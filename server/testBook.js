@@ -4,11 +4,9 @@ const Book = require("./models/Book");
 
 async function run() {
   try {
-    // Connect to MongoDB
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDB ✅");
 
-    // Create a sample book
     const sampleBook = new Book({
       title: "The Alchemist",
       author: "Paulo Coelho",
@@ -17,11 +15,9 @@ async function run() {
       status: "finished",
     });
 
-    // Save it
     await sampleBook.save();
     console.log("Book saved:", sampleBook);
 
-    // Close the connection
     mongoose.connection.close();
   } catch (err) {
     console.error("Error:", err);
