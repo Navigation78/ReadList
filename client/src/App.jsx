@@ -1,19 +1,10 @@
-//testing the frontend
-import { useEffect, useState } from "react";
+import BookForm from "./components/BookForm";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:5000") // calling your backend
-      .then((res) => res.text())
-      .then((data) => setMessage(data));
-  }, []);
-
   return (
     <div>
-      <h1>Hello World from Frontend!</h1>
-      <p>Backend says: {message}</p>
+      <h1>📚 My Readlist</h1>
+      <BookForm />
     </div>
   );
 }

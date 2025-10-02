@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
-require("dotenv").config();
+require("dotenv").config({ path: __dirname + "/.env" });
 
 const express = require("express");
 const cors = require("cors");
+
+// Debug: check if .env is loading
+console.log("🔑 MONGO_URI from .env:", process.env.MONGO_URI);
 
 // Import routes
 const bookRoutes = require("./routes/books");
@@ -13,8 +16,8 @@ const PORT = process.env.PORT || 5000;
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log(" MongoDB connected"))
-  .catch((err) => console.error(" MongoDB connection error:", err));
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Middleware
 app.use(cors());
