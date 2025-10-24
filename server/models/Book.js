@@ -1,14 +1,15 @@
+// server/models/Book.js
 const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
+  googleBookId: { type: String, required: true },
   title: { type: String, required: true },
-  author: { type: String, required: true },
-  pages: { type: Number },              // number of pages
-  genres: { type: [String] },           // multiple genres allowed
-  status: { 
-    type: String, 
-    enum: ["wishlist", "reading", "finished"], 
-    default: "wishlist" 
+  author: { type: String, default: "Unknown Author" },
+  coverImage: { type: String },
+  status: {
+    type: String,
+    enum: ["Wishlist", "Reading", "Read"],
+    default: "Wishlist"
   },
 });
 

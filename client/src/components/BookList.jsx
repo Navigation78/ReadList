@@ -1,6 +1,8 @@
+// src/components/BookList.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import BookForm from "./BookForm";
+import BookCard from "./BookCard";
+import BookSearch from "./BookSearch";
 
 function BookList() {
   const [books, setBooks] = useState([]);
@@ -19,20 +21,25 @@ function BookList() {
   }, []);
 
   return (
-    <div>
-      <BookForm onBookAdded={fetchBooks} />
-      <h2>📚 Your Reading List</h2>
+    <div style={{ padding: "20px" }}>
+      <h1>📖 My Reading Tracker</h1>
 
+      <BookSearch onBookAdded={fetchBooks} />
+
+      <h2>My Books</h2>
       {books.length === 0 ? (
-        <p>No books found yet.</p>
+        <p>No books saved yet. Try searching for one!</p>
       ) : (
-        books.map((book) => (
-          <div key={book._id}>
-            <h3>{book.title}</h3>
-            <p>{book.author}</p>
-            <small>{book.status}</small>
-          </div>
-        ))
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {books.map((book) => (
+            <BookCard
+              key={book._id}
+              book={book}
+              onBookDeleted={fetchBooks}
+              onStatusUpdated={fetchBooks}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
