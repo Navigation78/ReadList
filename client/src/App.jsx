@@ -1,50 +1,23 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import BookSearch from "./components/BookSearch";
+import BookList from "./components/BookList";
 
-const Home = () => {
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/books")
-      .then((response) => {
-        setBooks(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching books:", error);
-      });
-  }, []);
-
+function App() {
   return (
-    <div>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h1>📚 My Reading List</h1>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        {books.length > 0 ? (
-          books.map((book) => (
-            <div
-              key={book._id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "10px",
-                padding: "10px",
-                width: "200px",
-              }}
-            >
-              <img
-                src={book.coverImage || "https://via.placeholder.com/150"}
-                alt={book.title}
-                style={{ width: "100%", borderRadius: "8px" }}
-              />
-              <h3>{book.title}</h3>
-              <p>{book.author}</p>
-            </div>
-          ))
-        ) : (
-          <p>No books found yet.</p>
-        )}
-      </div>
+      <p style={{ color: "#555" }}>
+        Search books using Google Books API or browse your personal reading list.
+      </p>
+
+      <section style={{ marginBottom: "40px" }}>
+        <BookSearch />
+      </section>
+
+      <section>
+        <BookList />
+      </section>
     </div>
   );
-};
+}
 
-export default Home;
+export default App;
