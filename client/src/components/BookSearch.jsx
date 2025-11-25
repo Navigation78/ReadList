@@ -3,22 +3,24 @@ import React, { useState } from "react";
 import axios from "axios";
 
 function BookSearch({ onBookAdded }) {
-  const [query, setQuery] = useState("");       // User's search text
-  const [results, setResults] = useState([]);   // Search results from Google Books
-  const [status, setStatus] = useState("Wishlist"); // Book status before adding
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [status, setStatus] = useState("Wishlist");
 
-  // Load API key from environment variable
-  const apiKey = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
+  // Correct way to load your API key
+  const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
-  // Handles search form submission
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!query.trim()) return; // avoid empty searches
+    if (!query.trim()) return;
 
     try {
       const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`
+        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
+          query
+        )}&key=${apiKey}`
       );
+
       const data = await response.json();
       setResults(data.items || []);
     } catch (error) {
@@ -26,29 +28,27 @@ function BookSearch({ onBookAdded }) {
     }
   };
 
-  // Handles adding a book to the backend database
   const handleAddBook = async (book) => {
     const bookData = {
       googleBookId: book.id,
       title: book.volumeInfo.title,
       author: book.volumeInfo.authors?.[0] || "Unknown Author",
       coverImage: book.volumeInfo.imageLinks?.thumbnail || "",
-      status, // the selected reading status
+      status,
     };
 
     try {
       await axios.post("http://localhost:5000/api/books", bookData);
-      onBookAdded(); // refresh parent book list
-      alert(`✅ Added "${book.volumeInfo.title}" as "${status}"`);
+      onBookAdded();
+      alert(` Added "${book.volumeInfo.title}" as "${status}"`);
     } catch (error) {
-      console.error("❌ Error adding book:", error);
+      console.error(" Error adding book:", error);
       alert("Book already exists or could not be added.");
     }
   };
 
   return (
     <div style={{ margin: "20px" }}>
-      {/* Search bar */}
       <form onSubmit={handleSearch}>
         <input
           type="text"
@@ -60,9 +60,8 @@ function BookSearch({ onBookAdded }) {
         <button type="submit">🔍 Search</button>
       </form>
 
-      {/* Status selector */}
       <div style={{ marginTop: "10px" }}>
-        <label>Set Status: </label>
+        <label>Set Status:</label>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
@@ -74,7 +73,6 @@ function BookSearch({ onBookAdded }) {
         </select>
       </div>
 
-      {/* Display search results */}
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "20px" }}>
         {results.map((book) => (
           <div
@@ -90,12 +88,16 @@ function BookSearch({ onBookAdded }) {
             }}
           >
             <img
-              src={book.volumeInfo.imageLinks?.thumbnail}
+              src={
+                book.volumeInfo.imageLinks?.thumbnail ||
+                "https://via.placeholder.com/100x150?text=No+Cover"
+              }
               alt={book.volumeInfo.title}
               style={{ width: "100px", height: "150px", objectFit: "cover" }}
             />
             <h4>{book.volumeInfo.title}</h4>
             <p>{book.volumeInfo.authors?.join(", ")}</p>
+
             <button
               onClick={() => handleAddBook(book)}
               style={{
