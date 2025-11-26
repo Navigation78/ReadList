@@ -8,14 +8,29 @@ const supabase = require("../lib/supabaseServer");
 async function getUserFromReq(req) {
   const auth = req.headers.authorization || ''
   const token = auth.startsWith('Bearer ') ? auth.split(' ')[1] : null
-  if (!token) return { user: null, error: { message: 'No token provided' } }
+  if (!token) {
+    console.warn(`[auth] No Authorization token provided - ${req.method} ${req.originalUrl}`)
+    return { user: null, error: { message: 'No token provided' } }
+  }
 
   try {
+    // Do not log token contents; only its length for debugging
+    console.debug(`[auth] Verifying token (len=${token.length}) for ${req.method} ${req.originalUrl}`)
     const { data, error } = await supabase.auth.getUser(token)
-    if (error) return { user: null, error }
+    if (error) {
+      console.error(`[auth] Supabase getUser error for ${req.method} ${req.originalUrl}:`, error.message || error)
+      return { user: null, error }
+    }
+
+    if (!data || !data.user) {
+      console.warn(`[auth] No user returned by Supabase for ${req.method} ${req.originalUrl}`)
+      return { user: null, error: { message: 'Invalid token' } }
+    }
+
     return { user: data.user, error: null }
   } catch (err) {
-    return { user: null, error: err }
+    console.error(`[auth] Unexpected error verifying token for ${req.method} ${req.originalUrl}:`, err && err.stack ? err.stack : err)
+    return { user: null, error: { message: 'Token verification failed', detail: err && err.message ? err.message : err } }
   }
 }
 
