@@ -15,6 +15,23 @@ module.exports = {
       fontFamily: {
         lato: ['Lato', 'sans-serif'],
         roboto: ['Roboto', 'sans-serif']
+      },
+      backgroundColor: {
+        'custom-green': '#ABC270',
+        'custom-yellow': '#FEC868',
+        'custom-orange': '#FDA769',
+        'custom-brown': '#473C33'
+      },
+      textColor: {
+        'custom-brown': '#473C33',
+        'custom-green': '#ABC270',
+        'custom-yellow': '#FEC868',
+        'custom-orange': '#FDA769'
+      },
+      borderColor: {
+        'custom-green': '#ABC270',
+        'custom-yellow': '#FEC868',
+        'custom-orange': '#FDA769'
       }
     },
   },

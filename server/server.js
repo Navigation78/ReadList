@@ -11,6 +11,7 @@ console.log("MONGO_URI from .env:", process.env.MONGO_URI);
 
 // Import routes modules where all endpoints for handling book data are defined
 const bookRoutes = require("./routes/books");
+const authRoutes = require("./routes/auth");
 
 const app = express(); //create an express application / instance
 const PORT = process.env.PORT || 5000; // sets the port for the server to listen on
@@ -26,6 +27,7 @@ app.use(express.json()); // allows JSON request bodies
 
 // Routes
 app.use("/api/books", bookRoutes); // all book-related endpoints are prefixed with /api/books
+app.use("/api/auth", authRoutes); // all auth-related endpoints are prefixed with /api/auth
 
 // Test route
 app.get("/", (req, res) => { // basic route to test server

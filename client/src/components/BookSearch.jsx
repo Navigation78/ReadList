@@ -66,14 +66,15 @@ function BookSearch({ onBookAdded }) {
   };
 
   return (
-    <div className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm">
+    <div id="book-search-container" className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-sm">
       {/* Search Header */}
-      <h2 className="text-xl font-bold text-[#473C33] mb-4">🔍 Search for Books</h2>
+      <h2 id="search-header" className="text-xl font-bold text-[#473C33] mb-4">🔍 Search for Books</h2>
 
       {/* Search Form */}
-      <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row gap-3">
+      <div id="search-form" className="space-y-4">
+        <div id="search-input-group" className="flex flex-col sm:flex-row gap-3">
           <input
+            id="search-input"
             type="text"
             placeholder="Search by title, author, or ISBN..."
             value={query}
@@ -100,9 +101,9 @@ function BookSearch({ onBookAdded }) {
             onChange={(e) => setStatus(e.target.value)}
             className="px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#FEC868] focus:outline-none transition-colors"
           >
-            <option value="Wishlist">📚 Wishlist</option>
-            <option value="Reading">📖 Reading</option>
-            <option value="Read">✅ Read</option>
+            <option value="Wishlist"> Wishlist</option>
+            <option value="Reading"> Reading</option>
+            <option value="Read"> Read</option>
           </select>
           <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColors[status]}`}>
             {status}
