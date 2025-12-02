@@ -4,6 +4,8 @@
 
 @layer base {
   body {
+    margin: 0;   /* remove default browser margin */
+    padding: 0;
     font-family: 'Lato', 'Roboto', sans-serif;
     background-color: #fff;
     color: #2b2b2b;

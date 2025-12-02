@@ -43,13 +43,13 @@ function Login() {
   };
 
   return (
-    <div id="login-page" className="min-h-screen bg-gradient-to-r from-[#ABC270] to-[#FEC868] flex items-center justify-center px-4">
+    <div id="login-page" className="fixed inset-0 bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/src/assets/Green.jpg')" }}>
       <div id="login-container" className="w-full max-w-md">
         <div id="login-card" className="bg-white rounded-lg shadow-lg p-8">
           {/* Header */}
           <div id="login-header" className="text-center mb-8">
             <h1 id="login-title" className="text-3xl font-bold text-[#473C33] mb-2">
-              📖 ReadList
+               ReadList
             </h1>
             <p id="login-subtitle" className="text-gray-600">
               Sign in to your account
@@ -102,7 +102,7 @@ function Login() {
               id="login-btn"
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-3 bg-[#ABC270] text-white font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="w-full px-4 py-3 bg-[#537B2F] text-white font-semibold rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
@@ -115,7 +115,7 @@ function Login() {
               <Link
                 id="signup-link"
                 to="/signup"
-                className="text-[#FEC868] font-semibold hover:underline"
+                className="text-[#532B2F] font-semibold hover:underline"
               >
                 Sign up
               </Link>
