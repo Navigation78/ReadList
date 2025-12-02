@@ -1,37 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom'
-import { supabase } from '../lib/supabaseClient'
+// src/components/ProtectedRoute.jsx
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-export default function ProtectedRoute({ children }) {
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const check = async () => {
-      const { data } = await supabase.auth.getSession()
-      setUser(data.session?.user ?? null)
-      setLoading(false)
-    }
-    check()
-
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-    return () => listener.subscription.unsubscribe()
-  }, [])
+function ProtectedRoute({ children }) {
+  const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-[#FEC868] border-t-transparent mb-4"></div>
-          <h2 className="text-xl font-bold text-[#473C33] mb-2">Loading...</h2>
-          <p className="text-gray-600">Checking authentication</p>
-        </div>
+      <div id="loading-state" className="min-h-screen flex items-center justify-center bg-white">
+        <div id="loading-spinner" className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#FEC868] border-t-transparent"></div>
       </div>
-    )
+    );
   }
 
-  if (!user) return <Navigate to="/login" replace />
-  return children
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 }
+
+export default ProtectedRoute;
