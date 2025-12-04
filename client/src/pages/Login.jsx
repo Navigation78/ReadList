@@ -2,12 +2,14 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Eye, EyeOff } from 'lucide-react'; // <-- added import for eye icons
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // <-- state for show/hide password
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -43,13 +45,17 @@ function Login() {
   };
 
   return (
-    <div id="login-page" className="fixed inset-0 bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/src/assets/Green.jpg')" }}>
+    <div
+      id="login-page"
+      className="fixed inset-0 bg-cover bg-center flex items-center justify-center"
+      style={{ backgroundImage: "url('/src/assets/Green.jpg')" }}
+    >
       <div id="login-container" className="w-full max-w-md">
         <div id="login-card" className="bg-white rounded-lg shadow-lg p-8">
           {/* Header */}
           <div id="login-header" className="text-center mb-8">
             <h1 id="login-title" className="text-3xl font-bold text-[#473C33] mb-2">
-               ReadList
+              ReadList
             </h1>
             <p id="login-subtitle" className="text-gray-600">
               Sign in to your account
@@ -81,20 +87,31 @@ function Login() {
               />
             </div>
 
-            {/* Password Input */}
-            <div id="password-group" className="flex flex-col">
+            {/* Password Input with show/hide functionality */}
+            <div id="password-group" className="flex flex-col relative">
               <label id="password-label" htmlFor="password" className="text-sm font-semibold text-[#473C33] mb-2">
                 Password
               </label>
-              <input
-                id="password-input"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#FEC868] focus:outline-none transition-colors"
-                disabled={isLoading}
-              />
+
+              <div className="relative">
+                <input
+                  id="password-input"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#FEC868] focus:outline-none transition-colors pr-12"
+                  disabled={isLoading}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
             </div>
 
             {/* Submit Button */}

@@ -24,7 +24,7 @@ function Navbar() {
         {/* Logo */}
         <div id="navbar-logo" className="flex items-center">
           <h1 id="navbar-title" className="text-2xl font-bold text-[#ABC270]">
-            📖 ReadList
+             ReadList
           </h1>
         </div>
 
