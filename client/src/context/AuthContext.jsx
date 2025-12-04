@@ -42,25 +42,33 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  //  SIGNUP FUNCTION
   const signup = async (email, password) => {
-    setError(null);
-    try {
-      const { data, error: supabaseError } = await supabase.auth.signUpWithPassword({
-        email,
-        password,
-      });
+  setError(null);
+  try {
+    const { data, error: supabaseError } = await supabase.auth.signUp(
+      { email, password },
+      {
+        redirectTo: `${window.location.origin}/login` // where to go after confirmation
+      }
+    );
 
-      if (supabaseError) throw supabaseError;
+    if (supabaseError) throw supabaseError;
 
-      setUser(data.user);
-      return { success: true, user: data.user };
-    } catch (err) {
-      const message = err.message || 'Signup failed';
-      setError(message);
-      return { success: false, error: message };
-    }
-  };
+    // Always require email confirmation before login
+    return { success: true, emailSent: true };
 
+  } catch (err) {
+    const message = err.message || 'Signup failed';
+    setError(message);
+    return { success: false, error: message };
+  }
+};
+
+
+
+
+  //  LOGIN WAS ALREADY CORRECT
   const login = async (email, password) => {
     setError(null);
     try {

@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Eye, EyeOff } from 'lucide-react';
+
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -9,6 +11,8 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const { signup } = useAuth();
 
@@ -40,17 +44,22 @@ function Signup() {
     setIsLoading(true);
 
     try {
-      const result = await signup(email, password);
-      if (result.success) {
-        navigate('/');
-      } else {
-        setError(result.error);
-      }
-    } catch (err) {
-      setError('An unexpected error occurred');
-    } finally {
-      setIsLoading(false);
+  const result = await signup(email, password);
+
+  if (result.success) {
+    // Check if email confirmation is required
+    if (result.emailSent) {
+      navigate('/check-email'); // redirect user to check their email
     }
+  } else {
+    setError(result.error);
+  }
+} catch (err) {
+  setError('An unexpected error occurred');
+} finally {
+  setIsLoading(false);
+}
+
   };
 
   return (
@@ -92,40 +101,85 @@ function Signup() {
               />
             </div>
 
+            
             {/* Password Input */}
-            <div id="password-group" className="flex flex-col">
-              <label id="password-label" htmlFor="password" className="text-sm font-semibold text-[#473C33] mb-2">
-                Password
-              </label>
-              <input
-                id="password-input"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#FEC868] focus:outline-none transition-colors"
-                disabled={isLoading}
-              />
-              <p id="password-hint" className="text-xs text-gray-500 mt-1">
-                At least 6 characters
-              </p>
-            </div>
+<div id="password-group" className="flex flex-col relative">
+  
+  <label
+    id="password-label"
+    htmlFor="password"
+    className="text-sm font-semibold text-[#473C33] mb-2"
+  >
+    Password
+  </label>
 
-            {/* Confirm Password Input */}
-            <div id="confirm-password-group" className="flex flex-col">
+  <div className="relative">
+    
+    <input
+      id="password-input"
+      type={showPassword ? 'text' : 'password'}
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      placeholder="••••••••"
+      className="w-full px-4 py-3 border-2 
+       border-gray-200 rounded-lg 
+       focus:border-[#FEC868] 
+       focus:outline-none 
+       transition-colors 
+       pr-12"
+       disabled={isLoading}
+    />
+
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-3 top-1/2 
+                 -translate-y-1/2 
+                 text-gray-500 
+                 hover:text-gray-800"
+    >
+      {showPassword ? (
+        <EyeOff size={20} />
+      ) : (
+        <Eye size={20} />
+      )}
+    </button>
+
+  </div>
+
+  <p id="password-hint" className="text-xs text-gray-500 mt-1">
+    At least 6 characters
+  </p>
+
+</div>
+
+
+    <div id="confirm-password-group" className="flex flex-col relative">
               <label id="confirm-password-label" htmlFor="confirmPassword" className="text-sm font-semibold text-[#473C33] mb-2">
-                Confirm Password
+               Confirm Password
               </label>
-              <input
-                id="confirm-password-input"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="••••••••"
-                className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#FEC868] focus:outline-none transition-colors"
-                disabled={isLoading}
-              />
-            </div>
+
+      <div className="relative">
+        <input
+      id="confirm-password-input"
+      type={showPassword ? 'text' : 'password'}
+      value={confirmPassword}
+      onChange={(e) => setConfirmPassword(e.target.value)}
+      placeholder="••••••••"
+      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#FEC868] focus:outline-none transition-colors pr-12"
+      disabled={isLoading}
+    />
+
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
+    >
+      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+    </button>
+  </div>
+</div>
+
 
             {/* Submit Button */}
             <button
