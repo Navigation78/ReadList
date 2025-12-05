@@ -1,7 +1,8 @@
-// src/components/BookSearch.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { supabase } from '../lib/supabaseClient';
+import { useNavigate } from "react-router-dom";
+
 
 function BookSearch({ onBookAdded }) {
   const [query, setQuery] = useState("");
@@ -9,6 +10,8 @@ function BookSearch({ onBookAdded }) {
   const [status, setStatus] = useState("Wishlist");
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const navigate = useNavigate();
+
 
   // Correct way to load your API key
   const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
@@ -51,7 +54,8 @@ function BookSearch({ onBookAdded }) {
         headers: { Authorization: token ? `Bearer ${token}` : '' }
       });
       onBookAdded();
-      alert(`✅ Added "${book.volumeInfo.title}" as "${status}"`);
+      alert(` Added "${book.volumeInfo.title}" as "${status}"`);
+       navigate("/"); 
     } catch (error) {
       console.error("❌ Error adding book:", error);
       alert("Book already exists or could not be added.");
