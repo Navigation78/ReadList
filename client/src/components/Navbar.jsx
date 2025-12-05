@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -34,12 +33,23 @@ function Navbar() {
             {user?.email}
           </span>
           <button
-            id="logout-btn"
-            onClick={handleLogout}
-            className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-all"
-          >
-            Logout
-          </button>
+    onClick={() => navigate("/search")}
+    className="px-4 py-2 bg-[#ABC270] text-white font-semibold rounded-lg hover:opacity-90 transition"
+  >
+    ➕ Add Books
+  </button>
+
+  <span id="user-email" className="text-sm text-gray-600">
+    {user?.email}
+  </span>
+
+  <button
+    id="logout-btn"
+    onClick={handleLogout}
+    className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-all"
+  >
+    Logout
+  </button>
         </div>
       </div>
     </nav>

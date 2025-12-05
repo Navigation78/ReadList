@@ -1,4 +1,3 @@
-// src/pages/Signup.jsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -12,6 +11,8 @@ function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showCheckEmailAlert, setShowCheckEmailAlert] = useState(false);
+
 
   const navigate = useNavigate();
   const { signup } = useAuth();
@@ -46,14 +47,14 @@ function Signup() {
     try {
   const result = await signup(email, password);
 
-  if (result.success) {
-    // Check if email confirmation is required
-    if (result.emailSent) {
-      navigate('/check-email'); // redirect user to check their email
-    }
-  } else {
-    setError(result.error);
+if (result.success) {
+  if (result.emailSent) {
+    setShowCheckEmailAlert(true); 
   }
+} else {
+  setError(result.error);
+}
+
 } catch (err) {
   setError('An unexpected error occurred');
 } finally {
@@ -83,6 +84,13 @@ function Signup() {
             </div>
           )}
 
+          {showCheckEmailAlert && (
+           <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+            Account created successfully!  
+            Please check your email to confirm your account before logging in.
+           </div>
+         )}
+         
           {/* Signup Form */}
           <form id="signup-form" onSubmit={handleSubmit} className="space-y-4">
             {/* Email Input */}

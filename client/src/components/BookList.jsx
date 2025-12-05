@@ -1,4 +1,3 @@
-// src/components/BookList.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { supabase } from '../lib/supabaseClient';
