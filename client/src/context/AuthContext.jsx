@@ -66,8 +66,6 @@ export const AuthProvider = ({ children }) => {
 };
 
 
-
-
   //  LOGIN WAS ALREADY CORRECT
   const login = async (email, password) => {
     setError(null);

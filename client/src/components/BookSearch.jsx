@@ -58,7 +58,13 @@ function BookSearch({ onBookAdded }) {
        navigate("/"); 
     } catch (error) {
       console.error("❌ Error adding book:", error);
-      alert("Book already exists or could not be added.");
+     if (error.response?.status === 409) {
+  alert("This book already exists in your library.");
+} else if (error.response?.status === 401) {
+  alert("You are not logged in.");
+} else {
+  alert("Something went wrong. Try again.");
+}
     }
   };
 
@@ -142,12 +148,12 @@ function BookSearch({ onBookAdded }) {
                   className="bg-white border-2 border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md hover:border-[#FEC868] transition-all"
                 >
                   <img
-                    src={
-                      book.volumeInfo.imageLinks?.thumbnail ||
-                      "https://via.placeholder.com/100x150?text=No+Cover"
-                    }
-                    alt={book.volumeInfo.title}
-                    className="w-full h-48 object-cover rounded-md mx-auto mb-3"
+                   src={
+                   book.volumeInfo.imageLinks?.thumbnail ||
+                   "https://via.placeholder.com/100x150?text=No+Cover"
+                   }
+                   alt={book.volumeInfo.title}
+                  className="w-full h-48 object-contain rounded-md mx-auto mb-3"
                   />
                   <h4 className="text-sm font-bold text-[#473C33] mb-1 line-clamp-2 min-h-[2.5rem]">
                     {book.volumeInfo.title}
@@ -158,7 +164,7 @@ function BookSearch({ onBookAdded }) {
 
                   <button
                     onClick={() => handleAddBook(book)}
-                    className="w-full px-3 py-2 bg-[#ABC270] text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-all"
+                    className="w-full px-3 py-2 bg-[#532B2F] text-white text-sm font-semibold rounded-lg hover:opacity-100 transition-all"
                   >
                     ➕ Add
                   </button>
