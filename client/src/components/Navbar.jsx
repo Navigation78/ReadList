@@ -22,7 +22,7 @@ function Navbar() {
       <div id="navbar-content" className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <div id="navbar-logo" className="flex items-center">
-          <h1 id="navbar-title" className="text-2xl font-bold text-[#ABC270]">
+          <h1 id="navbar-title" className="text-2xl font-bold text-[#018786]">
              ReadList
           </h1>
         </div>
@@ -34,7 +34,7 @@ function Navbar() {
           </span>
           <button
     onClick={() => navigate("/search")}
-    className="px-4 py-2 bg-[#ABC270] text-white font-semibold rounded-lg hover:opacity-90 transition"
+    className="px-4 py-2 bg-[#532B2F] text-white font-semibold rounded-lg hover:opacity-90 transition"
   >
     ➕ Add Books
   </button>

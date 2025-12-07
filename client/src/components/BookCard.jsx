@@ -64,19 +64,20 @@ function BookCard({ book, onBookDeleted, onStatusUpdated }) {
       <div className={`h-2 bg-gradient-to-r ${statusColors[book.status]}`}></div>
 
       {/*  BOOK COVER */}
-      <div className="relative h-64 bg-gray-100 flex items-center justify-center overflow-hidden">
-        {book.coverImage ? (
-          <img
-            src={book.coverImage}
-            alt={book.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          />
-        ) : (
-          <BookOpen className="w-20 h-20 text-gray-400" />
-        )}
+<div className="relative h-[260px] bg-gray-100 overflow-hidden flex items-center justify-center">
+  {book.coverImage ? (
+    <img
+      src={book.coverImage}
+      alt={book.title}
+      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+    />
+  ) : (
+    <BookOpen className="w-20 h-20 text-gray-400 absolute inset-0 m-auto" />
+  )}
 
-        {/*  HOVER ACTIONS */}
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100">
+  {/*  HOVER ACTIONS */}
+  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100">
+
 
           {/* DROPDOWN TO CHANGE STATUS */}
           <button
