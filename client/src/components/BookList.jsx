@@ -94,11 +94,14 @@ function BookList() {
   const [loading, setLoading] = useState(true);
 
   const fetchBooks = async () => {
-    try {
-      setLoading(true);
-      const { data: sessionData } = await supabase.auth.getSession();
-      const token = sessionData.session?.access_token;
-
+  try {
+    setLoading(true);
+    const { data: sessionData } = await supabase.auth.getSession();
+    const token = sessionData.session?.access_token;
+    
+    console.log("🔍 Session data:", sessionData);
+    console.log("🔑 Token:", token ? "EXISTS" : "MISSING");
+    console.log("📤 Sending token (first 20 chars):", token?.substring(0, 20)); 
       const res = await axios.get("http://localhost:5000/api/books", {
         headers: { Authorization: token ? `Bearer ${token}` : "" },
       });
@@ -115,15 +118,41 @@ function BookList() {
     fetchBooks();
   }, []);
 
-  const handleStatusChange = (id, newStatus) => {
-    setBooks(books.map(book => book._id === id ? { ...book, status: newStatus } : book));
-    // Optionally, send update to backend here
-  };
+  const handleStatusChange = async (id, newStatus) => {
+  try {
+    const { data: sessionData } = await supabase.auth.getSession();
+    const token = sessionData.session?.access_token;
 
-  const handleDelete = (id) => {
-    setBooks(books.filter(book => book._id !== id));
-    // Optionally, send delete request to backend here
-  };
+    await axios.put(
+      `http://localhost:5000/api/books/${id}`,
+      { status: newStatus },
+      {
+        headers: { Authorization: token ? `Bearer ${token}` : "" },
+      }
+    );
+
+    fetchBooks(); // ✅ re-sync from MongoDB
+  } catch (error) {
+    console.error("❌ Status update failed:", error);
+  }
+};
+
+
+  const handleDelete = async (id) => {
+  try {
+    const { data: sessionData } = await supabase.auth.getSession();
+    const token = sessionData.session?.access_token;
+
+    await axios.delete(`http://localhost:5000/api/books/${id}`, {
+      headers: { Authorization: token ? `Bearer ${token}` : "" },
+    });
+
+    fetchBooks(); // ✅ re-sync from MongoDB
+  } catch (error) {
+    console.error("❌ Delete failed:", error);
+  }
+};
+
 
   const booksByStatus = {
     Wishlist: books.filter(b => b.status === 'Wishlist'),
