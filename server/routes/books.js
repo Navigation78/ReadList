@@ -96,9 +96,13 @@ router.delete("/:id", async (req, res) => {
     if (!book) return res.status(404).json({ message: "Book not found" });
     if (book.ownerId !== user.id) return res.status(403).json({ message: "Forbidden" });
 
-    await book.remove();
+    // ✅ Use deleteOne() or findByIdAndDelete()
+    await Book.findByIdAndDelete(req.params.id);
+    // OR: await book.deleteOne();
+    
     res.json({ message: "Book deleted successfully" });
   } catch (err) {
+    console.error("Delete error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
