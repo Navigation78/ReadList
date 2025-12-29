@@ -64,7 +64,7 @@ if (result.success) {
   };
 
   return (
-    <div id="signup-page" className="fixed inset-0 bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/src/assets/Green.jpg')" }}>
+    <div id="signup-page" className="fixed inset-0 bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/src/assets/snow2.jpg')" }}>
       <div id="signup-container" className="w-full max-w-md">
         <div id="signup-card" className="bg-white rounded-lg shadow-lg p-8">
           {/* Header */}

@@ -48,7 +48,7 @@ function Login() {
     <div
       id="login-page"
       className="fixed inset-0 bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: "url('/src/assets/Green.jpg')" }}
+      style={{ backgroundImage: "url('/src/assets/snow2.jpg')" }}
     >
       <div id="login-container" className="w-full max-w-md">
         <div id="login-card" className="bg-white rounded-lg shadow-lg p-8">
@@ -113,6 +113,17 @@ function Login() {
                 </button>
               </div>
             </div>
+
+{/* Forgot Password Link */}
+<div className="text-right mt-2">
+  <Link
+    to="/forgot-password"
+    className="text-sm text-[#532B2F] font-semibold hover:underline"
+  >
+    Forgot password?
+  </Link>
+</div>
+
 
             {/* Submit Button */}
             <button
