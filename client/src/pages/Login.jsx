@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Eye, EyeOff } from 'lucide-react'; // <-- added import for eye icons
+import Snow from "../components/Snow";
+import AuthLayout from "../components/AuthLayout";
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -45,11 +47,18 @@ function Login() {
   };
 
   return (
-    <div
-      id="login-page"
-      className="fixed inset-0 bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: "url('/src/assets/snow2.jpg')" }}
-    >
+     <AuthLayout>
+      {/* login form */}
+    </AuthLayout>
+   <div className="fixed inset-0 bg-white flex items-center justify-center">
+     <div className="relative min-h-screen bg-white overflow-hidden">
+      <Snow />
+
+      <div className="relative z-10 flex min-h-screen items-center justify-center">
+        {/* Your login form here */}
+      </div>
+    </div>
+
       <div id="login-container" className="w-full max-w-md">
         <div id="login-card" className="bg-white rounded-lg shadow-lg p-8">
           {/* Header */}

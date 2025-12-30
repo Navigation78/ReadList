@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import Snow from "../components/Snow";
+
 
 function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -43,10 +45,14 @@ function ResetPassword() {
   };
 
   return (
-    <div
-      className="fixed inset-0 bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: "url('/src/assets/snow2.jpg')" }}
-    >
+    <div className="fixed inset-0 bg-white flex items-center justify-center">
+      <div className="relative min-h-screen bg-white overflow-hidden">
+      <Snow />
+      <div className="relative z-10 min-h-screen flex items-center justify-center">
+        {children}
+      </div>
+    </div>
+
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-[#473C33] text-center mb-2">
           Reset Password

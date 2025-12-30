@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Eye, EyeOff } from 'lucide-react';
+import Snow from "../components/Snow";
 
 
 function Signup() {
@@ -64,7 +65,15 @@ if (result.success) {
   };
 
   return (
-    <div id="signup-page" className="fixed inset-0 bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/src/assets/snow2.jpg')" }}>
+    <div className="fixed inset-0 bg-white flex items-center justify-center">
+
+<div className="relative min-h-screen bg-white overflow-hidden">
+      <Snow />
+      <div className="relative z-10 min-h-screen flex items-center justify-center">
+        {children}
+      </div>
+    </div>
+    
       <div id="signup-container" className="w-full max-w-md">
         <div id="signup-card" className="bg-white rounded-lg shadow-lg p-8">
           {/* Header */}
