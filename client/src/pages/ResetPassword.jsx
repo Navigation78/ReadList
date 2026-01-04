@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import Snow from "../components/Snow";
+import AuthLayout from "../components/AuthLayout";
 
 
 function ResetPassword() {
@@ -44,19 +44,14 @@ function ResetPassword() {
     setIsLoading(false);
   };
 
+ 
   return (
-    <div className="fixed inset-0 bg-white flex items-center justify-center">
-      <div className="relative min-h-screen bg-white overflow-hidden">
-      <Snow />
-      <div className="relative z-10 min-h-screen flex items-center justify-center">
-        {children}
-      </div>
-    </div>
-
+    <AuthLayout>
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-[#473C33] text-center mb-2">
           Reset Password
         </h1>
+
         <p className="text-gray-600 text-center mb-6">
           Enter your new password
         </p>
@@ -68,10 +63,12 @@ function ResetPassword() {
         )}
 
         <form onSubmit={handleReset} className="space-y-4">
+          {/* New password */}
           <div>
             <label className="text-sm font-semibold text-[#473C33] mb-2 block">
               New Password
             </label>
+
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -79,6 +76,7 @@ function ResetPassword() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg pr-12 focus:border-[#FEC868] focus:outline-none"
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -89,10 +87,12 @@ function ResetPassword() {
             </div>
           </div>
 
+          {/* Confirm password */}
           <div>
             <label className="text-sm font-semibold text-[#473C33] mb-2 block">
               Confirm Password
             </label>
+
             <input
               type="password"
               value={confirmPassword}
@@ -110,7 +110,7 @@ function ResetPassword() {
           </button>
         </form>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
 
