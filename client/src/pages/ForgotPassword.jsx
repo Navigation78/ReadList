@@ -32,8 +32,7 @@ function ForgotPassword() {
     }
 
     setIsLoading(false);
-  }
-};
+  };
 
  return (
   <AuthLayout>
@@ -94,3 +93,6 @@ function ForgotPassword() {
     </div>
   </AuthLayout>
 );
+}
+
+export default ForgotPassword;

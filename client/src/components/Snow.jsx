@@ -10,7 +10,7 @@ const COLORS = [
 
 function Snow() {
   return (
-    <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
+    <div className="absolute inset-0 z-0 pointer-events-none">
       {SNOWFLAKES.map((_, i) => {
         const colorClass =
           COLORS[Math.floor(Math.random() * COLORS.length)];

@@ -1,71 +1,44 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BookList from "./components/BookList";
 import BookSearch from "./components/BookSearch";
-import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedLayout from "./layouts/ProtectedLayout";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
-return (
-	<AuthProvider>
-		<BrowserRouter>
-			<Navbar />
-			<main id="main-content" className="px-4 py-6 font-lato">
-				<Routes>
-  {/* Public auth routes */}
-  <Route path="/login" element={<Login />} />
-  <Route path="/signup" element={<Signup />} />
-  <Route path="/forgot-password" element={<ForgotPassword />} />
-  <Route path="/reset-password" element={<ResetPassword />} />
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
-  {/* Protected routes */}
-  <Route
-    path="/"
-    element={
-      <ProtectedRoute>
-        <BookList />
-      </ProtectedRoute>
-    }
-  />
+          {/* Protected routes */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <ProtectedLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/" element={<BookList />} />
+            <Route path="/books" element={<BookList />} />
+            <Route path="/search" element={<BookSearch />} />
+          </Route>
 
-  <Route
-    path="/books"
-    element={
-      <ProtectedRoute>
-        <BookList />
-      </ProtectedRoute>
-    }
-  />
-
-  <Route
-    path="/search"
-    element={
-      <ProtectedRoute>
-        <BookSearch />
-      </ProtectedRoute>
-    }
-  />
-
-  {/* 404 */}
-  <Route
-    path="*"
-    element={
-      <div className="max-w-4xl mx-auto mt-8">
-        <h2 className="text-xl mb-2">404 — Not Found</h2>
-        <p className="text-gray-700">The page you requested does not exist.</p>
-      </div>
-    }
-  />
-</Routes>
-
-			</main>
-		</BrowserRouter>
-	</AuthProvider>
-);
+          {/* 404 */}
+          <Route path="*" element={<div>404 — Not Found</div>} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
 export default App;
