@@ -1,44 +1,68 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import BookList from "./components/BookList";
-import BookSearch from "./components/BookSearch";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import ProtectedRoute from "./components/ProtectedRoute";
-import ProtectedLayout from "./layouts/ProtectedLayout";
-import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/auth/ProtectedRoute'
+import Navbar from './components/common/Navbar'
+
+// Auth pages
+import Login from './pages/auth/Login'
+import Signup from './pages/auth/Signup'
+import ForgotPassword from './pages/auth/ForgotPassword'
+import ResetPassword from './pages/auth/ResetPassword'
+
+// Main pages
+import Home from './pages/Home'
+import Library from './pages/Library'
+import SearchBooks from './pages/SearchBooks'
+import Stats from './pages/Stats'
+import Profile from './pages/Profile'
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+        <div className="min-h-screen bg-gray-50">
+          <Navbar />
+          <Routes>
+            {/* Public routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
-          {/* Protected routes */}
-          <Route
-            element={
+            {/* Protected routes */}
+            <Route path="/" element={
               <ProtectedRoute>
-                <ProtectedLayout />
+                <Home />
               </ProtectedRoute>
-            }
-          >
-            <Route path="/" element={<BookList />} />
-            <Route path="/books" element={<BookList />} />
-            <Route path="/search" element={<BookSearch />} />
-          </Route>
+            } />
+            <Route path="/library" element={
+              <ProtectedRoute>
+                <Library />
+              </ProtectedRoute>
+            } />
+            <Route path="/search" element={
+              <ProtectedRoute>
+                <SearchBooks />
+              </ProtectedRoute>
+            } />
+            <Route path="/stats" element={
+              <ProtectedRoute>
+                <Stats />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
 
-          {/* 404 */}
-          <Route path="*" element={<div>404 — Not Found</div>} />
-        </Routes>
+            {/* Catch all */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </AuthProvider>
-  );
+  )
 }
 
-export default App;
+export default App

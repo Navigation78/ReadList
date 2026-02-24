@@ -46,16 +46,16 @@ export const AuthProvider = ({ children }) => {
   const signup = async (email, password) => {
   setError(null);
   try {
-    const { data, error: supabaseError } = await supabase.auth.signUp(
-      { email, password },
-      {
-        redirectTo: `${window.location.origin}/login` // where to go after confirmation
+    const { data, error: supabaseError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/login`
       }
-    );
+    });
 
     if (supabaseError) throw supabaseError;
 
-    // Always require email confirmation before login
     return { success: true, emailSent: true };
 
   } catch (err) {
