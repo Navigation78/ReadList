@@ -1,0 +1,117 @@
+/* VerseLore Color System - Blush Antique Rose Palette */
+:root {
+  // PRIMARY COLORS - Main Palette
+   
+  
+  /* 60% - Dominant (Background) */
+  --background: #FBEAD6;           /* Champagne - Main background */
+  --surface: #FFFFFF;              /* White - Cards, elevated surfaces */
+  --surface-alt: #F0C4CB;          /* Blush - Alternative surface (modals, sidebars) */
+  
+  /* 30% - Secondary (Text & Structure) */
+  --primary-color: #6B7556;        /* Dried Thyme - Primary text, navbar, headers */
+  --primary-dark: #545d44;         /* Darker Thyme - Hover states, dark text */
+  --primary-light: #8a9370;        /* Lighter Thyme - Subtle elements */
+  
+  /* 10% - Accent (Actions & Highlights) */
+  --accent-color: #C87D87;         /* Antique Rose - Buttons, links, CTAs */
+  --accent-hover: #b36b76;         /* Darker Rose - Button hover */
+  --accent-light: #d9949d;         /* Lighter Rose - Subtle accents */
+  
+  /* Supporting Colors */
+  --secondary-accent: #E5BCA9;     /* Bisque - Secondary buttons, badges */
+  --secondary-hover: #d9ab95;      /* Darker Bisque - Secondary hover */
+  
+  /* ========================================
+     TEXT COLORS
+     ======================================== */
+  --text-primary: #3d4133;         /* Very dark thyme - Main text */
+  --text-secondary: #6B7556;       /* Dried Thyme - Secondary text */
+  --text-muted: #8a9370;           /* Light Thyme - Muted text, placeholders */
+  --text-on-accent: #FFFFFF;       /* White - Text on colored backgrounds */
+  
+  /* ========================================
+     SEMANTIC COLORS
+     ======================================== */
+  --success: #6B7556;              /* Dried Thyme - Success states */
+  --warning: #E5BCA9;              /* Bisque - Warning states */
+  --error: #C87D87;                /* Antique Rose - Error states */
+  --info: #F0C4CB;                 /* Blush - Info states */
+  
+  /* ========================================
+     BORDERS & DIVIDERS
+     ======================================== */
+  --border: #E5D4C1;               /* Warm beige - Subtle borders */
+  --border-dark: #C87D87;          /* Antique Rose - Emphasized borders */
+  --divider: #F0E6D8;              /* Very light - Section dividers */
+  
+  /* ========================================
+     SPACING SYSTEM
+     ======================================== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  
+  /* ========================================
+     BORDER RADIUS
+     ======================================== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  
+  /* ========================================
+     SHADOWS
+     ======================================== */
+  --shadow-sm: 0 1px 2px rgba(107, 117, 86, 0.05);
+  --shadow-md: 0 4px 6px rgba(107, 117, 86, 0.08);
+  --shadow-lg: 0 10px 15px rgba(107, 117, 86, 0.1);
+  --shadow-xl: 0 20px 25px rgba(107, 117, 86, 0.12);
+  
+  /* ========================================
+     TYPOGRAPHY
+     ======================================== */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
+                 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 
+                 'Helvetica Neue', sans-serif;
+  
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 24px;
+  --font-2xl: 32px;
+  --font-3xl: 40px;
+  --font-4xl: 48px;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* ========================================
+     TRANSITIONS
+     ======================================== */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+  
+  /* ========================================
+     Z-INDEX LAYERS
+     ======================================== */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-popover: 400;
+  --z-tooltip: 500;
+}
