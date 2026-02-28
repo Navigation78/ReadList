@@ -1,16 +1,14 @@
 /* VerseLore Color System - Blush Antique Rose Palette */
 :root {
-  // PRIMARY COLORS - Main Palette
    
-  
   /* 60% - Dominant (Background) */
   --background: #FBEAD6;           /* Champagne - Main background */
   --surface: #FFFFFF;              /* White - Cards, elevated surfaces */
   --surface-alt: #F0C4CB;          /* Blush - Alternative surface (modals, sidebars) */
   
   /* 30% - Secondary (Text & Structure) */
-  --primary-color: #6B7556;        /* Dried Thyme - Primary text, navbar, headers */
-  --primary-dark: #545d44;         /* Darker Thyme - Hover states, dark text */
+  --primary-color: #131410;        /* Dried Thyme - Primary text, navbar, headers */
+  --primary-dark: #30381f;         /* Darker Thyme - Hover states, dark text */
   --primary-light: #8a9370;        /* Lighter Thyme - Subtle elements */
   
   /* 10% - Accent (Actions & Highlights) */
@@ -25,8 +23,8 @@
   /* ========================================
      TEXT COLORS
      ======================================== */
-  --text-primary: #3d4133;         /* Very dark thyme - Main text */
-  --text-secondary: #6B7556;       /* Dried Thyme - Secondary text */
+  --text-primary: #131410;         /* Very dark thyme - Main text */
+  --text-secondary: #30381f;       /* Dried Thyme - Secondary text */
   --text-muted: #8a9370;           /* Light Thyme - Muted text, placeholders */
   --text-on-accent: #FFFFFF;       /* White - Text on colored backgrounds */
   
@@ -114,4 +112,6 @@
   --z-modal: 300;
   --z-popover: 400;
   --z-tooltip: 500;
+   /* Navbar height used to offset fixed header from page content */
+   --navbar-height: 70px;
 }
