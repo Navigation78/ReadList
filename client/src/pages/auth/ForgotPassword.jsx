@@ -1,98 +1,115 @@
-import React, { useState } from "react";
-import { supabase } from "../lib/supabaseClient";
-import { Link } from "react-router-dom";
-import AuthLayout from "../components/AuthLayout";
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import Button from '../../components/common/Button'
+import Input from '../../components/common/Input'
+import logoImage from '../../assets/VerseLore Logo.png'
+import styles from './ForgotPassword.module.css'
 
-function ForgotPassword() {
-  const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+export default function ForgotPassword() {
+  const { resetPassword } = useAuth()
+  
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleResetRequest = async (e) => {
-    e.preventDefault();
-    setError("");
-    setMessage("");
+  const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email)
+  }
 
-    if (!email || !email.includes("@")) {
-      setError("Please enter a valid email address");
-      return;
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setSuccess(false)
+
+    if (!email) {
+      setError('Email is required')
+      return
     }
 
-    setIsLoading(true);
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email')
+      return
+    }
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "http://localhost:5173/reset-password",
-    });
+    setLoading(true)
 
-    if (error) {
-      setError(error.message);
+    const result = await resetPassword(email)
+
+    setLoading(false)
+
+    if (result.success) {
+      setSuccess(true)
+      setEmail('')
     } else {
-      setMessage("Password reset link sent. Check your email.");
+      setError(result.error || 'Failed to send reset email. Please try again.')
     }
+  }
 
-    setIsLoading(false);
-  };
-
- return (
-  <AuthLayout>
-    <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-      <h1 className="text-3xl font-bold text-[#473C33] text-center mb-2">
-        Forgot Password
-      </h1>
-
-      <p className="text-gray-600 text-center mb-6">
-        Enter your email to receive a reset link
-      </p>
-
-      {error && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
-          {error}
-        </div>
-      )}
-
-      {message && (
-        <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
-          {message}
-        </div>
-      )}
-
-      <form onSubmit={handleResetRequest} className="space-y-4">
-        <div>
-          <label className="text-sm font-semibold text-[#473C33] mb-2 block">
-            Email
-          </label>
-
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#FEC868] focus:outline-none"
-            disabled={isLoading}
-          />
+  return (
+    <div className={styles.container}>
+      <div className={styles.card}>
+        {/* Logo */}
+        <div className={styles.logoSection}>
+          <img src={logoImage} alt="VerseLore" className={styles.logo} />
+          <h1 className={styles.title}>Forgot Password?</h1>
+          <p className={styles.subtitle}>
+            Enter your email and we'll send you a link to reset your password
+          </p>
         </div>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full px-4 py-3 bg-[#537B2F] text-white font-semibold rounded-lg hover:opacity-90 disabled:opacity-50"
-        >
-          {isLoading ? "Sending..." : "Send Reset Link"}
-        </button>
-      </form>
+        {/* Form */}
+        {!success ? (
+          <form onSubmit={handleSubmit} className={styles.form}>
+            {error && (
+              <div className={styles.errorAlert} role="alert">
+                {error}
+              </div>
+            )}
 
-      <div className="text-center mt-6">
-        <Link
-          to="/login"
-          className="text-[#532B2F] font-semibold hover:underline"
-        >
-          Back to Login
-        </Link>
+            <Input
+              label="Email"
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={error && !email ? error : ''}
+              fullWidth
+              required
+            />
+
+            <Button 
+              type="submit" 
+              variant="primary" 
+              fullWidth 
+              loading={loading}
+              disabled={loading}
+            >
+              {loading ? 'Sending...' : 'Send Reset Link'}
+            </Button>
+          </form>
+        ) : (
+          <div className={styles.successMessage}>
+            <div className={styles.successIcon}>✓</div>
+            <h2 className={styles.successTitle}>Check Your Email</h2>
+            <p className={styles.successText}>
+              We've sent a password reset link to <strong>{email}</strong>
+            </p>
+            <p className={styles.successText}>
+              Click the link in the email to reset your password.
+            </p>
+          </div>
+        )}
+
+        {/* Back to Login */}
+        <div className={styles.footer}>
+          <Link to="/login" className={styles.backLink}>
+            ← Back to Login
+          </Link>
+        </div>
       </div>
     </div>
-  </AuthLayout>
-);
+  )
 }
-
-export default ForgotPassword;

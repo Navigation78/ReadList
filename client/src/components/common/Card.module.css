@@ -1,0 +1,62 @@
+/* Base Card */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal);
+}
+
+/* Variants */
+.default {
+  box-shadow: var(--shadow-md);
+}
+
+.flat {
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+.alt {
+  background: var(--surface-alt);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Padding Options */
+.padding-none {
+  padding: 0;
+}
+
+.padding-small {
+  padding: var(--spacing-sm);
+}
+
+.padding-default {
+  padding: var(--spacing-lg);
+}
+
+.padding-large {
+  padding: var(--spacing-xl);
+}
+
+/* Hoverable */
+.hoverable:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-2px);
+}
+
+/* Clickable */
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.clickable:active {
+  transform: translateY(0);
+}

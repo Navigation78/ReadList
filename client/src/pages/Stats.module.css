@@ -1,0 +1,239 @@
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+/* Header */
+.header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+.subtitle {
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Metrics Grid */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.metricCard {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.metricIcon {
+  font-size: 40px;
+}
+
+.metricContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.metricValue {
+  font-size: var(--font-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-color);
+  line-height: 1;
+}
+
+.metricLabel {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+/* Charts Grid */
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.chartCard {
+  min-height: 300px;
+}
+
+.chartTitle {
+  font-size: var(--font-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Genre List */
+.genreList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.genreItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.genreInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.genreName {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.genreCount {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.genreBar {
+  height: 12px;
+  background: var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.genreBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+  transition: width 0.5s ease;
+  border-radius: 6px;
+}
+
+/* Monthly Chart */
+.monthlyChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 200px;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+}
+
+.monthBar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  height: 100%;
+}
+
+.monthBarFill {
+  width: 100%;
+  background: linear-gradient(180deg, var(--accent-color), var(--accent-light));
+  border-radius: 6px 6px 0 0;
+  min-height: 5px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4px;
+  transition: height 0.5s ease;
+  position: relative;
+}
+
+.monthCount {
+  font-size: var(--font-xs);
+  font-weight: var(--font-weight-semibold);
+  color: white;
+}
+
+.monthLabel {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Additional Stats */
+.additionalStats {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--background);
+  border-radius: var(--radius-md);
+}
+
+.statLabel {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.statValue {
+  font-size: var(--font-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-color);
+}
+
+.statSubtext {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  margin-top: var(--spacing-xs);
+}
+
+/* Empty Message */
+.emptyMessage {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: var(--spacing-xl);
+  font-size: var(--font-sm);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .title {
+    font-size: var(--font-2xl);
+  }
+
+  .metricsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .monthlyChart {
+    height: 150px;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
