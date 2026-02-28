@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(230, 126, 34, 0.1));
+  border-radius: var(--radius-lg);
+  border-left: 4px solid #e74c3c;
+}
+
+.icon {
+  font-size: 48px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.days {
+  font-size: var(--font-2xl);
+  font-weight: var(--font-weight-bold);
+  color: #e74c3c;
+  line-height: 1;
+}
+
+.label {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}

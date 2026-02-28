@@ -1,0 +1,438 @@
+/* ========================================
+   CONTAINER & LAYOUT
+   ======================================== */
+
+/* Main container - centers content with max width */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+/* Error container - shown when book not found */
+.errorContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-3xl);
+  text-align: center;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+/* Back button - returns to library */
+.backButton {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  transition: color var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.backButton:hover {
+  color: var(--accent-hover);
+}
+
+/* ========================================
+   HEADER SECTION - Book Cover & Info
+   ======================================== */
+
+/* Header layout - side-by-side on desktop, stacked on mobile */
+.header {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Cover section - contains book cover image */
+.coverSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Cover wrapper - maintains aspect ratio */
+.coverWrapper {
+  width: 100%;
+  aspect-ratio: 2/3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  background: var(--surface-alt);
+}
+
+/* Cover image */
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder when no cover image */
+.placeholderCover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent-color) 100%);
+  font-size: 80px;
+}
+
+/* ========================================
+   INFO SECTION - Title, Author, Metadata
+   ======================================== */
+
+/* Info section - contains all book details */
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* Title section wrapper */
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Book title */
+.title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Book author */
+.author {
+  font-size: var(--font-xl);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ========================================
+   STATUS BADGE
+   ======================================== */
+
+/* Status badge wrapper */
+.statusBadgeWrapper {
+  margin-top: var(--spacing-sm);
+}
+
+/* Base status badge styles */
+.statusBadge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-semibold);
+  text-transform: capitalize;
+}
+
+/* Status badge color variants */
+.statusWant {
+  background-color: rgba(229, 188, 169, 0.2);
+  color: var(--secondary-accent);
+}
+
+.statusReading {
+  background-color: rgba(200, 125, 135, 0.2);
+  color: var(--accent-color);
+}
+
+.statusFinished {
+  background-color: rgba(107, 117, 86, 0.2);
+  color: var(--success);
+}
+
+/* ========================================
+   METADATA SECTION
+   ======================================== */
+
+/* Metadata grid - displays book details */
+.metadata {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: var(--background);
+  border-radius: var(--radius-lg);
+}
+
+/* Individual metadata item */
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+/* Metadata label */
+.metaLabel {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Metadata value */
+.metaValue {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   ACTION BUTTONS
+   ======================================== */
+
+/* Actions container - holds action buttons */
+.actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   SECTION CARDS
+   ======================================== */
+
+/* Section wrapper - used for each content card */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* Section title */
+.sectionTitle {
+  font-size: var(--font-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-color);
+  margin: 0;
+}
+
+/* ========================================
+   DESCRIPTION SECTION
+   ======================================== */
+
+/* Book description text */
+.description {
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ========================================
+   PROGRESS SECTION
+   ======================================== */
+
+/* Progress section wrapper */
+.progressSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Progress header - shows current page and percentage */
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Progress label - current page / total pages */
+.progressLabel {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+/* Progress percentage */
+.progressPercentage {
+  font-size: var(--font-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-color);
+}
+
+/* Progress bar container */
+.progressBar {
+  height: 16px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress bar fill - animated width change */
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+  transition: width 0.5s ease;
+  border-radius: 8px;
+}
+
+/* Progress update form */
+.progressForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+}
+
+/* Progress action buttons container */
+.progressActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   COMPLETION INFO
+   ======================================== */
+
+/* Completion info wrapper */
+.completionInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--background);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--success);
+}
+
+/* Completion icon */
+.completionIcon {
+  font-size: 48px;
+}
+
+/* Completion text */
+.completionText {
+  font-size: var(--font-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+/* Completion date */
+.completionDate {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ========================================
+   TIMELINE SECTION
+   ======================================== */
+
+/* Timeline container */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* Individual timeline item */
+.timelineItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--background);
+  border-radius: var(--radius-md);
+}
+
+/* Timeline icon */
+.timelineIcon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+/* Timeline content wrapper */
+.timelineContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+/* Timeline label */
+.timelineLabel {
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+/* Timeline date */
+.timelineDate {
+  font-size: var(--font-md);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   MODAL CONTENT
+   ======================================== */
+
+/* Modal content wrapper */
+.modalContent {
+  padding: var(--spacing-md) 0;
+}
+
+/* Modal text */
+.modalText {
+  font-size: var(--font-md);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+/* Status options container in modal */
+.statusOptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Delete modal wrapper */
+.deleteModal {
+  padding: var(--spacing-md) 0;
+}
+
+/* Delete warning text */
+.deleteWarning {
+  font-size: var(--font-md);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: rgba(200, 125, 135, 0.05);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--error);
+}
+
+/* Delete actions container */
+.deleteActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet and below */
+@media (max-width: 768px) {
+  /* Reduce container padd

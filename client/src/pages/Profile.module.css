@@ -1,0 +1,343 @@
+/* ========================================
+   CONTAINER & LAYOUT
+   ======================================== */
+
+/* Main container - centers content and adds padding */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+/* ========================================
+   HEADER SECTION
+   ======================================== */
+
+/* Page header - title and subtitle */
+.header {
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Main page title */
+.title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Page subtitle/description */
+.subtitle {
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ========================================
+   ALERT MESSAGES
+   ======================================== */
+
+/* Success alert - shown after successful actions */
+.successAlert {
+  background-color: rgba(107, 117, 86, 0.1);
+  border: 1px solid var(--success);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  color: var(--success);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Error alert - shown in modals for errors */
+.errorAlert {
+  background-color: rgba(200, 125, 135, 0.1);
+  border: 1px solid var(--error);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  color: var(--error);
+  font-size: var(--font-sm);
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ========================================
+   SECTIONS
+   ======================================== */
+
+/* Section wrapper - adds spacing between cards */
+.section {
+  margin-bottom: var(--spacing-xl);
+}
+
+/* ========================================
+   CARD COMPONENTS
+   ======================================== */
+
+/* Card header - contains section title */
+.cardHeader {
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Card title */
+.cardTitle {
+  font-size: var(--font-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-color);
+  margin: 0;
+}
+
+/* Card content wrapper */
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* ========================================
+   ACCOUNT INFORMATION
+   ======================================== */
+
+/* Info row - displays label and value pairs */
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--background);
+  border-radius: var(--radius-md);
+}
+
+/* Label for info items */
+.infoLabel {
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+/* Value for info items */
+.infoValue {
+  font-size: var(--font-md);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Smaller value text (for IDs, etc.) */
+.infoValueSmall {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  font-family: monospace;
+  word-break: break-all;
+  max-width: 60%;
+  text-align: right;
+}
+
+/* ========================================
+   READING STATISTICS GRID
+   ======================================== */
+
+/* Grid container for stat boxes */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md);
+}
+
+/* Individual stat box */
+.statBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-lg);
+  background: var(--background);
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: transform var(--transition-normal);
+}
+
+.statBox:hover {
+  transform: translateY(-2px);
+}
+
+/* Icon in stat box */
+.statIcon {
+  font-size: 32px;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Number value in stat box */
+.statValue {
+  font-size: var(--font-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-color);
+  line-height: 1;
+}
+
+/* Label under stat value */
+.statLabel {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   SECURITY SECTION
+   ======================================== */
+
+/* Security item - contains title, description, and action button */
+.securityItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+}
+
+/* Security item title */
+.securityTitle {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Security item description */
+.securityDescription {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ========================================
+   DANGER ZONE
+   ======================================== */
+
+/* Danger item - similar to security item but for destructive actions */
+.dangerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--error);
+}
+
+/* Danger item title */
+.dangerTitle {
+  font-size: var(--font-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Danger item description */
+.dangerDescription {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ========================================
+   MODAL CONTENT
+   ======================================== */
+
+/* Modal form wrapper */
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+}
+
+/* Modal actions - button container */
+.modalActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+/* Delete modal content */
+.deleteModal {
+  padding: var(--spacing-md) 0;
+}
+
+/* Warning message in delete modal */
+.deleteWarning {
+  font-size: var(--font-md);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: rgba(200, 125, 135, 0.05);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--error);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet and mobile adjustments */
+@media (max-width: 768px) {
+  /* Reduce container padding */
+  .container {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  /* Smaller title */
+  .title {
+    font-size: var(--font-2xl);
+  }
+
+  /* Stack info rows vertically on small screens */
+  .infoRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+
+  /* Allow full width for small values */
+  .infoValueSmall {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  /* Reduce stats grid columns */
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Stack security/danger items vertically */
+  .securityItem,
+  .dangerItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Very small mobile screens */
+@media (max-width: 480px) {
+  /* Single column for stats */
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}

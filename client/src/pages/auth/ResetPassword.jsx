@@ -1,117 +1,141 @@
-import React, { useState } from "react";
-import { supabase } from "../lib/supabaseClient";
-import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
-import AuthLayout from "../components/AuthLayout";
+import { useState, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import Button from '../../components/common/Button'
+import Input from '../../components/common/Input'
+import logoImage from '../../assets/VerseLore Logo.png'
+import styles from './ResetPassword.module.css'
 
+export default function ResetPassword() {
+  const { updatePassword } = useAuth()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  
+  const [formData, setFormData] = useState({
+    password: '',
+    confirmPassword: ''
+  })
+  const [errors, setErrors] = useState({})
+  const [serverError, setServerError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-function ResetPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  // Check if we have the required token
+  useEffect(() => {
+    const accessToken = searchParams.get('access_token')
+    if (!accessToken) {
+      setServerError('Invalid or expired reset link. Please request a new one.')
+    }
+  }, [searchParams])
 
-  const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+    // Clear error for this field
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }))
+    }
+  }
 
-  const handleReset = async (e) => {
-    e.preventDefault();
-    setError("");
+  const validateForm = () => {
+    const newErrors = {}
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
+    if (!formData.password) {
+      newErrors.password = 'Password is required'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters'
     }
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password'
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match'
     }
 
-    setIsLoading(true);
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
-    const { error } = await supabase.auth.updateUser({
-      password,
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setServerError('')
 
-    if (error) {
-      setError(error.message);
+    if (!validateForm()) return
+
+    setLoading(true)
+
+    const result = await updatePassword(formData.password)
+
+    setLoading(false)
+
+    if (result.success) {
+      // Show success and redirect to login
+      alert('Password updated successfully! Please login with your new password.')
+      navigate('/login')
     } else {
-      alert("Password reset successful. Please log in.");
-      navigate("/login");
+      setServerError(result.error || 'Failed to update password. Please try again.')
     }
+  }
 
-    setIsLoading(false);
-  };
-
- 
   return (
-    <AuthLayout>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-[#473C33] text-center mb-2">
-          Reset Password
-        </h1>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        {/* Logo */}
+        <div className={styles.logoSection}>
+          <img src={logoImage} alt="VerseLore" className={styles.logo} />
+          <h1 className={styles.title}>Reset Password</h1>
+          <p className={styles.subtitle}>Enter your new password</p>
+        </div>
 
-        <p className="text-gray-600 text-center mb-6">
-          Enter your new password
-        </p>
-
-        {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleReset} className="space-y-4">
-          {/* New password */}
-          <div>
-            <label className="text-sm font-semibold text-[#473C33] mb-2 block">
-              New Password
-            </label>
-
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg pr-12 focus:border-[#FEC868] focus:outline-none"
-              />
-
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
-              >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className={styles.form}>
+          {serverError && (
+            <div className={styles.errorAlert} role="alert">
+              {serverError}
             </div>
-          </div>
+          )}
 
-          {/* Confirm password */}
-          <div>
-            <label className="text-sm font-semibold text-[#473C33] mb-2 block">
-              Confirm Password
-            </label>
+          <Input
+            label="New Password"
+            type="password"
+            name="password"
+            placeholder="Enter new password"
+            value={formData.password}
+            onChange={handleChange}
+            error={errors.password}
+            helperText="Must be at least 6 characters"
+            fullWidth
+            required
+          />
 
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#FEC868] focus:outline-none"
-            />
-          </div>
+          <Input
+            label="Confirm Password"
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm new password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            error={errors.confirmPassword}
+            fullWidth
+            required
+          />
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full px-4 py-3 bg-[#537B2F] text-white font-semibold rounded-lg hover:opacity-90 disabled:opacity-50"
+          <Button 
+            type="submit" 
+            variant="primary" 
+            fullWidth 
+            loading={loading}
+            disabled={loading || !!serverError}
           >
-            {isLoading ? "Resetting..." : "Reset Password"}
-          </button>
+            {loading ? 'Updating...' : 'Reset Password'}
+          </Button>
         </form>
       </div>
-    </AuthLayout>
-  );
+    </div>
+  )
 }
-
-export default ResetPassword;

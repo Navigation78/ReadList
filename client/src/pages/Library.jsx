@@ -1,73 +1,160 @@
-import { useState } from 'react'
-import { useBooks } from '../hooks/useBooks'
-import BookCard from '../components/books/BookCard'
-import './Library.css'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { bookService } from '../services/bookService'
+import Button from '../components/common/Button'
+import Card from '../components/common/Card'
+import Loading from '../components/common/Loading'
+import styles from './Library.module.css'
 
 export default function Library() {
-  const [activeTab, setActiveTab] = useState('currently_reading')
+  const { user } = useAuth()
+  const navigate = useNavigate()
   
-  const { books: wantToRead, loading: loadingWant } = useBooks('want_to_read')
-  const { books: currentlyReading, loading: loadingCurrent } = useBooks('currently_reading')
-  const { books: finished, loading: loadingFinished } = useBooks('finished')
+  const [activeTab, setActiveTab] = useState('currently_reading')
+  const [books, setBooks] = useState({
+    want_to_read: [],
+    currently_reading: [],
+    finished: []
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!user) return
+
+    async function loadBooks() {
+      try {
+        setLoading(true)
+        const allBooks = await bookService.getBooks(user.id)
+        
+        // Group books by status
+        const grouped = {
+          want_to_read: allBooks.filter(b => b.status === 'want_to_read'),
+          currently_reading: allBooks.filter(b => b.status === 'currently_reading'),
+          finished: allBooks.filter(b => b.status === 'finished')
+        }
+        
+        setBooks(grouped)
+      } catch (error) {
+        console.error('Error loading books:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadBooks()
+  }, [user])
 
   const tabs = [
-    { id: 'want_to_read', label: 'Want to Read', count: wantToRead.length },
-    { id: 'currently_reading', label: 'Currently Reading', count: currentlyReading.length },
-    { id: 'finished', label: 'Finished', count: finished.length }
+    { id: 'currently_reading', label: 'Currently Reading', count: books.currently_reading.length },
+    { id: 'want_to_read', label: 'Want to Read', count: books.want_to_read.length },
+    { id: 'finished', label: 'Finished', count: books.finished.length }
   ]
 
-  const getCurrentBooks = () => {
-    switch(activeTab) {
-      case 'want_to_read':
-        return { books: wantToRead, loading: loadingWant }
-      case 'currently_reading':
-        return { books: currentlyReading, loading: loadingCurrent }
-      case 'finished':
-        return { books: finished, loading: loadingFinished }
-      default:
-        return { books: [], loading: false }
-    }
+  const currentBooks = books[activeTab]
+
+  if (loading) {
+    return <Loading text="Loading your library..." />
   }
 
-  const { books, loading } = getCurrentBooks()
-
   return (
-    <div className="library-container">
-      <div className="library-header">
-        <h1 className="library-title">My Library</h1>
-        <p className="library-subtitle">
-          {wantToRead.length + currentlyReading.length + finished.length} books total
-        </p>
+    <div className={styles.container}>
+      {/* Header */}
+      <div className={styles.header}>
+        <div>
+          <h1 className={styles.title}>My Library</h1>
+          <p className={styles.subtitle}>
+            {Object.values(books).flat().length} books total
+          </p>
+        </div>
+        <Button 
+          variant="primary" 
+          onClick={() => navigate('/search')}
+          icon="+"
+        >
+          Add Book
+        </Button>
       </div>
 
       {/* Tabs */}
-      <div className="tabs">
+      <div className={styles.tabs}>
         {tabs.map(tab => (
           <button
             key={tab.id}
-            className={`tab ${activeTab === tab.id ? 'tab-active' : ''}`}
+            className={`${styles.tab} ${activeTab === tab.id ? styles.tabActive : ''}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
-            <span className="tab-count">{tab.count}</span>
+            <span className={styles.tabCount}>{tab.count}</span>
           </button>
         ))}
       </div>
 
       {/* Books Grid */}
-      <div className="books-section">
-        {loading ? (
-          <div className="loading">Loading books...</div>
-        ) : books.length === 0 ? (
-          <div className="empty-state">
-            <h3>No books here yet</h3>
-            <p>Start adding books to your library!</p>
-            <a href="/search" className="btn btn-primary">Search Books</a>
-          </div>
+      <div className={styles.content}>
+        {currentBooks.length === 0 ? (
+          <Card variant="flat">
+            <div className={styles.emptyState}>
+              <span className={styles.emptyIcon}>📚</span>
+              <h3 className={styles.emptyTitle}>No books here yet</h3>
+              <p className={styles.emptyText}>
+                {activeTab === 'currently_reading' && "Start reading a book to see it here"}
+                {activeTab === 'want_to_read' && "Add books you want to read"}
+                {activeTab === 'finished' && "Finish a book to see it here"}
+              </p>
+              <Button variant="primary" onClick={() => navigate('/search')}>
+                Find Books
+              </Button>
+            </div>
+          </Card>
         ) : (
-          <div className="books-grid">
-            {books.map(book => (
-              <BookCard key={book.id} book={book} />
+          <div className={styles.booksGrid}>
+            {currentBooks.map(book => (
+              <Card 
+                key={book.id} 
+                variant="default" 
+                hoverable
+                onClick={() => navigate(`/book/${book.id}`)}
+              >
+                <div className={styles.bookCard}>
+                  <div className={styles.bookCover}>
+                    {book.cover_url ? (
+                      <img src={book.cover_url} alt={book.title} />
+                    ) : (
+                      <div className={styles.placeholderCover}>
+                        <span>📚</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className={styles.bookInfo}>
+                    <h3 className={styles.bookTitle}>{book.title}</h3>
+                    <p className={styles.bookAuthor}>{book.author}</p>
+                    
+                    {activeTab === 'currently_reading' && book.page_count && (
+                      <div className={styles.progress}>
+                        <div className={styles.progressBar}>
+                          <div 
+                            className={styles.progressFill}
+                            style={{ 
+                              width: `${(book.current_page / book.page_count) * 100}%` 
+                            }}
+                          />
+                        </div>
+                        <span className={styles.progressText}>
+                          {Math.round((book.current_page / book.page_count) * 100)}% complete
+                        </span>
+                      </div>
+                    )}
+                    
+                    {activeTab === 'finished' && book.finished_at && (
+                      <span className={styles.finishedDate}>
+                        Finished {new Date(book.finished_at).toLocaleDateString()}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </Card>
             ))}
           </div>
         )}

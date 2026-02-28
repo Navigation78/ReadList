@@ -1,0 +1,121 @@
+/* Input Wrapper */
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* Label */
+.label {
+  font-size: var(--font-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  display: block;
+}
+
+.required {
+  color: var(--error);
+  margin-left: 2px;
+}
+
+/* Input Container - NEW: Wrapper for input + toggle button */
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+/* Input */
+.input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  font-family: inherit;
+  color: var(--text-primary);
+  background-color: var(--surface);
+  transition: all var(--transition-normal);
+}
+
+/* Password input - extra padding for toggle button */
+.passwordInput {
+  padding-right: 45px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(200, 125, 135, 0.1);
+}
+
+.input:disabled {
+  background-color: var(--surface-alt);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Error State */
+.input.error {
+  border-color: var(--error);
+}
+
+.input.error:focus {
+  box-shadow: 0 0 0 3px rgba(200, 125, 135, 0.2);
+}
+
+.errorText {
+  font-size: var(--font-sm);
+  color: var(--error);
+}
+
+.helperText {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+}
+
+/* Toggle Password Button - NEW */
+.toggleButton {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: var(--spacing-xs);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: color var(--transition-normal);
+  border-radius: var(--radius-sm);
+}
+
+.toggleButton:hover {
+  color: var(--accent-color);
+  background-color: rgba(200, 125, 135, 0.05);
+}
+
+.toggleButton:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.toggleButton:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Icon - NEW */
+.icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+}
