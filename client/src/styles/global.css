@@ -1,6 +1,6 @@
-/* ========================================
+/* 
    GLOBAL RESET & BASE STYLES
-   ======================================== */
+    */
 
 * {
   margin: 0;
@@ -28,9 +28,10 @@ body {
   color: var(--text-primary);
   background-color: var(--background);
   min-height: 100vh;
+}
+body.with-navbar {
   padding-top: var(--navbar-height);
 }
-
 /* ========================================
    TYPOGRAPHY
    ======================================== */
