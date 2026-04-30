@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
-import ProtectedRoute from './components/auth/ProtectedRoute'
-import Navbar from './components/common/Navbar'
+import ProtectedLayout from './components/auth/ProtectedLayout'
 
 // Auth pages
 import Login from './pages/auth/Login'
@@ -21,7 +20,6 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <div className="min-h-screen bg-gray-50">
-          <Navbar />
           <Routes>
             {/* Public routes */}
             <Route path="/login" element={<Login />} />
@@ -33,41 +31,41 @@ function App() {
             <Route
               path="/"
               element={
-                <ProtectedRoute>
+                <ProtectedLayout>
                   <Home />
-                </ProtectedRoute>
+                </ProtectedLayout>
               }
             />
             <Route
               path="/library"
               element={
-                <ProtectedRoute>
+                <ProtectedLayout>
                   <Library />
-                </ProtectedRoute>
+                </ProtectedLayout>
               }
             />
             <Route
               path="/search"
               element={
-                <ProtectedRoute>
+                <ProtectedLayout>
                   <SearchBooks />
-                </ProtectedRoute>
+                </ProtectedLayout>
               }
             />
             <Route
               path="/stats"
               element={
-                <ProtectedRoute>
+                <ProtectedLayout>
                   <Stats />
-                </ProtectedRoute>
+                </ProtectedLayout>
               }
             />
             <Route
               path="/profile"
               element={
-                <ProtectedRoute>
+                <ProtectedLayout>
                   <Profile />
-                </ProtectedRoute>
+                </ProtectedLayout>
               }
             />
 
