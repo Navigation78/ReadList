@@ -1,14 +1,19 @@
-/* Navbar */
+/* Navbar - Fixed Top */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: var(--surface);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+  bottom: unset;
+  transform: unset;
+  background-color: #1a1a2e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
   z-index: var(--z-sticky);
   height: 70px;
+  width: 100%;
+  border-radius: 0;
+  padding: 0;
 }
 
 .container {
@@ -28,7 +33,7 @@
   align-items: center;
   gap: var(--spacing-sm);
   text-decoration: none;
-  color: var(--primary-color);
+  color: #60a5fa;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-xl);
   transition: opacity var(--transition-normal);
@@ -38,35 +43,6 @@
   opacity: 0.8;
 }
 
-.logoIcon {
-  font-size: 28px;
-}
-
-.logoText {
-  font-family: 'Georgia', serif;
-}
-
-/* Links */
-.links {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  flex: 1;
-  justify-content: center;
-}
-
-.link {
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: var(--font-md);
-  font-weight: var(--font-weight-medium);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-normal);
-  position: relative;
-}
-
-/* Logo Image */
 .logoImage {
   height: 40px;
   width: auto;
@@ -78,47 +54,61 @@
   transform: scale(1.05);
 }
 
-/* Update existing .logoIcon - DELETE THIS SINCE WE'RE USING IMAGE NOW */
-/* Remove or comment out .logoIcon styles */
-
-/* Responsive adjustments for logo */
-@media (max-width: 768px) {
-  .logoImage {
-    height: 36px;
-  }
-  
-  .logoText {
-    display: inline; /* Show text on mobile with image */
-    font-size: var(--font-lg);
-  }
+.logoText {
+  font-family: 'Georgia', serif;
+  color: #f1f5f9;
 }
 
-/* If you want logo-only on mobile (no text) */
-@media (max-width: 480px) {
-  .logoText {
-    display: none; /* Hide text on very small screens, show only logo */
-  }
+/* Links */
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+  justify-content: center;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;       /* Icon on top, label below */
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: #6b7280;               /* Muted grey for inactive */
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  padding: 6px 20px;
+  border-radius: 12px;
+  transition: all var(--transition-normal);
+  position: relative;
+  min-width: 72px;
 }
 
 .link:hover {
-  color: var(--accent-color);
-  background-color: var(--surface-alt);
+  color: #93c5fd;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
+/* Active state */
 .link.active {
-  color: var(--accent-color);
+  color: #60a5fa;
+  background-color: transparent;
+}
+
+.link.active::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background-color: #60a5fa;
+  border-radius: 0 0 2px 2px;
 }
 
 .link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 2px;
-  background-color: var(--accent-color);
-  border-radius: 2px;
+  display: none;
 }
 
 /* Actions */
@@ -130,8 +120,7 @@
 
 .userEmail {
   font-size: var(--font-sm);
-  color: var(--text-secondary);
-  display: none;
+  color: #6b7280;
 }
 
 /* Responsive */
@@ -146,12 +135,24 @@
     padding: 0 var(--spacing-md);
   }
 
-  .links {
-    display: none;
+  .link {
+    min-width: unset;
+    padding: 6px 12px;
+    font-size: 10px;
   }
 
   .logoText {
     display: none;
+  }
+
+  .userEmail {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .links {
+    display: none;        /* Hide nav links on very small screens */
   }
 
   .actions {

@@ -2,7 +2,7 @@
 :root {
    
   /* 60% - Dominant (Background) */
-  --background: #FBEAD6;           /* Champagne - Main background */
+  --background: #ece5ea;           /* Champagne - Main background */
   --surface: #FFFFFF;              /* White - Cards, elevated surfaces */
   --surface-alt: #F0C4CB;          /* Blush - Alternative surface (modals, sidebars) */
   

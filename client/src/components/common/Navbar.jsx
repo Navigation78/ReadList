@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext'
 import Button from './Button'
 import logoImage from '../../assets/VerseLore Logo.png'
 import styles from './Navbar.module.css'
+import { Home, BookMarked, Search, BarChart2, User } from 'lucide-react'
 
 export default function Navbar() {
   const { user, logout } = useAuth()
@@ -40,30 +41,35 @@ export default function Navbar() {
               to="/" 
               className={`${styles.link} ${isActive('/') ? styles.active : ''}`}
             >
+              <Home size={18} />
               Home
             </Link>
             <Link 
               to="/library" 
               className={`${styles.link} ${isActive('/library') ? styles.active : ''}`}
             >
+              <BookMarked size={18} />
               Library
             </Link>
             <Link 
               to="/search" 
               className={`${styles.link} ${isActive('/search') ? styles.active : ''}`}
             >
+              <Search size={18} />
               Search
             </Link>
             <Link 
               to="/stats" 
               className={`${styles.link} ${isActive('/stats') ? styles.active : ''}`}
             >
+              <BarChart2 size={18} />
               Stats
             </Link>
             <Link 
               to="/profile" 
               className={`${styles.link} ${isActive('/profile') ? styles.active : ''}`}
             >
+              <User size={18} />
               Profile
             </Link>
           </div>
