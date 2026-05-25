@@ -1,8 +1,15 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import Button from './Button'
-import logoImage from '../../assets/VerseLore Logo.png'
 import styles from './Navbar.module.css'
+import { Home, BookMarked, Search, BarChart2, User, LogOut, Bell } from 'lucide-react'
+
+const navItems = [
+  { to: '/',        icon: Home,       label: 'Home'    },
+  { to: '/library', icon: BookMarked, label: 'Library' },
+  { to: '/search',  icon: Search,     label: 'Search'  },
+  { to: '/stats',   icon: BarChart2,  label: 'Stats'   },
+  { to: '/profile', icon: User,       label: 'Profile' },
+]
 
 export default function Navbar() {
   const { user, logout } = useAuth()
@@ -11,92 +18,48 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     const result = await logout()
-    if (result.success) {
-      navigate('/login')
-    }
+    if (result.success) navigate('/login')
   }
 
-  const isActive = (path) => {
-    return location.pathname === path
-  }
+  const isActive = (path) => location.pathname === path
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.container}>
-        {/* Logo */}
-        <Link to="/" className={styles.logo}>
-          <img 
-            src={logoImage} 
-            alt="VerseLore Logo" 
-            className={styles.logoImage}
-          />
-          <span className={styles.logoText}>VerseLore</span>
-        </Link>
+    <nav className={styles.sidebar}>
+      {/* Logo mark */}
+      <div className={styles.logoMark}>
+        <BookMarked size={22} className={styles.logoIcon} />
+      </div>
 
-        {/* Navigation Links */}
-        {user && (
-          <div className={styles.links}>
-            <Link 
-              to="/" 
-              className={`${styles.link} ${isActive('/') ? styles.active : ''}`}
+      {/* Main nav icons */}
+      {user && (
+        <div className={styles.navGroup}>
+          {navItems.map(({ to, icon: Icon, label }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`${styles.navItem} ${isActive(to) ? styles.active : ''}`}
+              title={label}
             >
-              Home
+              <Icon size={20} />
             </Link>
-            <Link 
-              to="/library" 
-              className={`${styles.link} ${isActive('/library') ? styles.active : ''}`}
-            >
-              Library
-            </Link>
-            <Link 
-              to="/search" 
-              className={`${styles.link} ${isActive('/search') ? styles.active : ''}`}
-            >
-              Search
-            </Link>
-            <Link 
-              to="/stats" 
-              className={`${styles.link} ${isActive('/stats') ? styles.active : ''}`}
-            >
-              Stats
-            </Link>
-            <Link 
-              to="/profile" 
-              className={`${styles.link} ${isActive('/profile') ? styles.active : ''}`}
-            >
-              Profile
-            </Link>
-          </div>
-        )}
-
-        {/* Auth Buttons */}
-        <div className={styles.actions}>
-          {user ? (
-            <>
-              <span className={styles.userEmail}>{user.email}</span>
-              <Button variant="outline" size="small" onClick={handleLogout}>
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button 
-                variant="ghost" 
-                size="small" 
-                onClick={() => navigate('/login')}
-              >
-                Login
-              </Button>
-              <Button 
-                variant="primary" 
-                size="small" 
-                onClick={() => navigate('/signup')}
-              >
-                Sign Up
-              </Button>
-            </>
-          )}
+          ))}
         </div>
+      )}
+
+      {/* Bottom actions */}
+      <div className={styles.bottomGroup}>
+        <button className={styles.navItem} title="Notifications">
+          <Bell size={20} />
+        </button>
+        {user && (
+          <button
+            className={styles.navItem}
+            onClick={handleLogout}
+            title="Log out"
+          >
+            <LogOut size={20} />
+          </button>
+        )}
       </div>
     </nav>
   )

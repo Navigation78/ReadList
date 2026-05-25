@@ -22,8 +22,6 @@
 
 main {
   flex: 1;
-  padding-top: 80px; /* Height of navbar + spacing */
-  padding-bottom: var(--spacing-2xl);
 }
 
 /* ========================================
