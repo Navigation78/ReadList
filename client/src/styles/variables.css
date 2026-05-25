@@ -1,48 +1,60 @@
-/* VerseLore Color System - Blush Antique Rose Palette */
+/* VerseLore Color System - Modern Blue Minimal */
 :root {
-   
-  /* 60% - Dominant (Background) */
-  --background: #ece5ea;           /* Champagne - Main background */
-  --surface: #FFFFFF;              /* White - Cards, elevated surfaces */
-  --surface-alt: #F0C4CB;          /* Blush - Alternative surface (modals, sidebars) */
-  
-  /* 30% - Secondary (Text & Structure) */
-  --primary-color: #131410;        /* Dried Thyme - Primary text, navbar, headers */
-  --primary-dark: #30381f;         /* Darker Thyme - Hover states, dark text */
-  --primary-light: #8a9370;        /* Lighter Thyme - Subtle elements */
-  
-  /* 10% - Accent (Actions & Highlights) */
-  --accent-color: #C87D87;         /* Antique Rose - Buttons, links, CTAs */
-  --accent-hover: #b36b76;         /* Darker Rose - Button hover */
-  --accent-light: #d9949d;         /* Lighter Rose - Subtle accents */
-  
-  /* Supporting Colors */
-  --secondary-accent: #E5BCA9;     /* Bisque - Secondary buttons, badges */
-  --secondary-hover: #d9ab95;      /* Darker Bisque - Secondary hover */
-  
+
+  /* ========================================
+     CORE PALETTE
+     ======================================== */
+  --background: #dce6f5;           /* Soft blue-grey - main app background */
+  --surface: #ffffff;              /* White - cards, panels */
+  --surface-alt: #eef2fa;          /* Light blue-grey - subtle backgrounds */
+  --surface-hover: #f7f9fd;        /* Near-white - hover states */
+
+  /* Sidebar */
+  --sidebar-bg: #131727;           /* Deep navy - sidebar background */
+  --sidebar-active: #1e2d4f;       /* Lighter navy - active item */
+  --sidebar-icon: #8892aa;         /* Muted blue-grey - inactive icons */
+  --sidebar-icon-active: #ffffff;  /* White - active icons */
+  --sidebar-width: 72px;
+
+  /* Primary brand */
+  --primary-color: #1a2a5e;        /* Deep navy - headings, strong text */
+  --primary-dark: #0f1a3e;         /* Darker navy - hover */
+  --primary-light: #4a6fa5;        /* Medium navy - secondary actions */
+
+  /* Accent */
+  --accent-color: #3b5bdb;         /* Bright blue - buttons, links, CTAs */
+  --accent-hover: #2f4ac4;         /* Darker blue - hover */
+  --accent-light: #748ffc;         /* Lighter blue - subtle accents */
+  --accent-bg: #e8edfb;            /* Very light blue - accent backgrounds */
+
+  /* Supporting */
+  --secondary-accent: #e0e7ff;     /* Indigo tint - secondary elements */
+  --secondary-hover: #c7d2fe;      /* Darker indigo tint */
+
   /* ========================================
      TEXT COLORS
      ======================================== */
-  --text-primary: #131410;         /* Very dark thyme - Main text */
-  --text-secondary: #30381f;       /* Dried Thyme - Secondary text */
-  --text-muted: #8a9370;           /* Light Thyme - Muted text, placeholders */
-  --text-on-accent: #FFFFFF;       /* White - Text on colored backgrounds */
-  
+  --text-primary: #1a2a5e;         /* Deep navy - main text */
+  --text-secondary: #4a5980;       /* Medium blue-grey - secondary */
+  --text-muted: #8892aa;           /* Light blue-grey - muted/placeholders */
+  --text-on-accent: #ffffff;       /* White - on colored backgrounds */
+  --text-on-dark: #ffffff;         /* White - on dark sidebar */
+
   /* ========================================
      SEMANTIC COLORS
      ======================================== */
-  --success: #6B7556;              /* Dried Thyme - Success states */
-  --warning: #E5BCA9;              /* Bisque - Warning states */
-  --error: #C87D87;                /* Antique Rose - Error states */
-  --info: #F0C4CB;                 /* Blush - Info states */
-  
+  --success: #2f9e44;
+  --warning: #e67700;
+  --error: #c92a2a;
+  --info: #1971c2;
+
   /* ========================================
      BORDERS & DIVIDERS
      ======================================== */
-  --border: #E5D4C1;               /* Warm beige - Subtle borders */
-  --border-dark: #C87D87;          /* Antique Rose - Emphasized borders */
-  --divider: #F0E6D8;              /* Very light - Section dividers */
-  
+  --border: rgba(0, 0, 0, 0.07);   /* Very subtle border */
+  --border-dark: #c5cfe8;          /* More visible border */
+  --divider: rgba(0, 0, 0, 0.05);  /* Section dividers */
+
   /* ========================================
      SPACING SYSTEM
      ======================================== */
@@ -53,56 +65,55 @@
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
-  
+
   /* ========================================
      BORDER RADIUS
      ======================================== */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
-  
+
   /* ========================================
      SHADOWS
      ======================================== */
-  --shadow-sm: 0 1px 2px rgba(107, 117, 86, 0.05);
-  --shadow-md: 0 4px 6px rgba(107, 117, 86, 0.08);
-  --shadow-lg: 0 10px 15px rgba(107, 117, 86, 0.1);
-  --shadow-xl: 0 20px 25px rgba(107, 117, 86, 0.12);
-  
+  --shadow-sm: 0 1px 3px rgba(26, 42, 94, 0.06);
+  --shadow-md: 0 4px 12px rgba(26, 42, 94, 0.08);
+  --shadow-lg: 0 8px 24px rgba(26, 42, 94, 0.10);
+  --shadow-xl: 0 16px 40px rgba(26, 42, 94, 0.12);
+
   /* ========================================
      TYPOGRAPHY
      ======================================== */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
-                 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 
-                 'Helvetica Neue', sans-serif;
-  
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter',
+                 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', sans-serif;
+
   --font-xs: 12px;
-  --font-sm: 14px;
-  --font-md: 16px;
-  --font-lg: 18px;
-  --font-xl: 24px;
-  --font-2xl: 32px;
-  --font-3xl: 40px;
+  --font-sm: 13px;
+  --font-md: 15px;
+  --font-lg: 17px;
+  --font-xl: 22px;
+  --font-2xl: 28px;
+  --font-3xl: 36px;
   --font-4xl: 48px;
-  
+
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  
+
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
-  
+
   /* ========================================
      TRANSITIONS
      ======================================== */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.2s ease;
-  --transition-slow: 0.3s ease;
-  
+  --transition-fast: 0.12s ease;
+  --transition-normal: 0.18s ease;
+  --transition-slow: 0.28s ease;
+
   /* ========================================
      Z-INDEX LAYERS
      ======================================== */
@@ -112,6 +123,6 @@
   --z-modal: 300;
   --z-popover: 400;
   --z-tooltip: 500;
-   /* Navbar height used to offset fixed header from page content */
-   --navbar-height: 70px;
+
+  --navbar-height: 70px;
 }

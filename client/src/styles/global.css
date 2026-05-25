@@ -29,9 +29,6 @@ body {
   background-color: var(--background);
   min-height: 100vh;
 }
-body.with-navbar {
-  padding-top: var(--navbar-height);
-}
 /* ========================================
    TYPOGRAPHY
    ======================================== */
@@ -258,7 +255,7 @@ small {
 .select:focus {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(200, 125, 135, 0.1);
+  box-shadow: 0 0 0 3px rgba(59, 91, 219, 0.12);
 }
 
 .input:disabled,

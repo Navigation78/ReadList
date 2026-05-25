@@ -1,217 +1,255 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { bookService } from '../services/bookService'
-import Button from '../components/common/Button'
-import Card from '../components/common/Card'
 import Loading from '../components/common/Loading'
 import styles from './Home.module.css'
+import { BookOpen, CheckCircle, Library, ChevronRight, ChevronDown, Plus } from 'lucide-react'
+
+const STATUS_TABS = [
+  { key: 'currently_reading', label: 'In Progress' },
+  { key: 'want_to_read',      label: 'Want to Read' },
+  { key: null,                label: 'All' },
+]
 
 export default function Home() {
   const { user } = useAuth()
   const navigate = useNavigate()
-  
-  const [currentlyReading, setCurrentlyReading] = useState([])
-  const [stats, setStats] = useState({
-    totalBooks: 0,
-    booksRead: 0,
-    currentlyReading: 0
-  })
+
+  const [allBooks, setAllBooks] = useState([])
+  const [activeTab, setActiveTab] = useState('currently_reading')
+  const [stats, setStats] = useState({ total: 0, finished: 0, reading: 0 })
   const [loading, setLoading] = useState(true)
+  const [expandedSections, setExpandedSections] = useState({
+    inProgress: true,
+    wantToRead: true,
+    finished: false,
+  })
 
   useEffect(() => {
     if (!user) return
-
-    async function loadData() {
+    async function load() {
       try {
         setLoading(true)
-        
-        // Get currently reading books
-        const reading = await bookService.getBooksByStatus(user.id, 'currently_reading')
-        setCurrentlyReading(reading)
-        
-        // Get all books for stats
-        const allBooks = await bookService.getBooks(user.id)
-        const finished = allBooks.filter(b => b.status === 'finished')
-        
+        const books = await bookService.getBooks(user.id)
+        setAllBooks(books)
         setStats({
-          totalBooks: allBooks.length,
-          booksRead: finished.length,
-          currentlyReading: reading.length
+          total: books.length,
+          finished: books.filter(b => b.status === 'finished').length,
+          reading: books.filter(b => b.status === 'currently_reading').length,
         })
-      } catch (error) {
-        console.error('Error loading home data:', error)
+      } catch (e) {
+        console.error(e)
       } finally {
         setLoading(false)
       }
     }
-
-    loadData()
+    load()
   }, [user])
 
-  if (loading) {
-    return <Loading text="Loading your dashboard..." />
-  }
+  const toggle = (key) =>
+    setExpandedSections(s => ({ ...s, [key]: !s[key] }))
+
+  const filtered =
+    activeTab === null
+      ? allBooks
+      : allBooks.filter(b => b.status === activeTab)
+
+  const inProgress  = allBooks.filter(b => b.status === 'currently_reading')
+  const wantToRead  = allBooks.filter(b => b.status === 'want_to_read')
+  const finished    = allBooks.filter(b => b.status === 'finished')
+
+  const today = new Date()
+  const monthName = today.toLocaleString('default', { month: 'long' })
+  const year = today.getFullYear()
+  const dayOfWeek = today.toLocaleString('default', { weekday: 'long' })
+  const dateStr = today.getDate()
+
+  if (loading) return <Loading text="Loading your dashboard…" />
 
   return (
-    <div className={styles.container}>
-      {/* Welcome Section */}
-      <div className={styles.header}>
-        <div>
-          <h1 className={styles.title}>Welcome back! 📚</h1>
-          <p className={styles.subtitle}>
-            {currentlyReading.length > 0 
-              ? `You're currently reading ${currentlyReading.length} ${currentlyReading.length === 1 ? 'book' : 'books'}`
-              : "Start your reading journey today"}
-          </p>
-        </div>
-        <Button 
-          variant="primary" 
-          onClick={() => navigate('/search')}
-          icon="+"
-        >
-          Add Book
-        </Button>
-      </div>
+    <div className={styles.page}>
+      {/* ── Left panel (Planner) ── */}
+      <section className={styles.plannerPanel}>
+        <h2 className={styles.panelTitle}>My Reading</h2>
 
-      {/* Stats Cards */}
-      <div className={styles.statsGrid}>
-        <Card variant="default" hoverable>
-          <div className={styles.statCard}>
-            <span className={styles.statIcon}>📖</span>
-            <div className={styles.statContent}>
-              <span className={styles.statValue}>{stats.currentlyReading}</span>
-              <span className={styles.statLabel}>Currently Reading</span>
-            </div>
-          </div>
-        </Card>
-
-        <Card variant="default" hoverable>
-          <div className={styles.statCard}>
-            <span className={styles.statIcon}>✓</span>
-            <div className={styles.statContent}>
-              <span className={styles.statValue}>{stats.booksRead}</span>
-              <span className={styles.statLabel}>Books Finished</span>
-            </div>
-          </div>
-        </Card>
-
-        <Card variant="default" hoverable>
-          <div className={styles.statCard}>
-            <span className={styles.statIcon}>📚</span>
-            <div className={styles.statContent}>
-              <span className={styles.statValue}>{stats.totalBooks}</span>
-              <span className={styles.statLabel}>Total Books</span>
-            </div>
-          </div>
-        </Card>
-      </div>
-
-      {/* Currently Reading Section */}
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Currently Reading</h2>
-          <Link to="/library" className={styles.viewAll}>
-            View All →
-          </Link>
+        {/* Filter tabs */}
+        <div className={styles.tabs}>
+          {STATUS_TABS.map(tab => (
+            <button
+              key={String(tab.key)}
+              className={`${styles.tab} ${activeTab === tab.key ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab(tab.key)}
+            >
+              {tab.key === 'currently_reading' && <BookOpen size={15} />}
+              {tab.key === 'want_to_read'      && <Library  size={15} />}
+              {tab.key === null                && <CheckCircle size={15} />}
+              {tab.label}
+              {tab.key === 'currently_reading' && inProgress.length > 0 && (
+                <span className={styles.badge}>{inProgress.length}</span>
+              )}
+              {tab.key === 'want_to_read' && wantToRead.length > 0 && (
+                <span className={styles.badge}>{wantToRead.length}</span>
+              )}
+            </button>
+          ))}
         </div>
 
-        {currentlyReading.length === 0 ? (
-          <Card variant="flat">
-            <div className={styles.emptyState}>
-              <span className={styles.emptyIcon}>📖</span>
-              <h3 className={styles.emptyTitle}>No books in progress</h3>
-              <p className={styles.emptyText}>
-                Start reading a book from your library or add a new one
-              </p>
-              <div className={styles.emptyActions}>
-                <Button variant="primary" onClick={() => navigate('/search')}>
-                  Find a Book
-                </Button>
-                <Button variant="outline" onClick={() => navigate('/library')}>
-                  Go to Library
-                </Button>
-              </div>
-            </div>
-          </Card>
-        ) : (
-          <div className={styles.booksGrid}>
-            {currentlyReading.slice(0, 4).map(book => (
-              <Card 
-                key={book.id} 
-                variant="default" 
-                hoverable
-                onClick={() => navigate(`/book/${book.id}`)}
+        {/* Stats row */}
+        <div className={styles.statsRow}>
+          <div className={styles.statBox}>
+            <span className={styles.statNum}>{stats.reading}</span>
+            <span className={styles.statLbl}>Reading</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statBox}>
+            <span className={styles.statNum}>{stats.finished}</span>
+            <span className={styles.statLbl}>Finished</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statBox}>
+            <span className={styles.statNum}>{stats.total}</span>
+            <span className={styles.statLbl}>Total</span>
+          </div>
+        </div>
+
+        {/* Date card */}
+        <div className={styles.dateCard}>
+          <div className={styles.dateCardInner}>
+            <p className={styles.dateTime}>
+              {dayOfWeek}, {monthName} {dateStr}
+            </p>
+            <p className={styles.dateYear}>{year}</p>
+          </div>
+        </div>
+
+        {/* Book list for active tab */}
+        <div className={styles.bookList}>
+          {filtered.length === 0 ? (
+            <div className={styles.emptyTab}>
+              <p>No books here yet.</p>
+              <button
+                className={styles.addBtn}
+                onClick={() => navigate('/search')}
               >
-                <div className={styles.bookCard}>
-                  <div className={styles.bookCover}>
-                    {book.cover_url ? (
-                      <img src={book.cover_url} alt={book.title} />
-                    ) : (
-                      <div className={styles.placeholderCover}>
-                        <span>📚</span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className={styles.bookInfo}>
-                    <h3 className={styles.bookTitle}>{book.title}</h3>
-                    <p className={styles.bookAuthor}>{book.author}</p>
-                    
-                    {book.page_count && (
-                      <div className={styles.progress}>
-                        <div className={styles.progressBar}>
-                          <div 
-                            className={styles.progressFill}
-                            style={{ 
-                              width: `${(book.current_page / book.page_count) * 100}%` 
-                            }}
-                          />
-                        </div>
-                        <span className={styles.progressText}>
-                          {book.current_page} / {book.page_count} pages
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                <Plus size={14} /> Find a book
+              </button>
+            </div>
+          ) : (
+            filtered.slice(0, 5).map(book => (
+              <div
+                key={book.id}
+                className={styles.bookRow}
+                onClick={() => navigate('/library')}
+              >
+                <div className={styles.bookCoverThumb}>
+                  {book.cover_url
+                    ? <img src={book.cover_url} alt={book.title} />
+                    : <BookOpen size={16} />
+                  }
                 </div>
-              </Card>
-            ))}
-          </div>
-        )}
+                <div className={styles.bookMeta}>
+                  <span className={styles.bookRowTitle}>{book.title}</span>
+                  <span className={styles.bookRowAuthor}>{book.author}</span>
+                </div>
+                {book.page_count && book.current_page != null && (
+                  <div className={styles.miniProgress}>
+                    <div
+                      className={styles.miniBar}
+                      style={{ width: `${Math.min(100, (book.current_page / book.page_count) * 100)}%` }}
+                    />
+                  </div>
+                )}
+              </div>
+            ))
+          )}
+        </div>
       </section>
 
-      {/* Quick Actions */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Quick Actions</h2>
-        <div className={styles.actionsGrid}>
-          <Card variant="flat" hoverable onClick={() => navigate('/library')}>
-            <div className={styles.actionCard}>
-              <span className={styles.actionIcon}>📚</span>
-              <span className={styles.actionLabel}>My Library</span>
-            </div>
-          </Card>
+      {/* ── Right panel (Queue / Todo-style) ── */}
+      <section className={styles.queuePanel}>
+        <div className={styles.queueHeader}>
+          <h2 className={styles.panelTitle}>Reading Queue</h2>
+          <button
+            className={styles.addBookBtn}
+            onClick={() => navigate('/search')}
+          >
+            <Plus size={14} /> Add book
+          </button>
+        </div>
 
-          <Card variant="flat" hoverable onClick={() => navigate('/search')}>
-            <div className={styles.actionCard}>
-              <span className={styles.actionIcon}>🔍</span>
-              <span className={styles.actionLabel}>Search Books</span>
-            </div>
-          </Card>
+        <p className={styles.queueSub}>Track · Organise · Discover</p>
 
-          <Card variant="flat" hoverable onClick={() => navigate('/stats')}>
-            <div className={styles.actionCard}>
-              <span className={styles.actionIcon}>📊</span>
-              <span className={styles.actionLabel}>Statistics</span>
-            </div>
-          </Card>
+        {/* In Progress section */}
+        <div className={styles.queueSection}>
+          <button
+            className={styles.sectionToggle}
+            onClick={() => toggle('inProgress')}
+          >
+            {expandedSections.inProgress
+              ? <ChevronDown size={14} />
+              : <ChevronRight size={14} />
+            }
+            <span>In Progress</span>
+            <span className={styles.sectionCount}>{inProgress.length}</span>
+          </button>
 
-          <Card variant="flat" hoverable onClick={() => navigate('/profile')}>
-            <div className={styles.actionCard}>
-              <span className={styles.actionIcon}>⚙️</span>
-              <span className={styles.actionLabel}>Settings</span>
+          {expandedSections.inProgress && inProgress.map(book => (
+            <div key={book.id} className={styles.queueItem}>
+              <BookOpen size={14} className={styles.queueItemIcon} />
+              <span className={styles.queueItemTitle}>{book.title}</span>
+              {book.author && (
+                <span className={styles.queueItemAuthor}>{book.author}</span>
+              )}
             </div>
-          </Card>
+          ))}
+        </div>
+
+        {/* Want to Read section */}
+        <div className={styles.queueSection}>
+          <button
+            className={styles.sectionToggle}
+            onClick={() => toggle('wantToRead')}
+          >
+            {expandedSections.wantToRead
+              ? <ChevronDown size={14} />
+              : <ChevronRight size={14} />
+            }
+            <span>Want to Read</span>
+            <span className={styles.sectionCount}>{wantToRead.length}</span>
+          </button>
+
+          {expandedSections.wantToRead && wantToRead.map(book => (
+            <div key={book.id} className={styles.queueItem}>
+              <Library size={14} className={styles.queueItemIcon} />
+              <span className={styles.queueItemTitle}>{book.title}</span>
+              {book.author && (
+                <span className={styles.queueItemAuthor}>{book.author}</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Finished section */}
+        <div className={styles.queueSection}>
+          <button
+            className={styles.sectionToggle}
+            onClick={() => toggle('finished')}
+          >
+            {expandedSections.finished
+              ? <ChevronDown size={14} />
+              : <ChevronRight size={14} />
+            }
+            <span>Finished</span>
+            <span className={styles.sectionCount}>{finished.length}</span>
+          </button>
+
+          {expandedSections.finished && finished.map(book => (
+            <div key={book.id} className={`${styles.queueItem} ${styles.queueItemDone}`}>
+              <CheckCircle size={14} className={styles.queueItemIcon} />
+              <span className={styles.queueItemTitle}>{book.title}</span>
+            </div>
+          ))}
         </div>
       </section>
     </div>

@@ -54,7 +54,7 @@
 
 .tab:hover {
   color: var(--accent-color);
-  background: rgba(200, 125, 135, 0.05);
+  background: var(--accent-bg);
 }
 
 .tabActive {

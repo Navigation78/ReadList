@@ -19,7 +19,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <div className="min-h-screen bg-gray-50">
+        <div style={{ minHeight: '100vh', background: 'var(--background)' }}>
           <Routes>
             {/* Public routes */}
             <Route path="/login" element={<Login />} />

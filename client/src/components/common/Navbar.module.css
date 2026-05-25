@@ -1,162 +1,76 @@
-/* Navbar - Fixed Top */
-.navbar {
+/* Vertical sidebar navigation */
+.sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: unset;
-  transform: unset;
-  background-color: #1a1a2e;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0 20px;
   z-index: var(--z-sticky);
-  height: 70px;
-  width: 100%;
-  border-radius: 0;
-  padding: 0;
+  gap: 0;
 }
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-lg);
-}
-
-/* Logo */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  text-decoration: none;
-  color: #60a5fa;
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-xl);
-  transition: opacity var(--transition-normal);
-}
-
-.logo:hover {
-  opacity: 0.8;
-}
-
-.logoImage {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-  transition: transform var(--transition-normal);
-}
-
-.logo:hover .logoImage {
-  transform: scale(1.05);
-}
-
-.logoText {
-  font-family: 'Georgia', serif;
-  color: #f1f5f9;
-}
-
-/* Links */
-.links {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  flex: 1;
-  justify-content: center;
-}
-
-.link {
-  display: flex;
-  flex-direction: column;       /* Icon on top, label below */
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  color: #6b7280;               /* Muted grey for inactive */
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: var(--font-weight-medium);
-  padding: 6px 20px;
+/* Logo mark at the top */
+.logoMark {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-color);
   border-radius: 12px;
-  transition: all var(--transition-normal);
-  position: relative;
-  min-width: 72px;
-}
-
-.link:hover {
-  color: #93c5fd;
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Active state */
-.link.active {
-  color: #60a5fa;
-  background-color: transparent;
-}
-
-.link.active::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 20%;
-  right: 20%;
-  height: 2px;
-  background-color: #60a5fa;
-  border-radius: 0 0 2px 2px;
-}
-
-.link.active::after {
-  display: none;
-}
-
-/* Actions */
-.actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  justify-content: center;
+  margin-bottom: 28px;
+  flex-shrink: 0;
 }
 
-.userEmail {
-  font-size: var(--font-sm);
-  color: #6b7280;
+.logoIcon {
+  color: #ffffff;
 }
 
-/* Responsive */
-@media (min-width: 768px) {
-  .userEmail {
-    display: block;
-  }
+/* Nav group fills available space */
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 0 var(--spacing-md);
-  }
-
-  .link {
-    min-width: unset;
-    padding: 6px 12px;
-    font-size: 10px;
-  }
-
-  .logoText {
-    display: none;
-  }
-
-  .userEmail {
-    display: none;
-  }
+/* Bottom actions group */
+.bottomGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
-@media (max-width: 480px) {
-  .links {
-    display: none;        /* Hide nav links on very small screens */
-  }
+/* Individual nav item */
+.navItem {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: var(--sidebar-icon);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-normal), color var(--transition-normal);
+}
 
-  .actions {
-    flex: 1;
-    justify-content: flex-end;
-  }
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.navItem.active {
+  background: var(--sidebar-active);
+  color: var(--sidebar-icon-active);
 }

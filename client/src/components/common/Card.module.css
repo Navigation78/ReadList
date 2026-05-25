@@ -1,13 +1,14 @@
 /* Base Card */
 .card {
   background: var(--surface);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   transition: all var(--transition-normal);
 }
 
 /* Variants */
 .default {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
 }
 
 .flat {
@@ -16,12 +17,13 @@
 }
 
 .elevated {
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .alt {
   background: var(--surface-alt);
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
+  border: 1px solid var(--border);
 }
 
 /* Padding Options */
@@ -43,7 +45,7 @@
 
 /* Hoverable */
 .hoverable:hover {
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
