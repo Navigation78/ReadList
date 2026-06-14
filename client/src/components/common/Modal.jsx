@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import styles from './Modal.module.css'
+import { X } from 'lucide-react'
 
 export default function Modal({ 
   isOpen,
@@ -58,7 +59,7 @@ export default function Modal({
                 className={styles.closeButton}
                 aria-label="Close modal"
               >
-                ✕
+                <X size={16} />
               </button>
             )}
           </div>

@@ -1,4 +1,5 @@
 import styles from './GoalProgress.module.css'
+import { Trophy } from 'lucide-react'
 
 export default function GoalProgress({ current, goal }) {
   const percentage = goal > 0 ? Math.round((current / goal) * 100) : 0
@@ -18,8 +19,8 @@ export default function GoalProgress({ current, goal }) {
       </div>
       
       <p className={styles.text}>
-        {percentage >= 100 
-          ? '🎉 Goal achieved!' 
+        {percentage >= 100
+          ? <span className={styles.achieved}><Trophy size={14} /> Goal achieved!</span>
           : `${goal - current} books to go`}
       </p>
     </div>

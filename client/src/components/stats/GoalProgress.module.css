@@ -42,3 +42,11 @@
   text-align: center;
   margin: 0;
 }
+
+.achieved {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #1a6c27;
+  font-weight: var(--font-weight-semibold);
+}
