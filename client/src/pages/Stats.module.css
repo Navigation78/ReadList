@@ -1,6 +1,5 @@
-/* Container */
 .container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: var(--spacing-xl) var(--spacing-lg);
 }
@@ -27,7 +26,7 @@
 .metricsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
   margin-bottom: var(--spacing-2xl);
 }
 
@@ -35,60 +34,101 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--border);
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
 }
 
-.metricIcon {
-  font-size: 40px;
+.metricCard:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
+
+.metricIconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Color variants */
+.metric_blue   .metricIconWrap { background: #e8edfb; color: #3b5bdb; }
+.metric_green  .metricIconWrap { background: #d3f9d8; color: #2f9e44; }
+.metric_indigo .metricIconWrap { background: #edf2ff; color: #4263eb; }
+.metric_purple .metricIconWrap { background: #f3f0ff; color: #7048e8; }
 
 .metricContent {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: 2px;
 }
 
 .metricValue {
   font-size: var(--font-2xl);
   font-weight: var(--font-weight-bold);
-  color: var(--accent-color);
+  color: var(--text-primary);
   line-height: 1;
 }
 
 .metricLabel {
-  font-size: var(--font-sm);
+  font-size: var(--font-xs);
   color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 /* Charts Grid */
 .chartsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: var(--spacing-lg);
 }
 
 .chartCard {
-  min-height: 300px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--border);
+}
+
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xl);
 }
 
 .chartTitle {
-  font-size: var(--font-xl);
+  font-size: var(--font-lg);
   font-weight: var(--font-weight-semibold);
   color: var(--primary-color);
-  margin-bottom: var(--spacing-lg);
+  margin: 0;
+}
+
+.chartIcon {
+  color: var(--text-muted);
 }
 
 /* Genre List */
 .genreList {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
 }
 
 .genreItem {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 7px;
 }
 
 .genreInfo {
@@ -98,28 +138,29 @@
 }
 
 .genreName {
-  font-size: var(--font-md);
+  font-size: var(--font-sm);
   font-weight: var(--font-weight-medium);
   color: var(--text-primary);
 }
 
 .genreCount {
-  font-size: var(--font-sm);
-  color: var(--text-secondary);
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-medium);
 }
 
-.genreBar {
-  height: 12px;
-  background: var(--border);
-  border-radius: 6px;
+.genreBarTrack {
+  height: 8px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 
 .genreBarFill {
   height: 100%;
   background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
-  transition: width 0.5s ease;
-  border-radius: 6px;
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
 }
 
 /* Monthly Chart */
@@ -127,9 +168,9 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
-  height: 200px;
-  gap: var(--spacing-md);
-  padding-top: var(--spacing-lg);
+  height: 180px;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
 }
 
 .monthBar {
@@ -137,8 +178,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: 8px;
   height: 100%;
+}
+
+.monthBarTrack {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
 }
 
 .monthBarFill {
@@ -151,64 +199,85 @@
   justify-content: center;
   padding-top: 4px;
   transition: height 0.5s ease;
-  position: relative;
 }
 
 .monthCount {
-  font-size: var(--font-xs);
-  font-weight: var(--font-weight-semibold);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
   color: white;
 }
 
 .monthLabel {
-  font-size: var(--font-xs);
+  font-size: 11px;
   color: var(--text-secondary);
-  text-align: center;
+  font-weight: var(--font-weight-medium);
 }
 
-/* Additional Stats */
-.additionalStats {
+/* Empty chart */
+.emptyChart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  gap: var(--spacing-sm);
+  color: var(--text-muted);
+}
+
+.emptyChart p {
+  font-size: var(--font-sm);
+  margin: 0;
+}
+
+/* Additional stats card */
+.additionalCard {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--border);
   margin-bottom: var(--spacing-2xl);
 }
 
-.statsGrid {
+.additionalGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-xl);
+  gap: var(--spacing-lg);
 }
 
 .statItem {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
+  align-items: center;
+  gap: var(--spacing-md);
   padding: var(--spacing-md);
-  background: var(--background);
+  background: var(--surface-alt);
   border-radius: var(--radius-md);
 }
 
-.statLabel {
-  font-size: var(--font-sm);
-  color: var(--text-secondary);
+.statItemIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .statValue {
+  display: block;
   font-size: var(--font-xl);
   font-weight: var(--font-weight-bold);
-  color: var(--accent-color);
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 3px;
 }
 
-.statSubtext {
+.statLabel {
+  display: block;
   font-size: var(--font-xs);
-  color: var(--text-muted);
-  margin-top: var(--spacing-xs);
-}
-
-/* Empty Message */
-.emptyMessage {
-  text-align: center;
   color: var(--text-secondary);
-  padding: var(--spacing-xl);
-  font-size: var(--font-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Responsive */
@@ -230,10 +299,20 @@
   }
 
   .monthlyChart {
-    height: 150px;
+    height: 140px;
   }
 
-  .statsGrid {
+  .additionalGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .additionalGrid {
+    grid-template-columns: 1fr;
   }
 }

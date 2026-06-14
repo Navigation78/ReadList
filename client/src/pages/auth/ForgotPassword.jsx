@@ -5,6 +5,7 @@ import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
 import logoImage from '../../assets/VerseLore Logo.png'
 import styles from './ForgotPassword.module.css'
+import { CheckCircle, ArrowLeft } from 'lucide-react'
 
 export default function ForgotPassword() {
   const { resetPassword } = useAuth()
@@ -92,7 +93,7 @@ export default function ForgotPassword() {
           </form>
         ) : (
           <div className={styles.successMessage}>
-            <div className={styles.successIcon}>✓</div>
+            <div className={styles.successIcon}><CheckCircle size={40} /></div>
             <h2 className={styles.successTitle}>Check Your Email</h2>
             <p className={styles.successText}>
               We've sent a password reset link to <strong>{email}</strong>
@@ -106,7 +107,7 @@ export default function ForgotPassword() {
         {/* Back to Login */}
         <div className={styles.footer}>
           <Link to="/login" className={styles.backLink}>
-            ← Back to Login
+            <ArrowLeft size={15} /> Back to Login
           </Link>
         </div>
       </div>

@@ -4,58 +4,49 @@ import { useAuth } from '../context/AuthContext'
 import { bookService } from '../services/bookService'
 import Button from '../components/common/Button'
 import Input from '../components/common/Input'
-import Card from '../components/common/Card'
 import Loading from '../components/common/Loading'
 import Modal from '../components/common/Modal'
 import styles from './Profile.module.css'
+import {
+  BookMarked, CheckCircle, BookOpen, Bookmark,
+  Shield, LogOut, Trash2, AlertTriangle, User,
+  Calendar, Key, CheckCircle2
+} from 'lucide-react'
 
 export default function Profile() {
   const { user, logout, updatePassword } = useAuth()
   const navigate = useNavigate()
-  
-  // Profile data state
-  const [userData, setUserData] = useState({
+
+  const [userData] = useState({
     email: user?.email || '',
-    displayName: user?.user_metadata?.display_name || ''
   })
-  
-  // Password change state
+
   const [passwordData, setPasswordData] = useState({
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
   })
-  
-  // Statistics state
+
   const [stats, setStats] = useState({
-    totalBooks: 0,
-    booksRead: 0,
-    currentlyReading: 0,
-    wantToRead: 0
+    totalBooks: 0, booksRead: 0, currentlyReading: 0, wantToRead: 0,
   })
-  
-  // UI state
+
   const [loading, setLoading] = useState(true)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [errors, setErrors] = useState({})
   const [successMessage, setSuccessMessage] = useState('')
 
-  /**
-   * Load user statistics on component mount
-   */
   useEffect(() => {
     if (!user) return
-
     async function loadStats() {
       try {
         setLoading(true)
         const books = await bookService.getBooks(user.id)
-        
         setStats({
-          totalBooks: books.length,
-          booksRead: books.filter(b => b.status === 'finished').length,
+          totalBooks:       books.length,
+          booksRead:        books.filter(b => b.status === 'finished').length,
           currentlyReading: books.filter(b => b.status === 'currently_reading').length,
-          wantToRead: books.filter(b => b.status === 'want_to_read').length
+          wantToRead:       books.filter(b => b.status === 'want_to_read').length,
         })
       } catch (error) {
         console.error('Error loading stats:', error)
@@ -63,20 +54,15 @@ export default function Profile() {
         setLoading(false)
       }
     }
-
     loadStats()
   }, [user])
 
-  /**
-   * Handle password change
-   */
   const handlePasswordChange = async (e) => {
     e.preventDefault()
     setErrors({})
     setSuccessMessage('')
-
-    // Validate passwords
     const newErrors = {}
+
     if (!passwordData.newPassword) {
       newErrors.newPassword = 'Password is required'
     } else if (passwordData.newPassword.length < 6) {
@@ -92,42 +78,35 @@ export default function Profile() {
       return
     }
 
-    // Update password
     const result = await updatePassword(passwordData.newPassword)
-
     if (result.success) {
       setSuccessMessage('Password updated successfully!')
       setPasswordData({ newPassword: '', confirmPassword: '' })
       setShowPasswordModal(false)
-      
-      // Auto-dismiss success message after 3 seconds
       setTimeout(() => setSuccessMessage(''), 3000)
     } else {
       setErrors({ submit: result.error || 'Failed to update password' })
     }
   }
 
-  /**
-   * Handle account logout
-   */
   const handleLogout = async () => {
     await logout()
     navigate('/login')
   }
 
-  /**
-   * Handle account deletion (placeholder)
-   * In a real app, this would call a delete endpoint
-   */
   const handleDeleteAccount = async () => {
-    // This is a placeholder - implement actual deletion logic
-    alert('Account deletion would happen here. Not implemented in this demo.')
+    alert('Account deletion is not implemented in this demo.')
     setShowDeleteModal(false)
   }
 
-  if (loading) {
-    return <Loading text="Loading profile..." />
-  }
+  if (loading) return <Loading text="Loading profile..." />
+
+  const statItems = [
+    { icon: BookMarked, label: 'Total Books',      value: stats.totalBooks,       color: '#3b5bdb', bg: '#e8edfb' },
+    { icon: CheckCircle,label: 'Finished',         value: stats.booksRead,        color: '#2f9e44', bg: '#d3f9d8' },
+    { icon: BookOpen,   label: 'Reading',          value: stats.currentlyReading, color: '#7048e8', bg: '#f3f0ff' },
+    { icon: Bookmark,   label: 'Want to Read',     value: stats.wantToRead,       color: '#c2255c', bg: '#fff0f6' },
+  ]
 
   return (
     <div className={styles.container}>
@@ -137,157 +116,118 @@ export default function Profile() {
         <p className={styles.subtitle}>Manage your account and preferences</p>
       </div>
 
-      {/* Success Message */}
       {successMessage && (
         <div className={styles.successAlert}>
-          ✓ {successMessage}
+          <CheckCircle2 size={16} /> {successMessage}
         </div>
       )}
 
-      {/* Account Information Section */}
+      {/* Account Info */}
       <section className={styles.section}>
-        <Card variant="default">
+        <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Account Information</h2>
+            <h2 className={styles.cardTitle}><User size={16} /> Account Information</h2>
           </div>
-
           <div className={styles.cardContent}>
-            {/* Email (read-only) */}
             <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Email</span>
               <span className={styles.infoValue}>{userData.email}</span>
             </div>
-
-            {/* User ID (for reference) */}
-            <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>User ID</span>
-              <span className={styles.infoValueSmall}>{user.id}</span>
-            </div>
-
-            {/* Member since */}
             <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Member Since</span>
               <span className={styles.infoValue}>
                 {new Date(user.created_at).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
+                  year: 'numeric', month: 'long', day: 'numeric'
                 })}
               </span>
             </div>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>User ID</span>
+              <span className={styles.infoValueSmall}>{user.id}</span>
+            </div>
           </div>
-        </Card>
+        </div>
       </section>
 
-      {/* Reading Statistics Section */}
+      {/* Reading Stats */}
       <section className={styles.section}>
-        <Card variant="default">
+        <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Reading Statistics</h2>
+            <h2 className={styles.cardTitle}><BookOpen size={16} /> Reading Statistics</h2>
           </div>
-
           <div className={styles.statsGrid}>
-            {/* Total Books */}
-            <div className={styles.statBox}>
-              <span className={styles.statIcon}>📚</span>
-              <span className={styles.statValue}>{stats.totalBooks}</span>
-              <span className={styles.statLabel}>Total Books</span>
-            </div>
-
-            {/* Books Read */}
-            <div className={styles.statBox}>
-              <span className={styles.statIcon}>✓</span>
-              <span className={styles.statValue}>{stats.booksRead}</span>
-              <span className={styles.statLabel}>Finished</span>
-            </div>
-
-            {/* Currently Reading */}
-            <div className={styles.statBox}>
-              <span className={styles.statIcon}>📖</span>
-              <span className={styles.statValue}>{stats.currentlyReading}</span>
-              <span className={styles.statLabel}>Reading</span>
-            </div>
-
-            {/* Want to Read */}
-            <div className={styles.statBox}>
-              <span className={styles.statIcon}>🔖</span>
-              <span className={styles.statValue}>{stats.wantToRead}</span>
-              <span className={styles.statLabel}>To Read</span>
-            </div>
+            {statItems.map(({ icon: Icon, label, value, color, bg }) => (
+              <div key={label} className={styles.statBox}>
+                <div className={styles.statIconWrap} style={{ background: bg, color }}>
+                  <Icon size={20} />
+                </div>
+                <span className={styles.statValue}>{value}</span>
+                <span className={styles.statLabel}>{label}</span>
+              </div>
+            ))}
           </div>
-        </Card>
+        </div>
       </section>
 
-      {/* Security Section */}
+      {/* Security */}
       <section className={styles.section}>
-        <Card variant="default">
+        <div className={styles.card}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Security</h2>
+            <h2 className={styles.cardTitle}><Shield size={16} /> Security</h2>
           </div>
-
           <div className={styles.cardContent}>
-            <div className={styles.securityItem}>
-              <div>
-                <h3 className={styles.securityTitle}>Password</h3>
-                <p className={styles.securityDescription}>
-                  Change your password to keep your account secure
-                </p>
+            <div className={styles.settingsRow}>
+              <div className={styles.settingsRowLeft}>
+                <Key size={16} className={styles.settingsRowIcon} />
+                <div>
+                  <h3 className={styles.settingsRowTitle}>Password</h3>
+                  <p className={styles.settingsRowDesc}>Change your password to keep your account secure</p>
+                </div>
               </div>
-              <Button 
-                variant="outline" 
-                size="small"
-                onClick={() => setShowPasswordModal(true)}
-              >
+              <Button variant="outline" size="small" onClick={() => setShowPasswordModal(true)}>
                 Change Password
               </Button>
             </div>
           </div>
-        </Card>
+        </div>
       </section>
 
-      {/* Danger Zone Section */}
+      {/* Danger Zone */}
       <section className={styles.section}>
-        <Card variant="default">
+        <div className={`${styles.card} ${styles.dangerCard}`}>
           <div className={styles.cardHeader}>
-            <h2 className={styles.cardTitle}>Danger Zone</h2>
+            <h2 className={`${styles.cardTitle} ${styles.dangerTitle}`}>
+              <AlertTriangle size={16} /> Danger Zone
+            </h2>
           </div>
-
           <div className={styles.cardContent}>
-            {/* Logout */}
-            <div className={styles.dangerItem}>
-              <div>
-                <h3 className={styles.dangerTitle}>Logout</h3>
-                <p className={styles.dangerDescription}>
-                  Sign out of your account on this device
-                </p>
+            <div className={styles.settingsRow}>
+              <div className={styles.settingsRowLeft}>
+                <LogOut size={16} className={styles.settingsRowIcon} />
+                <div>
+                  <h3 className={styles.settingsRowTitle}>Log Out</h3>
+                  <p className={styles.settingsRowDesc}>Sign out of your account on this device</p>
+                </div>
               </div>
-              <Button 
-                variant="outline" 
-                size="small"
-                onClick={handleLogout}
-              >
-                Logout
+              <Button variant="outline" size="small" onClick={handleLogout}>
+                Log Out
               </Button>
             </div>
 
-            {/* Delete Account */}
-            <div className={styles.dangerItem}>
-              <div>
-                <h3 className={styles.dangerTitle}>Delete Account</h3>
-                <p className={styles.dangerDescription}>
-                  Permanently delete your account and all your data
-                </p>
+            <div className={`${styles.settingsRow} ${styles.dangerRow}`}>
+              <div className={styles.settingsRowLeft}>
+                <Trash2 size={16} className={styles.settingsRowIconDanger} />
+                <div>
+                  <h3 className={styles.settingsRowTitle}>Delete Account</h3>
+                  <p className={styles.settingsRowDesc}>Permanently delete your account and all data</p>
+                </div>
               </div>
-              <Button 
-                variant="danger" 
-                size="small"
-                onClick={() => setShowDeleteModal(true)}
-              >
+              <Button variant="danger" size="small" onClick={() => setShowDeleteModal(true)}>
                 Delete Account
               </Button>
             </div>
           </div>
-        </Card>
+        </div>
       </section>
 
       {/* Change Password Modal */}
@@ -303,53 +243,36 @@ export default function Profile() {
       >
         <form onSubmit={handlePasswordChange} className={styles.modalForm}>
           {errors.submit && (
-            <div className={styles.errorAlert}>
-              {errors.submit}
-            </div>
+            <div className={styles.errorAlert}>{errors.submit}</div>
           )}
-
           <Input
             label="New Password"
             type="password"
             name="newPassword"
             placeholder="Enter new password"
             value={passwordData.newPassword}
-            onChange={(e) => setPasswordData(prev => ({
-              ...prev,
-              newPassword: e.target.value
-            }))}
+            onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
             error={errors.newPassword}
             helperText="Must be at least 6 characters"
             fullWidth
             required
           />
-
           <Input
             label="Confirm Password"
             type="password"
             name="confirmPassword"
             placeholder="Confirm new password"
             value={passwordData.confirmPassword}
-            onChange={(e) => setPasswordData(prev => ({
-              ...prev,
-              confirmPassword: e.target.value
-            }))}
+            onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
             error={errors.confirmPassword}
             fullWidth
             required
           />
-
           <div className={styles.modalActions}>
-            <Button 
-              type="submit" 
-              variant="primary" 
-              fullWidth
-            >
-              Update Password
-            </Button>
-            <Button 
+            <Button type="submit" variant="primary" fullWidth>Update Password</Button>
+            <Button
               type="button"
-              variant="ghost" 
+              variant="ghost"
               fullWidth
               onClick={() => {
                 setShowPasswordModal(false)
@@ -363,7 +286,7 @@ export default function Profile() {
         </form>
       </Modal>
 
-      {/* Delete Account Confirmation Modal */}
+      {/* Delete Account Modal */}
       <Modal
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
@@ -371,26 +294,15 @@ export default function Profile() {
         size="small"
       >
         <div className={styles.deleteModal}>
-          <p className={styles.deleteWarning}>
-            ⚠️ This action cannot be undone. All your books, reading progress, 
-            and data will be permanently deleted.
-          </p>
-          
+          <div className={styles.deleteWarning}>
+            <AlertTriangle size={18} className={styles.deleteWarningIcon} />
+            <p>
+              This action cannot be undone. All your books, reading progress, and data will be permanently deleted.
+            </p>
+          </div>
           <div className={styles.modalActions}>
-            <Button 
-              variant="danger" 
-              fullWidth
-              onClick={handleDeleteAccount}
-            >
-              Yes, Delete My Account
-            </Button>
-            <Button 
-              variant="outline" 
-              fullWidth
-              onClick={() => setShowDeleteModal(false)}
-            >
-              Cancel
-            </Button>
+            <Button variant="danger" fullWidth onClick={handleDeleteAccount}>Yes, Delete My Account</Button>
+            <Button variant="outline" fullWidth onClick={() => setShowDeleteModal(false)}>Cancel</Button>
           </div>
         </div>
       </Modal>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import styles from './Toast.module.css'
+import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react'
 
 export default function Toast({ 
   message,
@@ -21,22 +22,22 @@ export default function Toast({
   if (!isVisible) return null
 
   const icons = {
-    success: '✓',
-    error: '✕',
-    warning: '⚠',
-    info: 'ℹ'
+    success: <CheckCircle size={16} />,
+    error:   <XCircle size={16} />,
+    warning: <AlertTriangle size={16} />,
+    info:    <Info size={16} />,
   }
 
   return (
     <div className={`${styles.toast} ${styles[type]}`} role="alert">
       <span className={styles.icon}>{icons[type]}</span>
       <span className={styles.message}>{message}</span>
-      <button 
+      <button
         onClick={onClose}
         className={styles.closeButton}
         aria-label="Close notification"
       >
-        ✕
+        <X size={14} />
       </button>
     </div>
   )
