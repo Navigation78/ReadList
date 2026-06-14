@@ -1,44 +1,49 @@
-/* VerseLore Color System - Modern Blue Minimal */
+/* VerseLore Color System - Warm Cream / Coffee Theme */
 :root {
 
   /* ========================================
      CORE PALETTE
      ======================================== */
-  --background: #dce6f5;           /* Soft blue-grey - main app background */
-  --surface: #ffffff;              /* White - cards, panels */
-  --surface-alt: #eef2fa;          /* Light blue-grey - subtle backgrounds */
-  --surface-hover: #f7f9fd;        /* Near-white - hover states */
+  --background: #FEF6EE;            /* Warm cream - main app background */
+  --surface: #FFFFFF;               /* White - cards, panels */
+  --surface-alt: #FDF0E6;           /* Light warm - subtle backgrounds */
+  --surface-hover: #FDF4EC;         /* Near-white warm - hover states */
 
   /* Sidebar */
-  --sidebar-bg: #131727;           /* Deep navy - sidebar background */
-  --sidebar-active: #1e2d4f;       /* Lighter navy - active item */
-  --sidebar-icon: #8892aa;         /* Muted blue-grey - inactive icons */
-  --sidebar-icon-active: #ffffff;  /* White - active icons */
-  --sidebar-width: 72px;
+  --sidebar-bg: #FFFFFF;            /* White sidebar */
+  --sidebar-active-bg: #FEF0E3;     /* Warm peach - active item bg */
+  --sidebar-active-bar: #7C4A23;    /* Brown - active left bar */
+  --sidebar-icon: #A0856D;          /* Warm muted brown - inactive icons */
+  --sidebar-icon-active: #7C4A23;   /* Rich brown - active icons */
+  --sidebar-label: #6B5044;         /* Brown-grey - nav labels */
+  --sidebar-label-active: #7C4A23;  /* Rich brown - active label */
+  --sidebar-section: #B3978A;       /* Muted section headers */
+  --sidebar-width: 220px;
+  --sidebar-collapsed-width: 72px;
 
   /* Primary brand */
-  --primary-color: #1a2a5e;        /* Deep navy - headings, strong text */
-  --primary-dark: #0f1a3e;         /* Darker navy - hover */
-  --primary-light: #4a6fa5;        /* Medium navy - secondary actions */
+  --primary-color: #2D1F14;         /* Dark coffee - headings, strong text */
+  --primary-dark: #1A1109;          /* Darker coffee - hover */
+  --primary-light: #7C5A3A;         /* Medium brown - secondary */
 
   /* Accent */
-  --accent-color: #3b5bdb;         /* Bright blue - buttons, links, CTAs */
-  --accent-hover: #2f4ac4;         /* Darker blue - hover */
-  --accent-light: #748ffc;         /* Lighter blue - subtle accents */
-  --accent-bg: #e8edfb;            /* Very light blue - accent backgrounds */
+  --accent-color: #7C4A23;          /* Rich coffee brown - buttons, CTAs */
+  --accent-hover: #5C3317;          /* Darker brown - hover */
+  --accent-light: #A86B3E;          /* Lighter brown - subtle accents */
+  --accent-bg: #FEF0E3;             /* Very light warm - accent backgrounds */
 
   /* Supporting */
-  --secondary-accent: #e0e7ff;     /* Indigo tint - secondary elements */
-  --secondary-hover: #c7d2fe;      /* Darker indigo tint */
+  --secondary-accent: #F4DCC8;      /* Warm sand - secondary elements */
+  --secondary-hover: #E8C9A8;       /* Darker sand */
 
   /* ========================================
      TEXT COLORS
      ======================================== */
-  --text-primary: #1a2a5e;         /* Deep navy - main text */
-  --text-secondary: #4a5980;       /* Medium blue-grey - secondary */
-  --text-muted: #8892aa;           /* Light blue-grey - muted/placeholders */
-  --text-on-accent: #ffffff;       /* White - on colored backgrounds */
-  --text-on-dark: #ffffff;         /* White - on dark sidebar */
+  --text-primary: #2D1F14;          /* Dark coffee - main text */
+  --text-secondary: #6B5044;        /* Medium brown-grey - secondary */
+  --text-muted: #A0856D;            /* Light brown - muted/placeholders */
+  --text-on-accent: #FFFFFF;        /* White - on colored backgrounds */
+  --text-on-dark: #FFFFFF;
 
   /* ========================================
      SEMANTIC COLORS
@@ -51,9 +56,9 @@
   /* ========================================
      BORDERS & DIVIDERS
      ======================================== */
-  --border: rgba(0, 0, 0, 0.07);   /* Very subtle border */
-  --border-dark: #c5cfe8;          /* More visible border */
-  --divider: rgba(0, 0, 0, 0.05);  /* Section dividers */
+  --border: rgba(124, 74, 35, 0.10);
+  --border-dark: #DEC9B4;
+  --divider: rgba(124, 74, 35, 0.06);
 
   /* ========================================
      SPACING SYSTEM
@@ -78,18 +83,18 @@
   /* ========================================
      SHADOWS
      ======================================== */
-  --shadow-sm: 0 1px 3px rgba(26, 42, 94, 0.06);
-  --shadow-md: 0 4px 12px rgba(26, 42, 94, 0.08);
-  --shadow-lg: 0 8px 24px rgba(26, 42, 94, 0.10);
-  --shadow-xl: 0 16px 40px rgba(26, 42, 94, 0.12);
+  --shadow-sm: 0 1px 3px rgba(45, 31, 20, 0.06);
+  --shadow-md: 0 4px 12px rgba(45, 31, 20, 0.08);
+  --shadow-lg: 0 8px 24px rgba(45, 31, 20, 0.10);
+  --shadow-xl: 0 16px 40px rgba(45, 31, 20, 0.12);
 
   /* ========================================
      TYPOGRAPHY
      ======================================== */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter',
-                 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', sans-serif;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                 'Roboto', 'Helvetica Neue', sans-serif;
 
-  --font-xs: 12px;
+  --font-xs: 11px;
   --font-sm: 13px;
   --font-md: 15px;
   --font-lg: 17px;
@@ -124,5 +129,5 @@
   --z-popover: 400;
   --z-tooltip: 500;
 
-  --navbar-height: 70px;
+  --navbar-height: 64px;
 }
