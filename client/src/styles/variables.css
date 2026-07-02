@@ -39,8 +39,8 @@
   /* ========================================
      TEXT COLORS
      ======================================== */
-  --text-primary: #2D1F14;          /* Dark coffee - main text */
-  --text-secondary: #6B5044;        /* Medium brown-grey - secondary */
+  --text-primary: #0b0308;          /* Dark coffee - main text */
+  --text-secondary: #140d0a;        /* Medium brown-grey - secondary */
   --text-muted: #A0856D;            /* Light brown - muted/placeholders */
   --text-on-accent: #FFFFFF;        /* White - on colored backgrounds */
   --text-on-dark: #FFFFFF;

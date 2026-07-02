@@ -11,7 +11,7 @@
   padding: 20px 0 24px;
   z-index: var(--z-sticky);
   transition: width var(--transition-slow);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .collapsed {
