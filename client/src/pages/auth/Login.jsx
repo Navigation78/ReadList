@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
-import logoImage from '../../assets/Logo.png'
+import logoImage from '../../assets/Black Logo.png'
 import styles from './Login.module.css'
 
 export default function Login() {
@@ -69,7 +69,7 @@ export default function Login() {
       <div className={styles.card}>
         {/* Logo */}
         <div className={styles.logoSection}>
-          <img src={logoImage} alt="VerseLore" className={styles.logo} />
+          <img src={logoImage} alt="ReadList" className={styles.logo} />
           <h1 className={styles.title}>Welcome Back</h1>
           <p className={styles.subtitle}>Login to continue your reading journey</p>
         </div>
