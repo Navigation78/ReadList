@@ -9,11 +9,13 @@ import ForgotPassword from './pages/auth/ForgotPassword'
 import ResetPassword from './pages/auth/ResetPassword'
 
 // Main pages
+import Landing from './pages/Landing'
 import Home from './pages/Home'
 import Library from './pages/Library'
 import SearchBooks from './pages/SearchBooks'
 import Stats from './pages/Stats'
 import Profile from './pages/Profile'
+import LegalPage from './pages/LegalPage'
 
 function App() {
   return (
@@ -22,14 +24,17 @@ function App() {
         <div style={{ minHeight: '100vh', background: 'var(--background)' }}>
           <Routes>
             {/* Public routes */}
+            <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/terms" element={<LegalPage type="terms" />} />
+            <Route path="/privacy" element={<LegalPage type="privacy" />} />
 
             {/* Protected routes */}
             <Route
-              path="/"
+              path="/dashboard"
               element={
                 <ProtectedLayout>
                   <Home />

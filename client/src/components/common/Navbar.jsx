@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
+import { createElement } from 'react'
 import { Home, BookMarked, Search, BarChart2, User, Settings, HelpCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import styles from './Navbar.module.css'
 import logo from '../../assets/Black Logo.png'
 
 const MENU_ITEMS = [
-  { to: '/',        icon: Home,       label: 'Dashboard' },
+  { to: '/dashboard', icon: Home,       label: 'Dashboard' },
   { to: '/library', icon: BookMarked, label: 'Library'   },
   { to: '/search',  icon: Search,     label: 'Search'    },
   { to: '/stats',   icon: BarChart2,  label: 'Stats'     },
@@ -18,7 +19,7 @@ const OTHER_ITEMS = [
 export default function Navbar({ collapsed, onToggle }) {
   const location = useLocation()
   const isActive = (path) =>
-    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
+    location.pathname === path || location.pathname.startsWith(`${path}/`)
 
   return (
     <nav className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
@@ -47,7 +48,7 @@ export default function Navbar({ collapsed, onToggle }) {
               title={collapsed ? label : undefined}
             >
               <div className={styles.navItemInner}>
-                <Icon size={18} className={styles.navIcon} />
+                {createElement(Icon, { size: 18, className: styles.navIcon })}
                 {!collapsed && <span className={styles.navLabel}>{label}</span>}
               </div>
               {isActive(to) && <div className={styles.activeBar} />}
@@ -68,7 +69,7 @@ export default function Navbar({ collapsed, onToggle }) {
               title={collapsed ? label : undefined}
             >
               <div className={styles.navItemInner}>
-                <Icon size={18} className={styles.navIcon} />
+                {createElement(Icon, { size: 18, className: styles.navIcon })}
                 {!collapsed && <span className={styles.navLabel}>{label}</span>}
               </div>
             </Link>
