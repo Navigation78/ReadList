@@ -1,4 +1,4 @@
-# VerseLore (ReadList) - Book Reading Tracker
+# ReadList - Book Reading Tracker
 
 A full-stack web application for book lovers, students, and hobby readers to track and manage their reading journey. Built with React, Supabase, and Vite.
 
@@ -23,7 +23,7 @@ A full-stack web application for book lovers, students, and hobby readers to tra
 
 ## Overview
 
-VerseLore (formerly ReadList) helps users organize their reading journey by tracking:
+ReadList helps users organize their reading journey by tracking:
 
 -  Books currently being read
 -  Books already finished

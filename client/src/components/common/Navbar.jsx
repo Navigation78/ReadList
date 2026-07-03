@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Home, BookMarked, Search, BarChart2, User, Settings, HelpCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import styles from './Navbar.module.css'
-import logo from '../../assets/Logo.png'
+import logo from '../../assets/Black Logo.png'
 
 const MENU_ITEMS = [
   { to: '/',        icon: Home,       label: 'Dashboard' },
@@ -25,9 +25,9 @@ export default function Navbar({ collapsed, onToggle }) {
       {/* Brand */}
       <div className={styles.brand}>
         <div className={styles.logoWrap}>
-          <img src={logo} alt="VerseLore" className={styles.logoImg} />
+          <img src={logo} alt="ReadList" className={styles.logoImg} />
         </div>
-        {!collapsed && <span className={styles.brandName}>VerseLore</span>}
+        {!collapsed && <span className={styles.brandName}>ReadList</span>}
       </div>
 
       {/* Toggle button */}

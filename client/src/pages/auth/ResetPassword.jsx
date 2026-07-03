@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
-import logoImage from '../../assets/Logo.png'
+import logoImage from '../../assets/Black Logo.png'
 import styles from './ResetPassword.module.css'
 
 export default function ResetPassword() {
@@ -87,7 +87,7 @@ export default function ResetPassword() {
       <div className={styles.card}>
         {/* Logo */}
         <div className={styles.logoSection}>
-          <img src={logoImage} alt="VerseLore" className={styles.logo} />
+          <img src={logoImage} alt="ReadList" className={styles.logo} />
           <h1 className={styles.title}>Reset Password</h1>
           <p className={styles.subtitle}>Enter your new password</p>
         </div>

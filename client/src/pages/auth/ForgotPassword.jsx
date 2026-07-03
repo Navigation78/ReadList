@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
-import logoImage from '../../assets/Logo.png'
+import logoImage from '../../assets/Black Logo.png'
 import styles from './ForgotPassword.module.css'
 import { CheckCircle, ArrowLeft } from 'lucide-react'
 
@@ -53,7 +53,7 @@ export default function ForgotPassword() {
       <div className={styles.card}>
         {/* Logo */}
         <div className={styles.logoSection}>
-          <img src={logoImage} alt="VerseLore" className={styles.logo} />
+          <img src={logoImage} alt="ReadList" className={styles.logo} />
           <h1 className={styles.title}>Forgot Password?</h1>
           <p className={styles.subtitle}>
             Enter your email and we'll send you a link to reset your password
