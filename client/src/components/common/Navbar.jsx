@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Home, BookMarked, Search, BarChart2, User, Settings, HelpCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import styles from './Navbar.module.css'
-import logo from '../../assets/VerseLore Logo.png'
+import logo from '../../assets/Logo.png'
 
 const MENU_ITEMS = [
   { to: '/',        icon: Home,       label: 'Dashboard' },
