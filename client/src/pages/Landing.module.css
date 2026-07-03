@@ -111,9 +111,7 @@
   gap: clamp(28px, 6vw, 76px);
   min-height: calc(100vh - 74px);
   padding: clamp(44px, 7vw, 86px) clamp(18px, 5vw, 72px) 54px;
-  background:
-    linear-gradient(rgba(254, 246, 238, 0.84), rgba(254, 246, 238, 0.94)),
-    url('../assets/images (4).jpg') center right / min(46vw, 620px) no-repeat;
+  background: linear-gradient(180deg, rgba(254, 246, 238, 0.96), rgba(254, 246, 238, 1));
 }
 
 .heroCopy {
@@ -177,29 +175,36 @@
 .heroVisual {
   position: relative;
   min-height: 540px;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 154px;
+  grid-template-rows: auto 1fr;
+  gap: 18px;
   align-items: center;
   justify-content: center;
 }
 
 .bookArt {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: min(38%, 180px);
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: var(--shadow-lg);
+  align-self: start;
+  justify-self: end;
 }
 
 .previewShell {
+  grid-column: 1 / -1;
+  grid-row: 2;
   width: min(100%, 640px);
   border: 1px solid rgba(45, 31, 20, 0.18);
   border-radius: 8px;
   background: var(--surface);
   box-shadow: var(--shadow-xl);
   overflow: hidden;
+  justify-self: center;
 }
 
 .previewTop {
@@ -577,10 +582,20 @@
 
   .heroVisual {
     min-height: auto;
+    grid-template-columns: 1fr;
   }
 
   .bookArt {
-    display: none;
+    display: block;
+    grid-column: 1;
+    grid-row: 1;
+    width: min(180px, 44vw);
+    justify-self: start;
+  }
+
+  .previewShell {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .featureGrid,
