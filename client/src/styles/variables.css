@@ -39,11 +39,12 @@
   /* ========================================
      TEXT COLORS
      ======================================== */
-  --text-primary: #0b0308;          /* Dark coffee - main text */
-  --text-secondary: #140d0a;        /* Medium brown-grey - secondary */
-  --text-muted: #A0856D;            /* Light brown - muted/placeholders */
-  --text-on-accent: #FFFFFF;        /* White - on colored backgrounds */
-  --text-on-dark: #FFFFFF;
+  --text-primary: #000000;       /* Pure black - main text */
+  --text-secondary: #1a1a1a;     /* Very dark grey */
+  --text-muted: #4d4d4d;         /* Medium grey */
+  --text-subtle: #808080;        /* Light grey (optional for placeholders) */
+  --text-on-accent: #ffffff;     /* White on colored backgrounds */
+  --text-on-dark: #ffffff;       /* White on dark surfaces */
 
   /* ========================================
      SEMANTIC COLORS
