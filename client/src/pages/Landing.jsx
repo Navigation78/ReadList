@@ -2,15 +2,14 @@ import { Link } from 'react-router-dom'
 import { createElement } from 'react'
 import {
   ArrowRight,
-  BarChart3,
-  BookMarked,
   BookOpen,
+  Bookmark,
   CheckCircle2,
-  Clock3,
   Library,
+  LineChart,
+  NotebookPen,
   Search,
-  Sparkles,
-  TrendingUp
+  Sparkles
 } from 'lucide-react'
 import logoImage from '../assets/Black Logo.png'
 import bookImage from '../assets/images (4).jpg'
@@ -20,17 +19,17 @@ const features = [
   {
     icon: Library,
     title: 'A library with memory',
-    text: 'Sort books into want to read, currently reading, and finished without losing the thread.'
+    text: 'Sort books into want to read, currently reading, and finished, without losing the thread.'
   },
   {
-    icon: Clock3,
+    icon: NotebookPen,
     title: 'Progress that stays visible',
-    text: 'Track pages, sessions, and active reads so every small pocket of reading counts.'
+    text: 'Log sessions and pages so every pocket of reading counts toward something.'
   },
   {
-    icon: BarChart3,
+    icon: LineChart,
     title: 'Stats for better habits',
-    text: 'See streaks, pages, genres, and monthly momentum in one warm, readable dashboard.'
+    text: 'See streaks, pages, and monthly momentum in one warm, readable dashboard.'
   }
 ]
 
@@ -39,6 +38,27 @@ const steps = [
   'Move it into your list',
   'Log sessions and pages',
   'Watch your reading grow'
+]
+
+const shelves = [
+  {
+    icon: BookOpen,
+    code: 'LC-001',
+    title: 'Active Reads',
+    text: 'Keep current books close, with page progress and quick status changes.'
+  },
+  {
+    icon: Search,
+    code: 'LC-002',
+    title: 'Book Search',
+    text: 'Find titles through book search and add them to your personal list.'
+  },
+  {
+    icon: Bookmark,
+    code: 'LC-003',
+    title: 'Finished Shelf',
+    text: 'Review completed books, total pages, and long term reading momentum.'
+  }
 ]
 
 export default function Landing() {
@@ -66,42 +86,40 @@ export default function Landing() {
         <section className={styles.hero}>
           <div className={styles.heroCopy}>
             <div className={styles.kicker}>
-              <Sparkles size={15} />
-              Your personal reading tracker
+              <Sparkles size={14} />
+              No. 01 · Personal Library System
             </div>
-            <h1>Track every book, page, and reading habit in one quiet place.</h1>
+            <h1>A library that remembers where you left off.</h1>
             <p>
-              Build your personal library, follow progress across active books,
-              log reading sessions, and see your reading life grow over time.
+              Keep every book, every page, and every reading streak in one calm,
+              well kept shelf. Add a title, log a session, and watch the shelf fill in.
             </p>
             <div className={styles.heroActions}>
               <Link to="/signup" className={styles.primaryCta}>
-                Start Reading <ArrowRight size={18} />
+                Start Your Shelf <ArrowRight size={18} />
               </Link>
               <Link to="/login" className={styles.secondaryCta}>I already have an account</Link>
             </div>
             <div className={styles.trustRow} aria-label="ReadList highlights">
-              <span><CheckCircle2 size={16} /> Progress tracking</span>
-              <span><CheckCircle2 size={16} /> Reading stats</span>
-              <span><CheckCircle2 size={16} /> Book search</span>
+              <span><CheckCircle2 size={15} /> Progress tracking</span>
+              <span><CheckCircle2 size={15} /> Reading stats</span>
+              <span><CheckCircle2 size={15} /> Book search</span>
             </div>
           </div>
 
           <div className={styles.heroVisual} aria-label="ReadList product preview">
-            <img src={bookImage} alt="Open book illustration" className={styles.bookArt} />
-            <div className={styles.previewShell}>
-              <div className={styles.previewTop}>
-                <span />
-                <span />
-                <span />
+            <div className={styles.ledger}>
+              <div className={styles.ledgerTop}>
+                <span>Reading Ledger</span>
+                <span>Up To Date</span>
               </div>
-              <div className={styles.previewGrid}>
+              <div className={styles.ledgerGrid}>
                 <div className={styles.metricWide}>
                   <div>
                     <small>Books Finished</small>
                     <strong>24</strong>
                   </div>
-                  <TrendingUp size={19} />
+                  <LineChart size={18} />
                 </div>
                 <div className={styles.metric}>
                   <small>Streak</small>
@@ -129,14 +147,14 @@ export default function Landing() {
 
         <section className={styles.featureBand} id="features">
           <div className={styles.sectionHeading}>
-            <span>What ReadList keeps together</span>
+            <span>What The Shelf Keeps</span>
             <h2>A calmer way to manage your reading life.</h2>
           </div>
           <div className={styles.featureGrid}>
             {features.map(({ icon: Icon, title, text }) => (
               <article className={styles.featurePanel} key={title}>
                 <div className={styles.featureIcon}>
-                  {createElement(Icon, { size: 22 })}
+                  {createElement(Icon, { size: 21 })}
                 </div>
                 <h3>{title}</h3>
                 <p>{text}</p>
@@ -150,12 +168,12 @@ export default function Landing() {
             <img src={logoImage} alt="ReadList flower book logo" />
           </div>
           <div className={styles.workflowCopy}>
-            <span>Simple workflow</span>
+            <span>Simple Workflow</span>
             <h2>From wishlist to finished shelf, every step has a home.</h2>
             <div className={styles.steps}>
               {steps.map((step, index) => (
                 <div className={styles.step} key={step}>
-                  <span>{index + 1}</span>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
                   <p>{step}</p>
                 </div>
               ))}
@@ -165,36 +183,29 @@ export default function Landing() {
 
         <section className={styles.previewBand} id="preview">
           <div className={styles.sectionHeading}>
-            <span>Product preview</span>
+            <span>The Reading Room</span>
             <h2>Built for readers who like seeing the whole shelf.</h2>
           </div>
           <div className={styles.previewCards}>
-            <article className={styles.productPanel}>
-              <BookOpen size={24} />
-              <h3>Active Reads</h3>
-              <p>Keep current books close, with page progress and quick status changes.</p>
-            </article>
-            <article className={styles.productPanel}>
-              <Search size={24} />
-              <h3>Book Search</h3>
-              <p>Find titles through book search and add them to your personal list.</p>
-            </article>
-            <article className={styles.productPanel}>
-              <BookMarked size={24} />
-              <h3>Finished Shelf</h3>
-              <p>Review completed books, total pages, and long-term reading momentum.</p>
-            </article>
+            {shelves.map(({ icon: Icon, code, title, text }) => (
+              <article className={styles.productPanel} key={code}>
+                {createElement(Icon, { size: 22 })}
+                <span className={styles.catalogCode}>{code}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
           </div>
         </section>
 
         <section className={styles.finalCta}>
           <img src={bookImage} alt="" />
           <div>
-            <h2>Your next chapter deserves a place to live.</h2>
-            <p>Start a library that remembers what you read, when you read, and where you are headed next.</p>
+            <h2>Your next chapter deserves a shelf.</h2>
+            <p>Start a library that remembers what you read, when you read it, and where you are headed next.</p>
           </div>
           <Link to="/signup" className={styles.primaryCta}>
-            Create Your ReadList <ArrowRight size={18} />
+            Create Your Shelf <ArrowRight size={18} />
           </Link>
         </section>
       </main>
