@@ -74,7 +74,7 @@ export default function Signup() {
         setSuccessMessage(result.message)
       } else {
         // Auto-login successful
-        navigate('/')
+        navigate('/dashboard')
       }
     } else {
       setServerError(result.error || 'Failed to create account. Please try again.')
