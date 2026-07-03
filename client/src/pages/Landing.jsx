@@ -1,4 +1,4 @@
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { createElement } from 'react'
 import {
   ArrowRight,
@@ -12,7 +12,6 @@ import {
   Sparkles,
   TrendingUp
 } from 'lucide-react'
-import { useAuth } from '../context/AuthContext'
 import logoImage from '../assets/Black Logo.png'
 import bookImage from '../assets/images (4).jpg'
 import styles from './Landing.module.css'
@@ -43,12 +42,6 @@ const steps = [
 ]
 
 export default function Landing() {
-  const { user, loading } = useAuth()
-
-  if (!loading && user) {
-    return <Navigate to="/dashboard" replace />
-  }
-
   return (
     <div className={styles.page}>
       <header className={styles.header}>
