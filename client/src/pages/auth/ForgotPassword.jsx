@@ -4,12 +4,11 @@ import { useAuth } from '../../context/AuthContext'
 import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
 import logoImage from '../../assets/Black Logo.png'
-import styles from './ForgotPassword.module.css'
 import { CheckCircle, ArrowLeft } from 'lucide-react'
 
 export default function ForgotPassword() {
   const { resetPassword } = useAuth()
-  
+
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -49,22 +48,24 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.card}>
-        {/* Logo */}
-        <div className={styles.logoSection}>
-          <img src={logoImage} alt="ReadList" className={styles.logo} />
-          <h1 className={styles.title}>Forgot Password?</h1>
-          <p className={styles.subtitle}>
-            Enter your email and we'll send you a link to reset your password
+    <div className="min-h-screen bg-stone-50 flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-sm bg-white border border-stone-200 rounded-2xl p-8 shadow-sm">
+        {/* logo and heading */}
+        <div className="flex flex-col items-center text-center mb-8">
+          <img src={logoImage} alt="ReadList" className="w-12 h-12 rounded-lg object-cover mb-4" />
+          <h1 className="text-xl font-semibold text-stone-900 mb-2">Forgot password</h1>
+          <p className="text-sm text-stone-500 leading-relaxed">
+            Enter your email and we will send you a link to reset your password.
           </p>
         </div>
 
-        {/* Form */}
         {!success ? (
-          <form onSubmit={handleSubmit} className={styles.form}>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {error && (
-              <div className={styles.errorAlert} role="alert">
+              <div
+                role="alert"
+                className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3"
+              >
                 {error}
               </div>
             )}
@@ -81,33 +82,38 @@ export default function ForgotPassword() {
               required
             />
 
-            <Button 
-              type="submit" 
-              variant="primary" 
-              fullWidth 
+            <Button
+              type="submit"
+              variant="primary"
+              fullWidth
               loading={loading}
               disabled={loading}
             >
-              {loading ? 'Sending...' : 'Send Reset Link'}
+              {loading ? 'Sending...' : 'Send reset link'}
             </Button>
           </form>
         ) : (
-          <div className={styles.successMessage}>
-            <div className={styles.successIcon}><CheckCircle size={40} /></div>
-            <h2 className={styles.successTitle}>Check Your Email</h2>
-            <p className={styles.successText}>
-              We've sent a password reset link to <strong>{email}</strong>
+          <div className="flex flex-col items-center text-center gap-3 py-2">
+            <div className="w-14 h-14 rounded-full bg-sage-100 text-sage-600 flex items-center justify-center">
+              <CheckCircle size={28} />
+            </div>
+            <h2 className="text-lg font-semibold text-stone-900">Check your email</h2>
+            <p className="text-sm text-stone-500">
+              We sent a password reset link to <strong className="text-stone-700">{email}</strong>
             </p>
-            <p className={styles.successText}>
+            <p className="text-sm text-stone-500">
               Click the link in the email to reset your password.
             </p>
           </div>
         )}
 
-        {/* Back to Login */}
-        <div className={styles.footer}>
-          <Link to="/login" className={styles.backLink}>
-            <ArrowLeft size={15} /> Back to Login
+        {/* back to login */}
+        <div className="mt-8 pt-6 border-t border-stone-100 text-center">
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-stone-500 hover:text-plum-600 transition"
+          >
+            <ArrowLeft size={15} /> Back to login
           </Link>
         </div>
       </div>

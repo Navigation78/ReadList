@@ -1,49 +1,23 @@
-/* ========================================
-   ReadList - Entry Point Styles
-   ======================================== */
+@theme {
+  --color-plum-50: #f6f0f4;
+  --color-plum-100: #ecdfe8;
+  --color-plum-200: #d6bdd0;
+  --color-plum-300: #b98fae;
+  --color-plum-400: #96628a;
+  --color-plum-500: #5b3a53;
+  --color-plum-600: #4a2f44;
+  --color-plum-700: #3a2436;
+  --color-plum-800: #2b1a29;
+  --color-plum-900: #1c111b;
 
-/* Import Design System */
-@import './styles/variables.css';
-@import './styles/global.css';
-
-/* ========================================
-   ROOT APP STYLES
-   ======================================== */
-
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ========================================
-   MAIN CONTENT AREA
-   ======================================== */
-
-main {
-  flex: 1;
-}
-
-/* ========================================
-   PAGE TRANSITIONS (Optional)
-   ======================================== */
-
-.page-enter {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.page-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.3s ease;
-}
-
-.page-exit {
-  opacity: 1;
-}
-
-.page-exit-active {
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  --color-sage-50: #f3f5f1;
+  --color-sage-100: #e1e6dc;
+  --color-sage-200: #c1cbb7;
+  --color-sage-300: #a3b394;
+  --color-sage-400: #8a9b7c;
+  --color-sage-500: #5c6f4f;
+  --color-sage-600: #4f6151;
+  --color-sage-700: #3d4c33;
+  --color-sage-800: #2c3625;
+  --color-sage-900: #1c2317;
 }
