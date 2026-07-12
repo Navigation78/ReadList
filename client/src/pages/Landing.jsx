@@ -116,11 +116,7 @@ export default function Landing() {
             <div className={styles.heroPhotoFrame}>
               <img src={heroImage} alt="ReadList" />
             </div>
-            <div className={styles.floatingCard}>
-              <div className={styles.floatingCardHead}>
-                <BookOpen size={18} />
-              </div>
-            </div>
+          
           </div>
         </section>
 
