@@ -13,7 +13,8 @@ import {
   Star
 } from 'lucide-react'
 import logoImage from '../assets/Black Logo.png'
-import bookImage from '../assets/images (4).jpg'
+import heroImage from '../assets/ReadList Hero Image.jpg'
+import bookCoverImage from '../assets/Bookcover.jpg'
 import styles from './Landing.module.css'
 
 // short capability labels shown in the strip under the hero
@@ -113,7 +114,7 @@ export default function Landing() {
 
           <div className={styles.heroVisual}>
             <div className={styles.heroPhotoFrame}>
-              <img src={bookImage} alt="A stack of books" />
+              <img src={heroImage} alt="ReadList" />
             </div>
             <div className={styles.floatingCard}>
               <div className={styles.floatingCardHead}>
@@ -209,9 +210,9 @@ export default function Landing() {
 
             <div className={styles.previewVisual}>
               <div className={styles.bookDetailCard}>
-                <div className={styles.bookCoverBlock} />
-                <h4>The Quiet Mind</h4>
-                <p className={styles.author}>Marcus Aurelius</p>
+                <img src={bookCoverImage} alt="The Gilded Mirror book cover" className={styles.bookCoverBlock} />
+                <h4>The Gilded Mirror</h4>
+                <p className={styles.author}>K E Barden</p>
                 <div className={styles.bookStats}>
                   <span>Reading Progress</span>
                   <span>182 / 240 pages</span>
@@ -220,7 +221,7 @@ export default function Landing() {
                   <span style={{ width: '75%' }} />
                 </div>
                 <p className={styles.note}>
-                  &ldquo;The happiness of your life depends upon the quality of your thoughts.&rdquo;
+                  &ldquo;Every mirror tells the truth, it just waits for you to be ready.&rdquo;
                 </p>
                 <p className={styles.noteMeta}>Recent Note, 2 mins ago</p>
               </div>
