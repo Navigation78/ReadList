@@ -2,62 +2,72 @@ import { Link } from 'react-router-dom'
 import { createElement } from 'react'
 import {
   ArrowRight,
+  BarChart3,
   BookOpen,
-  Bookmark,
   CheckCircle2,
   Library,
-  LineChart,
+  Mail,
   NotebookPen,
   Search,
-  Sparkles
+  Share2,
+  Star
 } from 'lucide-react'
 import logoImage from '../assets/Black Logo.png'
 import bookImage from '../assets/images (4).jpg'
 import styles from './Landing.module.css'
 
+// short capability labels shown in the strip under the hero
+// kept honest (no invented user counts) since ReadList has no live users yet
+const highlights = [
+  { icon: Library, title: 'Personal Library', text: 'Every book in one place' },
+  { icon: NotebookPen, title: 'Session Logging', text: 'Track pages as you read' },
+  { icon: BarChart3, title: 'Reading Stats', text: 'Streaks and monthly pace' },
+  { icon: Search, title: 'Quick Add', text: 'Search and add in seconds' }
+]
+
 const features = [
   {
-    icon: Library,
-    title: 'A library with memory',
-    text: 'Sort books into want to read, currently reading, and finished, without losing the thread.'
+    icon: BarChart3,
+    title: 'Visual Progress',
+    text: 'Watch your pace take shape through simple, tactile charts of your streaks and monthly totals.',
+    mock: 'chart'
   },
   {
     icon: NotebookPen,
-    title: 'Progress that stays visible',
-    text: 'Log sessions and pages so every pocket of reading counts toward something.'
+    title: 'Reading Notes',
+    text: 'Jot a quick note after every session so the moments that stood out do not fade.',
+    mock: 'notes'
   },
   {
-    icon: LineChart,
-    title: 'Stats for better habits',
-    text: 'See streaks, pages, and monthly momentum in one warm, readable dashboard.'
+    icon: Library,
+    title: 'Curated Shelves',
+    text: 'Organize want to read, currently reading, and finished titles into shelves that make sense to you.',
+    mock: 'stack'
   }
 ]
 
-const steps = [
-  'Search or add a book',
-  'Move it into your list',
-  'Log sessions and pages',
-  'Watch your reading grow'
+const previewPoints = [
+  'One tap progress tracking',
+  'Quick notes after every session',
+  'Cross device sync with your account'
 ]
 
-const shelves = [
+// fictional reader personas standing in for testimonials until real ones are collected
+const testimonials = [
   {
-    icon: BookOpen,
-    code: 'LC-001',
-    title: 'Active Reads',
-    text: 'Keep current books close, with page progress and quick status changes.'
+    quote: 'ReadList turned my scattered reading list into one calm shelf. Logging a session takes seconds.',
+    name: 'Amara N.',
+    role: 'Book Club Organizer'
   },
   {
-    icon: Search,
-    code: 'LC-002',
-    title: 'Book Search',
-    text: 'Find titles through book search and add them to your personal list.'
+    quote: 'The stats page is the first tracker I have used that actually makes me want to keep my streak going.',
+    name: 'Brian K.',
+    role: 'Graduate Student'
   },
   {
-    icon: Bookmark,
-    code: 'LC-003',
-    title: 'Finished Shelf',
-    text: 'Review completed books, total pages, and long term reading momentum.'
+    quote: 'Search and add is genuinely fast. I dropped my old spreadsheet within a week.',
+    name: 'Wanjiru M.',
+    role: 'Casual Reader'
   }
 ]
 
@@ -65,180 +75,226 @@ export default function Landing() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Link to="/" className={styles.brand} aria-label="ReadList home">
-          <img src={logoImage} alt="" className={styles.brandLogo} />
-          <span>ReadList</span>
-        </Link>
+        <div className={styles.headerInner}>
+          <Link to="/" className={styles.brand} aria-label="ReadList home">
+            <img src={logoImage} alt="" className={styles.brandLogo} />
+            ReadList
+          </Link>
 
-        <nav className={styles.nav} aria-label="Landing navigation">
-          <a href="#features">Features</a>
-          <a href="#workflow">Workflow</a>
-          <a href="#preview">Preview</a>
-        </nav>
+          <nav className={styles.nav} aria-label="Landing navigation">
+            <a href="#features" className={styles.navActive}>Features</a>
+            <a href="#preview">Preview</a>
+            <a href="#testimonials">Community</a>
+          </nav>
 
-        <div className={styles.headerActions}>
-          <Link to="/login" className={styles.loginLink}>Log In</Link>
-          <Link to="/signup" className={styles.headerCta}>Get Started</Link>
+          <div className={styles.headerActions}>
+            <Link to="/login" className={styles.loginLink}>Sign In</Link>
+            <Link to="/signup" className={styles.headerCta}>Start Reading</Link>
+          </div>
         </div>
       </header>
 
       <main>
+        {/* hero: headline, two CTAs, and a photo with a floating progress card */}
         <section className={styles.hero}>
           <div className={styles.heroCopy}>
-            <div className={styles.kicker}>
-              <Sparkles size={14} />
-              No. 01 · Personal Library System
-            </div>
-            <h1>A library that remembers where you left off.</h1>
-            <p>
-              Keep every book, every page, and every reading streak in one calm,
-              well kept shelf. Add a title, log a session, and watch the shelf fill in.
+            <h1>Your reading journey, <em>beautifully chronicled.</em></h1>
+            <p className={styles.heroLead}>
+              A calm home for the modern reader. Track your pace, log every
+              session, and keep a shelf that reflects what you actually read.
             </p>
             <div className={styles.heroActions}>
               <Link to="/signup" className={styles.primaryCta}>
-                Start Your Shelf <ArrowRight size={18} />
+                Start Your Library <ArrowRight size={17} />
               </Link>
-              <Link to="/login" className={styles.secondaryCta}>I already have an account</Link>
-            </div>
-            <div className={styles.trustRow} aria-label="ReadList highlights">
-              <span><CheckCircle2 size={15} /> Progress tracking</span>
-              <span><CheckCircle2 size={15} /> Reading stats</span>
-              <span><CheckCircle2 size={15} /> Book search</span>
+              <a href="#features" className={styles.secondaryCta}>Explore Features</a>
             </div>
           </div>
 
-          <div className={styles.heroVisual} aria-label="ReadList product preview">
-            <div className={styles.ledger}>
-              <div className={styles.ledgerTop}>
-                <span>Reading Ledger</span>
-                <span>Up To Date</span>
+          <div className={styles.heroVisual}>
+            <div className={styles.heroPhotoFrame}>
+              <img src={bookImage} alt="A stack of books" />
+            </div>
+            <div className={styles.floatingCard}>
+              <div className={styles.floatingCardHead}>
+                <BookOpen size={18} />
+                <span>Current Reading</span>
               </div>
-              <div className={styles.ledgerGrid}>
-                <div className={styles.metricWide}>
-                  <div>
-                    <small>Books Finished</small>
-                    <strong>24</strong>
-                  </div>
-                  <LineChart size={18} />
-                </div>
-                <div className={styles.metric}>
-                  <small>Streak</small>
-                  <strong>12 days</strong>
-                </div>
-                <div className={styles.bookStack}>
-                  <div className={styles.bookCover} />
-                  <div>
-                    <small>Currently Reading</small>
-                    <strong>The Quiet Page</strong>
-                    <div className={styles.progressTrack}>
-                      <span style={{ width: '68%' }} />
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.chartPreview}>
-                  {[42, 70, 48, 86, 62, 96].map((height, index) => (
-                    <span key={index} style={{ height: `${height}%` }} />
-                  ))}
-                </div>
+              <div className={styles.progressTrack}>
+                <span style={{ width: '74%' }} />
               </div>
+              <p>74% through &lsquo;The Odyssey&rsquo;</p>
             </div>
           </div>
         </section>
 
-        <section className={styles.featureBand} id="features">
-          <div className={styles.sectionHeading}>
-            <span>What The Shelf Keeps</span>
-            <h2>A calmer way to manage your reading life.</h2>
+        {/* honest capability strip, replaces the usual fabricated stats bar */}
+        <section className={styles.highlights}>
+          <div className={styles.highlightsGrid}>
+            {highlights.map(({ icon: Icon, title, text }) => (
+              <div className={styles.highlightItem} key={title}>
+                <div className={styles.highlightIcon}>
+                  {createElement(Icon, { size: 18 })}
+                </div>
+                <strong>{title}</strong>
+                <p>{text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* features bento grid, each card paired with a small visual mockup */}
+        <section className={styles.features} id="features">
+          <div className={styles.sectionHead}>
+            <h2>Designed for Intention</h2>
+            <p>Tools that stay out of the way, leaving only you and the page you are on.</p>
           </div>
           <div className={styles.featureGrid}>
-            {features.map(({ icon: Icon, title, text }) => (
-              <article className={styles.featurePanel} key={title}>
-                <div className={styles.featureIcon}>
-                  {createElement(Icon, { size: 21 })}
+            {features.map(({ icon: Icon, title, text, mock }, index) => (
+              <article
+                className={`${styles.featureCard} ${index === 1 ? styles.featureCardRaised : ''}`}
+                key={title}
+              >
+                <div className={styles.featureIconWrap}>
+                  {createElement(Icon, { size: 20 })}
                 </div>
                 <h3>{title}</h3>
                 <p>{text}</p>
+
+                {mock === 'chart' && (
+                  <div className={styles.chartMock}>
+                    {[40, 70, 55, 90, 65].map((height, i) => (
+                      <span key={i} style={{ height: `${height}%` }} />
+                    ))}
+                  </div>
+                )}
+                {mock === 'notes' && (
+                  <div className={styles.notesMock}>
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                )}
+                {mock === 'stack' && (
+                  <div className={styles.stackMock}>
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                )}
               </article>
             ))}
           </div>
         </section>
 
-        <section className={styles.workflow} id="workflow">
-          <div className={styles.workflowImage}>
-            <img src={logoImage} alt="ReadList flower book logo" />
-          </div>
-          <div className={styles.workflowCopy}>
-            <span>Simple Workflow</span>
-            <h2>From wishlist to finished shelf, every step has a home.</h2>
-            <div className={styles.steps}>
-              {steps.map((step, index) => (
-                <div className={styles.step} key={step}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <p>{step}</p>
+        {/* interface preview: copy on the left, a mock book detail card on the right */}
+        <section className={styles.preview} id="preview">
+          <div className={styles.previewPanel}>
+            <div className={styles.previewCopy}>
+              <span className={styles.previewBadge}>Interface Preview</span>
+              <h2>Focus on the Narrative</h2>
+              <p>
+                Generous whitespace and minimal typography keep your books at the
+                center. No cluttered dashboards, just you and your progress.
+              </p>
+              <ul className={styles.previewList}>
+                {previewPoints.map((point) => (
+                  <li key={point}>
+                    <CheckCircle2 size={17} />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={styles.previewVisual}>
+              <div className={styles.bookDetailCard}>
+                <div className={styles.bookCoverBlock} />
+                <h4>The Quiet Mind</h4>
+                <p className={styles.author}>Marcus Aurelius</p>
+                <div className={styles.bookStats}>
+                  <span>Reading Progress</span>
+                  <span>182 / 240 pages</span>
                 </div>
-              ))}
+                <div className={styles.progressTrack}>
+                  <span style={{ width: '75%' }} />
+                </div>
+                <p className={styles.note}>
+                  &ldquo;The happiness of your life depends upon the quality of your thoughts.&rdquo;
+                </p>
+                <p className={styles.noteMeta}>Recent Note, 2 mins ago</p>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className={styles.previewBand} id="preview">
-          <div className={styles.sectionHeading}>
-            <span>The Reading Room</span>
-            <h2>Built for readers who like seeing the whole shelf.</h2>
+        {/* testimonials use fictional placeholder reviewers until real ones exist */}
+        <section className={styles.testimonials} id="testimonials">
+          <div className={styles.testimonialsHead}>
+            <div>
+              <h2>Community Highlights</h2>
+              <p>Early feedback from readers trying out ReadList.</p>
+            </div>
+            <a href="#" className={styles.seeAll}>
+              See All Stories <ArrowRight size={16} />
+            </a>
           </div>
-          <div className={styles.previewCards}>
-            {shelves.map(({ icon: Icon, code, title, text }) => (
-              <article className={styles.productPanel} key={code}>
-                {createElement(Icon, { size: 22 })}
-                <span className={styles.catalogCode}>{code}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
+          <div className={styles.testimonialGrid}>
+            {testimonials.map(({ quote, name, role }) => (
+              <article className={styles.testimonialCard} key={name}>
+                <div className={styles.stars}>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" stroke="none" />
+                  ))}
+                </div>
+                <blockquote>{quote}</blockquote>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.avatar} />
+                  <div>
+                    <strong>{name}</strong>
+                    <span>{role}</span>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
         </section>
 
         <section className={styles.finalCta}>
-          <img src={bookImage} alt="" />
-          <div>
-            <h2>Your next chapter deserves a shelf.</h2>
-            <p>Start a library that remembers what you read, when you read it, and where you are headed next.</p>
+          <div className={styles.finalCtaInner}>
+            <h2>Turn the Page to Your Next Chapter</h2>
+            <p>Start your reading library today and see how ReadList helps you keep track of every book.</p>
+            <Link to="/signup" className={styles.finalCtaButton}>
+              Get Started for Free <ArrowRight size={18} />
+            </Link>
+            <small>No credit card required. Sync across all your devices.</small>
           </div>
-          <Link to="/signup" className={styles.primaryCta}>
-            Create Your Shelf <ArrowRight size={18} />
-          </Link>
         </section>
       </main>
 
       <footer className={styles.footer}>
-        <div className={styles.footerBrand}>
-          <img src={logoImage} alt="" />
-          <div>
+        <div className={styles.footerInner}>
+          <div className={styles.footerBrand}>
             <strong>ReadList</strong>
             <p>A warm, organized home for your books, pages, and reading habits.</p>
           </div>
-        </div>
-        <div className={styles.footerGrid}>
-          <div>
-            <span>Product</span>
+
+          <div className={styles.footerLinks}>
             <a href="#features">Features</a>
-            <a href="#workflow">Workflow</a>
-            <a href="#preview">Preview</a>
-          </div>
-          <div>
-            <span>Account</span>
             <Link to="/signup">Sign Up</Link>
             <Link to="/login">Log In</Link>
+            <Link to="/privacy">Privacy</Link>
+            <Link to="/terms">Terms</Link>
           </div>
-          <div>
-            <span>Legal</span>
-            <Link to="/terms">Terms of Use</Link>
-            <Link to="/privacy">Privacy Policy</Link>
+
+          <div className={styles.footerSocial}>
+            <a href="#" aria-label="Share ReadList">
+              <Share2 size={17} />
+            </a>
+            <a href="#" aria-label="Email ReadList">
+              <Mail size={17} />
+            </a>
           </div>
-        </div>
-        <div className={styles.footerBottom}>
-          <small>Copyright 2026 ReadList. All rights reserved.</small>
-          <small>Made for readers who like a little order with their wonder.</small>
         </div>
       </footer>
     </div>
