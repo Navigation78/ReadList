@@ -119,10 +119,6 @@ export default function Landing() {
             <div className={styles.floatingCard}>
               <div className={styles.floatingCardHead}>
                 <BookOpen size={18} />
-                <span>Current Reading</span>
-              </div>
-              <div className={styles.progressTrack}>
-                <span style={{ width: '74%' }} />
               </div>
               <p>74% through &lsquo;The Odyssey&rsquo;</p>
             </div>
