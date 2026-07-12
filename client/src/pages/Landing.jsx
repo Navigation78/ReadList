@@ -119,7 +119,10 @@ export default function Landing() {
             <div className={styles.floatingCard}>
               <div className={styles.floatingCardHead}>
                 <BookOpen size={18} />
+              </div>
+            </div>
           </div>
+        </section>
 
         {/* honest capability strip, replaces the usual fabricated stats bar */}
         <section className={styles.highlights}>
