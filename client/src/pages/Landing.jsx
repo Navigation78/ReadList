@@ -10,8 +10,11 @@ import {
   NotebookPen,
   Sparkles,
   Star,
+  Sun,
+  Moon,
   Zap
 } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 import logoImage from '../assets/Black Logo.png'
 import heroImage from '../assets/ReadList Hero Image.jpg'
 import bookCoverImage from '../assets/Bookcover.jpg'
@@ -53,10 +56,12 @@ const tintClasses = {
 }
 
 export default function Landing() {
+  const { theme, toggleTheme } = useTheme()
+
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 font-body" style={doodleBg}>
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 font-body" style={doodleBg}>
       {/* header */}
-      <header className="sticky top-0 z-50 bg-stone-50/80 backdrop-blur-md shadow-[0_8px_30px_rgba(248,200,220,0.35)]">
+      <header className="sticky top-0 z-50 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-md shadow-[0_8px_30px_rgba(248,200,220,0.35)] dark:shadow-none">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 font-display text-xl font-bold text-rose-500">
             <img src={logoImage} alt="" className="w-8 h-8 rounded-lg object-cover" />
@@ -64,23 +69,30 @@ export default function Landing() {
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
             <a href="#features" className="text-rose-500 font-bold border-b-2 border-rose-200 pb-1">Features</a>
-            <a href="#preview" className="text-stone-500 hover:text-rose-500 transition">Preview</a>
-            <a href="#testimonials" className="text-stone-500 hover:text-rose-500 transition">Community</a>
+            <a href="#preview" className="text-stone-800 dark:text-stone-300 hover:text-rose-500 transition">Preview</a>
+            <a href="#testimonials" className="text-stone-800 dark:text-stone-300 hover:text-rose-500 transition">Community</a>
           </div>
-          <Link
-            to="/signup"
-            className="bg-rose-200 text-rose-700 px-6 py-2 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-rose-200/60 active:scale-95 transition-all"
-          >
-            Start Reading
-          </Link>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="text-stone-600 dark:text-stone-300 hover:text-rose-500 transition p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <Link
+              to="/login"
+              className="bg-rose-200 text-rose-700 px-6 py-2 rounded-lg text-sm font-bold hover:shadow-lg hover:shadow-rose-200/60 active:scale-95 transition-all"
+            >
+              Start Reading
+            </Link>
+          </div>
         </nav>
       </header>
 
       <main>
         {/* hero */}
         <section className="relative max-w-7xl mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-12">
-          <Sparkles className="absolute -top-6 -left-6 text-rose-200 opacity-60" size={36} />
-
           <div className="lg:w-1/2 flex flex-col items-start gap-5 z-10">
             <span className="bg-lavender-100 text-lavender-600 px-4 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-2">
               <Sparkles size={14} /> Your Personal Sanctuary
@@ -88,20 +100,20 @@ export default function Landing() {
             <h1 className="font-display text-5xl md:text-6xl font-bold text-rose-500 leading-tight">
               Your reading journey, <span className="italic font-light">beautifully</span> chronicled.
             </h1>
-            <p className="text-lg text-stone-500 max-w-lg leading-relaxed">
+            <p className="text-lg text-stone-800 dark:text-stone-300 max-w-lg leading-relaxed">
               A calm home for the modern reader. Track your pace, log every
               session, and keep a shelf that reflects what you actually read.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
-                to="/signup"
-                className="bg-rose-500 text-white px-8 py-4 rounded-full font-display font-semibold shadow-[0_10px_30px_-5px_rgba(121,84,101,0.4)] hover:scale-105 active:scale-95 transition-all"
+                to="/login"
+                className="bg-rose-500 text-white px-8 py-4 rounded-lg font-display font-semibold shadow-[0_10px_30px_-5px_rgba(121,84,101,0.4)] hover:scale-105 active:scale-95 transition-all"
               >
                 Start Your Library
               </Link>
               <a
                 href="#features"
-                className="bg-lavender-100 text-lavender-600 px-8 py-4 rounded-full font-display font-semibold hover:bg-lavender-200 active:scale-95 transition-all"
+                className="bg-lavender-100 text-lavender-600 px-8 py-4 rounded-lg font-display font-semibold hover:bg-lavender-200 active:scale-95 transition-all"
               >
                 Explore Features
               </a>
@@ -117,14 +129,14 @@ export default function Landing() {
               <img src={heroImage} alt="ReadList" className="w-full h-auto object-cover" />
             </div>
 
-            <div className="absolute -bottom-6 -right-6 bg-white p-5 rounded-2xl shadow-xl max-w-[220px] border-4 border-rose-100 hidden md:block">
+            <div className="absolute -bottom-6 -right-6 bg-white dark:bg-stone-900 p-5 rounded-2xl shadow-xl max-w-[220px] border-4 border-rose-100 hidden md:block">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-mint-100 flex items-center justify-center text-mint-600">
                   <CheckCircle2 size={18} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-stone-900">Book Finished!</p>
-                  <p className="text-[10px] text-stone-500">420 pages, 12 days</p>
+                  <p className="text-xs font-bold text-stone-900 dark:text-stone-100">Book Finished!</p>
+                  <p className="text-[10px] text-stone-800 dark:text-stone-300">420 pages, 12 days</p>
                 </div>
               </div>
             </div>
@@ -132,7 +144,7 @@ export default function Landing() {
         </section>
 
         {/* honest capability strip */}
-        <section className="bg-white py-10">
+        <section className="bg-white dark:bg-stone-900 py-10">
           <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between gap-8">
             {highlights.map(({ icon: Icon, title, text, tint }) => (
               <div className="flex items-center gap-4 group" key={title}>
@@ -143,7 +155,7 @@ export default function Landing() {
                 </div>
                 <div>
                   <p className={`font-display text-sm font-semibold ${tintClasses[tint].text500}`}>{title}</p>
-                  <p className="text-xs text-stone-500">{text}</p>
+                  <p className="text-xs text-stone-800 dark:text-stone-300">{text}</p>
                 </div>
               </div>
             ))}
@@ -154,17 +166,17 @@ export default function Landing() {
         <section className="max-w-7xl mx-auto px-6 py-20" id="features">
           <div className="text-center mb-14">
             <h2 className="font-display text-3xl font-bold text-rose-500 mb-3">Every detail, considered.</h2>
-            <p className="text-stone-500 max-w-2xl mx-auto">
+            <p className="text-stone-800 dark:text-stone-300 max-w-2xl mx-auto">
               Thoughtfully designed features that celebrate your reading life without adding clutter.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* visual progress, wide card with a mini bar chart */}
-            <div className="md:col-span-2 bg-white rounded-3xl p-8 shadow-[0_15px_40px_rgba(193,220,198,0.3)] border-t-8 border-mint-100 flex flex-col justify-between">
+            <div className="md:col-span-2 bg-white dark:bg-stone-900 rounded-3xl p-8 shadow-[0_15px_40px_rgba(193,220,198,0.3)] border-t-8 border-mint-100 flex flex-col justify-between">
               <div>
                 <h3 className="font-display text-xl font-semibold text-mint-600 mb-2">Visual Progress</h3>
-                <p className="text-stone-500 max-w-md">
+                <p className="text-stone-800 dark:text-stone-300 max-w-md">
                   Watch your pace take shape through simple, tactile charts of your streaks and monthly totals.
                 </p>
               </div>
@@ -180,29 +192,29 @@ export default function Landing() {
             </div>
 
             {/* reading notes, small card with two sample note snippets */}
-            <div className="bg-rose-50 rounded-3xl p-8 shadow-[0_15px_40px_rgba(248,200,220,0.25)] border-b-8 border-rose-200 flex flex-col">
+            <div className="bg-rose-50 dark:bg-stone-900 rounded-3xl p-8 shadow-[0_15px_40px_rgba(248,200,220,0.25)] border-b-8 border-rose-200 flex flex-col">
               <div className="w-12 h-12 bg-rose-200 rounded-full flex items-center justify-center mb-4 text-rose-700">
                 <NotebookPen size={20} />
               </div>
               <h3 className="font-display text-xl font-semibold text-rose-500 mb-2">Reading Notes</h3>
-              <p className="text-stone-500 text-sm mb-6">
+              <p className="text-stone-800 dark:text-stone-300 text-sm mb-6">
                 Jot a quick note after every session so the moments that stood out do not fade.
               </p>
               <div className="mt-auto space-y-3">
-                <div className="bg-white p-3 rounded-xl shadow-sm border border-rose-100 text-xs text-stone-600">
+                <div className="bg-white dark:bg-stone-900 p-3 rounded-xl shadow-sm border border-rose-100 text-xs text-stone-600 dark:text-stone-400">
                   The way she describes the fog is breathtaking.
                 </div>
-                <div className="bg-white p-3 rounded-xl shadow-sm border border-rose-100 text-xs text-stone-600 translate-x-3 opacity-70">
+                <div className="bg-white dark:bg-stone-900 p-3 rounded-xl shadow-sm border border-rose-100 text-xs text-stone-600 dark:text-stone-400 translate-x-3 opacity-70">
                   Important character beat in chapter four.
                 </div>
               </div>
             </div>
 
             {/* curated shelves, full width card with tag chips and a spine illustration */}
-            <div className="md:col-span-3 bg-lavender-50 rounded-3xl p-8 shadow-[0_15px_40px_rgba(197,197,216,0.3)] flex flex-col md:flex-row items-center gap-10">
+            <div className="md:col-span-3 bg-lavender-50 dark:bg-stone-900 rounded-3xl p-8 shadow-[0_15px_40px_rgba(197,197,216,0.3)] flex flex-col md:flex-row items-center gap-10">
               <div className="md:w-1/2">
                 <h3 className="font-display text-xl font-semibold text-lavender-600 mb-2">Curated Shelves</h3>
-                <p className="text-stone-500">
+                <p className="text-stone-800 dark:text-stone-300">
                   Organize want to read, currently reading, and finished titles into shelves that make sense to
                   you. Build custom collections for favorites, classics, or study material.
                 </p>
@@ -224,17 +236,17 @@ export default function Landing() {
         </section>
 
         {/* interface preview, book detail card mockup using the real cover image */}
-        <section className="bg-white py-20" id="preview">
+        <section className="bg-white dark:bg-stone-900 py-20" id="preview">
           <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2">
               <h2 className="font-display text-4xl font-bold text-rose-500 mb-5">Focus on the Narrative</h2>
-              <p className="text-lg text-stone-500 mb-8 leading-relaxed">
+              <p className="text-lg text-stone-800 dark:text-stone-300 mb-8 leading-relaxed">
                 Generous whitespace and minimal typography keep your books at the center. No distractions,
                 just you and your stories.
               </p>
               <ul className="space-y-4">
                 {previewPoints.map((point) => (
-                  <li className="flex items-center gap-3 text-stone-700" key={point}>
+                  <li className="flex items-center gap-3 text-stone-700 dark:text-stone-300" key={point}>
                     <CheckCircle2 className="text-rose-500" size={20} />
                     {point}
                   </li>
@@ -246,7 +258,7 @@ export default function Landing() {
               <div className="absolute -top-8 -right-8 w-28 h-28 bg-rose-200/30 rounded-full blur-2xl" />
               <div className="absolute -bottom-8 -left-8 w-36 h-36 bg-mint-200/30 rounded-full blur-3xl" />
 
-              <div className="bg-white p-8 rounded-3xl shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] w-full max-w-md border border-stone-100 rotate-1 relative z-10">
+              <div className="bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] w-full max-w-md border border-stone-100 rotate-1 relative z-10">
                 <div className="flex items-start gap-5 mb-8">
                   <img
                     src={bookCoverImage}
@@ -256,7 +268,7 @@ export default function Landing() {
                   <div className="flex flex-col h-40 justify-between">
                     <div>
                       <h4 className="font-display text-lg font-semibold text-rose-500 leading-tight">The Gilded Mirror</h4>
-                      <p className="text-stone-500 text-sm">K E Barden</p>
+                      <p className="text-stone-800 dark:text-stone-300 text-sm">K E Barden</p>
                     </div>
                     <div className="bg-lavender-100 rounded-full px-4 py-2 text-xs font-bold text-lavender-600 flex items-center gap-2 w-fit">
                       <Clock size={14} /> In Progress
@@ -266,7 +278,7 @@ export default function Landing() {
 
                 <div className="mb-6">
                   <div className="flex justify-between items-end mb-2">
-                    <p className="text-sm font-bold text-stone-800">182 of 240 pages</p>
+                    <p className="text-sm font-bold text-stone-800 dark:text-stone-300">182 of 240 pages</p>
                     <p className="text-sm font-bold text-rose-500">75%</p>
                   </div>
                   <div className="w-full h-3 bg-stone-100 rounded-full overflow-hidden">
@@ -275,13 +287,13 @@ export default function Landing() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-stone-50 p-4 rounded-xl">
-                    <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">Started</p>
-                    <p className="text-sm font-bold text-stone-800">Jul 2, 2026</p>
+                  <div className="bg-stone-50 dark:bg-stone-800 p-4 rounded-xl">
+                    <p className="text-[10px] uppercase tracking-wider text-stone-600 dark:text-stone-400 mb-1">Started</p>
+                    <p className="text-sm font-bold text-stone-800 dark:text-stone-300">Jul 2, 2026</p>
                   </div>
-                  <div className="bg-stone-50 p-4 rounded-xl">
-                    <p className="text-[10px] uppercase tracking-wider text-stone-400 mb-1">Est. Finish</p>
-                    <p className="text-sm font-bold text-stone-800">In 3 days</p>
+                  <div className="bg-stone-50 dark:bg-stone-800 p-4 rounded-xl">
+                    <p className="text-[10px] uppercase tracking-wider text-stone-600 dark:text-stone-400 mb-1">Est. Finish</p>
+                    <p className="text-sm font-bold text-stone-800 dark:text-stone-300">In 3 days</p>
                   </div>
                 </div>
               </div>
@@ -296,14 +308,14 @@ export default function Landing() {
             {testimonials.map(({ quote, name, tint }) => (
               <div
                 key={name}
-                className={`bg-white p-8 rounded-3xl shadow-xl border ${tintClasses[tint].border100} flex flex-col gap-4`}
+                className={`bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-xl border ${tintClasses[tint].border100} flex flex-col gap-4`}
               >
                 <div className={`flex ${tintClasses[tint].text500}`}>
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} size={16} fill="currentColor" stroke="none" />
                   ))}
                 </div>
-                <p className="italic text-stone-500">{quote}</p>
+                <p className="italic text-stone-800 dark:text-stone-300">{quote}</p>
                 <div className="mt-auto pt-4 flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-full ${tintClasses[tint].bg100}`} />
                   <p className={`font-bold ${tintClasses[tint].text600}`}>{name}</p>
@@ -316,8 +328,6 @@ export default function Landing() {
         {/* final cta */}
         <section className="max-w-5xl mx-auto px-6 pb-20">
           <div className="bg-rose-200 rounded-3xl p-12 text-center relative overflow-hidden shadow-2xl shadow-rose-200/40">
-            <Sparkles className="absolute -top-6 -left-6 text-white/40" size={90} />
-            <Sparkles className="absolute -bottom-6 -right-6 text-white/40" size={90} />
             <h2 className="font-display text-4xl font-bold text-rose-700 mb-5 relative z-10">
               Turn the Page to Your Next Chapter
             </h2>
@@ -325,8 +335,8 @@ export default function Landing() {
               Start your reading library today and see how ReadList helps you keep track of every book.
             </p>
             <Link
-              to="/signup"
-              className="inline-flex items-center gap-2 bg-rose-500 text-white px-10 py-5 rounded-full font-display font-semibold shadow-xl hover:scale-105 active:scale-95 transition-all relative z-10"
+              to="/login"
+              className="inline-flex items-center gap-2 bg-rose-500 text-white px-10 py-5 rounded-lg font-display font-semibold shadow-xl hover:scale-105 active:scale-95 transition-all relative z-10"
             >
               Get Started for Free <ArrowRight size={18} />
             </Link>
@@ -335,18 +345,18 @@ export default function Landing() {
       </main>
 
       {/* footer */}
-      <footer className="bg-white rounded-t-3xl">
+      <footer className="bg-white dark:bg-stone-900 rounded-t-3xl">
         <div className="max-w-7xl mx-auto px-6 py-14 flex flex-col items-center gap-6">
           <div className="flex items-center gap-2 font-display text-lg font-semibold text-rose-500">
             <BookOpen size={20} /> ReadList
           </div>
           <div className="flex gap-8 flex-wrap justify-center text-sm">
-            <Link to="/privacy" className="text-stone-500 hover:text-rose-500 transition">Privacy</Link>
-            <Link to="/terms" className="text-stone-500 hover:text-rose-500 transition">Terms</Link>
-            <Link to="/login" className="text-stone-500 hover:text-rose-500 transition">Log In</Link>
-            <Link to="/signup" className="text-stone-500 hover:text-rose-500 transition">Sign Up</Link>
+            <Link to="/privacy" className="text-stone-800 dark:text-stone-300 hover:text-rose-500 transition">Privacy</Link>
+            <Link to="/terms" className="text-stone-800 dark:text-stone-300 hover:text-rose-500 transition">Terms</Link>
+            <Link to="/login" className="text-stone-800 dark:text-stone-300 hover:text-rose-500 transition">Log In</Link>
+            <Link to="/signup" className="text-stone-800 dark:text-stone-300 hover:text-rose-500 transition">Sign Up</Link>
           </div>
-          <p className="text-stone-400 text-sm text-center">© 2026 ReadList. Made for readers who love a little whimsy.</p>
+          <p className="text-stone-600 dark:text-stone-400 text-sm text-center">© 2026 ReadList. Made for readers who love a little whimsy.</p>
         </div>
       </footer>
     </div>

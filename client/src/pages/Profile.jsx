@@ -9,7 +9,7 @@ import Modal from '../components/common/Modal'
 import {
   BookMarked, CheckCircle, BookOpen, Bookmark,
   Shield, LogOut, Trash2, AlertTriangle, User,
-  Key, CheckCircle2, ChevronRight, Sparkles
+  Key, CheckCircle2, ChevronRight
 } from 'lucide-react'
 
 export default function Profile() {
@@ -112,23 +112,11 @@ export default function Profile() {
     lavender: { box: 'bg-lavender-50 border-lavender-100', icon: 'bg-lavender-100 text-lavender-600', text: 'text-lavender-600' },
     mint: { box: 'bg-mint-50 border-mint-100', icon: 'bg-mint-100 text-mint-600', text: 'text-mint-600' },
     rose: { box: 'bg-rose-50 border-rose-100', icon: 'bg-rose-100 text-rose-600', text: 'text-rose-600' },
-    stone: { box: 'bg-stone-50 border-stone-200', icon: 'bg-stone-100 text-stone-500', text: 'text-stone-600' }
+    stone: { box: 'bg-stone-50 border-stone-200', icon: 'bg-stone-100 text-stone-800 dark:text-stone-300', text: 'text-stone-600' }
   }
 
   return (
     <div className="relative max-w-5xl mx-auto px-6 py-10 overflow-hidden">
-      {/* floating decorative sparkles, purely visual */}
-      <Sparkles
-        className="hidden lg:block absolute top-4 right-16 text-rose-200 pointer-events-none"
-        size={36}
-        style={{ animation: 'float 6s ease-in-out infinite' }}
-      />
-      <Sparkles
-        className="hidden lg:block absolute bottom-40 left-2 text-mint-200 pointer-events-none"
-        size={28}
-        style={{ animation: 'float 6s ease-in-out infinite 2s' }}
-      />
-
       {/* header with icon avatar */}
       <div className="relative z-10 flex items-center gap-4 mb-10">
         <div className="w-16 h-16 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center shadow-[0_4px_20px_rgba(248,200,220,0.4)]">
@@ -136,7 +124,7 @@ export default function Profile() {
         </div>
         <div>
           <h1 className="font-display text-3xl font-bold text-rose-500">Profile Settings</h1>
-          <p className="text-stone-500">Manage your account and preferences</p>
+          <p className="text-stone-800 dark:text-stone-300">Manage your account and preferences</p>
         </div>
       </div>
 
@@ -153,22 +141,22 @@ export default function Profile() {
         {/* account info */}
         <section>
           <h2 className="font-display text-lg font-semibold text-rose-500 mb-4 ml-1">Account Info</h2>
-          <div className="bg-white rounded-3xl p-8 shadow-[0_10px_40px_-10px_rgba(121,84,101,0.15)] border border-white/60">
+          <div className="bg-white dark:bg-stone-900 rounded-3xl p-8 shadow-[0_10px_40px_-10px_rgba(121,84,101,0.15)] border border-white/60">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="block text-xs font-medium text-stone-400 mb-1">Email Address</label>
-                <p className="text-sm font-medium text-stone-800">{userData.email}</p>
+                <label className="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Email Address</label>
+                <p className="text-sm font-medium text-stone-900 dark:text-stone-100">{userData.email}</p>
               </div>
               <div>
-                <label className="block text-xs font-medium text-stone-400 mb-1">Member Since</label>
-                <p className="text-sm font-medium text-stone-800">
+                <label className="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Member Since</label>
+                <p className="text-sm font-medium text-stone-900 dark:text-stone-100">
                   {new Date(user.created_at).toLocaleDateString('en-US', {
                     year: 'numeric', month: 'long', day: 'numeric'
                   })}
                 </p>
               </div>
               <div>
-                <label className="block text-xs font-medium text-stone-400 mb-1">User ID</label>
+                <label className="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">User ID</label>
                 <code className="text-xs font-medium text-stone-600 bg-stone-100 px-2 py-1 rounded-lg break-all">
                   {user.id}
                 </code>
@@ -192,7 +180,7 @@ export default function Profile() {
                     <Icon size={18} />
                   </div>
                   <span className={`font-display text-3xl font-bold ${c.text}`}>{value}</span>
-                  <span className="text-xs text-stone-500 mt-1">{label}</span>
+                  <span className="text-xs text-stone-800 dark:text-stone-300 mt-1">{label}</span>
                 </div>
               )
             })}
@@ -202,15 +190,15 @@ export default function Profile() {
         {/* security */}
         <section>
           <h2 className="font-display text-lg font-semibold text-rose-500 mb-4 ml-1">Security</h2>
-          <div className="bg-white rounded-3xl p-8 shadow-[0_10px_40px_-10px_rgba(121,84,101,0.15)] border border-white/60">
+          <div className="bg-white dark:bg-stone-900 rounded-3xl p-8 shadow-[0_10px_40px_-10px_rgba(121,84,101,0.15)] border border-white/60">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-lavender-100 text-lavender-600 flex items-center justify-center flex-shrink-0">
                   <Key size={18} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-stone-800">Change Password</p>
-                  <p className="text-sm text-stone-500">Update your account password regularly</p>
+                  <p className="text-sm font-semibold text-stone-900 dark:text-stone-100">Change Password</p>
+                  <p className="text-sm text-stone-800 dark:text-stone-300">Update your account password regularly</p>
                 </div>
               </div>
               <Button variant="outline" size="small" onClick={() => setShowPasswordModal(true)}>
@@ -231,12 +219,12 @@ export default function Profile() {
               className="flex items-center justify-between group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-white text-stone-500 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-full bg-white text-stone-800 dark:text-stone-300 flex items-center justify-center flex-shrink-0">
                   <LogOut size={18} />
                 </div>
-                <p className="text-sm font-semibold text-stone-800">Log Out</p>
+                <p className="text-sm font-semibold text-stone-900 dark:text-stone-100">Log Out</p>
               </div>
-              <ChevronRight size={18} className="text-stone-400 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight size={18} className="text-stone-600 dark:text-stone-400 group-hover:translate-x-1 transition-transform" />
             </button>
 
             <div className="h-px bg-red-100" />
@@ -248,7 +236,7 @@ export default function Profile() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-red-600">Delete Account</p>
-                  <p className="text-sm text-stone-500">This action is permanent and cannot be undone</p>
+                  <p className="text-sm text-stone-800 dark:text-stone-300">This action is permanent and cannot be undone</p>
                 </div>
               </div>
               <Button variant="danger" size="small" onClick={() => setShowDeleteModal(true)}>

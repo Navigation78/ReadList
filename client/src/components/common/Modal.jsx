@@ -53,10 +53,10 @@ export default function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className={`w-full bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(248,200,220,0.4)] ${sizes[size]}`}
+        className={`w-full bg-white dark:bg-stone-900 rounded-[2rem] shadow-[0_20px_50px_rgba(248,200,220,0.4)] dark:shadow-none ${sizes[size]}`}
       >
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between px-7 py-5 border-b border-stone-100">
+          <div className="flex items-center justify-between px-7 py-5 border-b border-stone-100 dark:border-stone-700">
             {title && (
               <h2 id="modal-title" className="font-display text-lg font-semibold text-rose-500">
                 {title}
@@ -66,7 +66,7 @@ export default function Modal({
               <button
                 onClick={onClose}
                 aria-label="Close modal"
-                className="w-8 h-8 rounded-full flex items-center justify-center text-stone-400 hover:bg-rose-50 hover:text-rose-500 transition"
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 dark:text-stone-400 hover:bg-rose-50 dark:hover:bg-stone-800 hover:text-rose-500 transition"
               >
                 <X size={16} />
               </button>

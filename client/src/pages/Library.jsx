@@ -57,7 +57,7 @@ export default function Library() {
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="font-display text-3xl font-bold text-rose-500">My Library</h1>
-          <p className="text-stone-500 mt-1">{total} {total === 1 ? 'book' : 'books'} in your collection</p>
+          <p className="text-stone-800 dark:text-stone-300 mt-1">{total} {total === 1 ? 'book' : 'books'} in your collection</p>
         </div>
         <Button variant="primary" onClick={() => navigate('/search')}>
           <Plus size={16} /> Add Book
@@ -70,10 +70,10 @@ export default function Library() {
           <button
             key={id}
             onClick={() => setActiveTab(id)}
-            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition ${
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition ${
               activeTab === id
                 ? 'bg-rose-500 text-white shadow-md'
-                : 'bg-white text-stone-500 border border-stone-200 hover:border-rose-200 hover:text-rose-500'
+                : 'bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-300 border border-stone-200 dark:border-stone-700 hover:border-rose-200 hover:text-rose-500'
             }`}
           >
             <Icon size={15} />
@@ -87,12 +87,12 @@ export default function Library() {
 
       {/* content */}
       {currentBooks.length === 0 ? (
-        <div className="flex flex-col items-center text-center gap-4 bg-white rounded-3xl py-20 px-6 shadow-[0_20px_50px_rgba(0,0,0,0.04)]">
+        <div className="flex flex-col items-center text-center gap-4 bg-white dark:bg-stone-900 rounded-3xl py-20 px-6 shadow-[0_20px_50px_rgba(0,0,0,0.04)]">
           <div className="w-16 h-16 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center">
             <Search size={28} />
           </div>
-          <h3 className="font-display text-xl font-semibold text-stone-800">No books here yet</h3>
-          <p className="text-stone-500 max-w-sm">
+          <h3 className="font-display text-xl font-semibold text-stone-900 dark:text-stone-100">No books here yet</h3>
+          <p className="text-stone-800 dark:text-stone-300 max-w-sm">
             {activeTab === 'currently_reading' && 'Start reading a book to track your progress here.'}
             {activeTab === 'want_to_read' && 'Add books you want to read to build your reading list.'}
             {activeTab === 'finished' && "Finish a book and it'll show up here."}
@@ -127,15 +127,15 @@ export default function Library() {
                     </div>
                   )}
                 </div>
-                <h3 className="text-sm font-bold text-stone-800 leading-tight truncate">{book.title}</h3>
-                <p className="text-xs text-stone-500 truncate">{book.author}</p>
+                <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100 leading-tight truncate">{book.title}</h3>
+                <p className="text-xs text-stone-800 dark:text-stone-300 truncate">{book.author}</p>
 
                 {activeTab === 'currently_reading' && book.page_count > 0 && (
                   <div className="mt-2">
                     <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
                       <div className="h-full bg-rose-400 rounded-full" style={{ width: `${pct}%` }} />
                     </div>
-                    <div className="flex items-center justify-between mt-1 text-[10px] text-stone-400">
+                    <div className="flex items-center justify-between mt-1 text-[10px] text-stone-600 dark:text-stone-400">
                       <span className="flex items-center gap-1"><TrendingUp size={10} /> {pct}%</span>
                       <span>{book.current_page}/{book.page_count}</span>
                     </div>
@@ -143,7 +143,7 @@ export default function Library() {
                 )}
 
                 {activeTab === 'finished' && book.finished_at && (
-                  <span className="mt-2 inline-flex items-center gap-1 text-[10px] text-stone-400">
+                  <span className="mt-2 inline-flex items-center gap-1 text-[10px] text-stone-600 dark:text-stone-400">
                     <Clock size={10} />
                     {new Date(book.finished_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                   </span>

@@ -64,7 +64,7 @@ export default function Login() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#faf9f8] flex items-center justify-center px-4 py-12 overflow-hidden">
+    <div className="relative min-h-screen bg-[#faf9f8] dark:bg-stone-950 flex items-center justify-center px-4 py-12 overflow-hidden">
       {/* Whimsical background glow */}
       <div
         className="fixed inset-0 -z-10 opacity-40 pointer-events-none"
@@ -74,12 +74,12 @@ export default function Login() {
         }}
       />
 
-      <div className="w-full max-w-sm bg-white rounded-[2.5rem] p-8 shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)]">
+      <div className="w-full max-w-sm bg-white dark:bg-stone-900 rounded-[2.5rem] p-8 shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)]">
         {/* logo and heading */}
         <div className="flex flex-col items-center text-center mb-8">
           <img src={logoImage} alt="ReadList" className="w-12 h-12 rounded-2xl object-cover mb-4" />
           <h1 className="font-['Quicksand'] font-bold text-2xl text-[#795465] mb-2">Welcome back</h1>
-          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/70">Login to continue your reading journey</p>
+          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448] dark:text-stone-300">Login to continue your reading journey</p>
         </div>
 
         {/* form */}
@@ -132,15 +132,15 @@ export default function Login() {
             fullWidth
             loading={loading}
             disabled={loading}
-            className="rounded-full bg-[#795465] hover:bg-[#795465]/90 font-['Quicksand'] font-bold shadow-lg"
+            className="rounded-lg bg-[#795465] hover:bg-[#795465]/90 font-['Quicksand'] font-bold shadow-lg"
           >
             {loading ? 'Logging in...' : 'Login'}
           </Button>
         </form>
 
         {/* sign up link */}
-        <div className="mt-8 pt-6 border-t border-[#e3e2e1] text-center">
-          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/70">
+        <div className="mt-8 pt-6 border-t border-[#e3e2e1] dark:border-stone-700 text-center">
+          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448] dark:text-stone-300">
             Don't have an account?{' '}
             <Link to="/signup" className="font-medium text-[#795465] hover:text-[#5f3c4d] transition">
               Sign up

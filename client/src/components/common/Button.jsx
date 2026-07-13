@@ -4,9 +4,9 @@ import { Loader2 } from 'lucide-react'
 
 const variants = {
   primary: 'bg-rose-500 text-white hover:bg-rose-600 focus-visible:ring-rose-500',
-  secondary: 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 focus-visible:ring-rose-500',
-  outline: 'bg-transparent text-stone-600 border border-stone-300 hover:bg-stone-50 focus-visible:ring-rose-500',
-  ghost: 'bg-transparent text-stone-600 hover:bg-stone-100 focus-visible:ring-rose-500',
+  secondary: 'bg-white dark:bg-stone-800 text-stone-800 dark:text-stone-200 border border-stone-300 dark:border-stone-600 hover:bg-stone-50 dark:hover:bg-stone-700 focus-visible:ring-rose-500',
+  outline: 'bg-transparent text-stone-800 dark:text-stone-200 border border-stone-300 dark:border-stone-600 hover:bg-stone-50 dark:hover:bg-stone-800 focus-visible:ring-rose-500',
+  ghost: 'bg-transparent text-stone-800 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 focus-visible:ring-rose-500',
   danger: 'bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-500'
 }
 const sizes = {

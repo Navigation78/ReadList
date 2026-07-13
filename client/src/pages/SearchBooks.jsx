@@ -5,7 +5,7 @@ import Button from '../components/common/Button'
 import Input from '../components/common/Input'
 import Loading from '../components/common/Loading'
 import Modal from '../components/common/Modal'
-import { Search, BookOpen, Plus, CheckCircle, AlertCircle, Sparkles } from 'lucide-react'
+import { Search, BookOpen, Plus, CheckCircle, AlertCircle } from 'lucide-react'
 
 
 export default function SearchBooks() {
@@ -89,10 +89,7 @@ export default function SearchBooks() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#faf9f8] px-6 py-10 md:px-12 overflow-hidden">
-      {/* Decorative sparkles */}
-      <Sparkles className="hidden md:block absolute top-10 right-12 text-[#f8c8dc] opacity-50" size={40} />
-      <BookOpen className="hidden md:block absolute bottom-16 left-6 text-[#e1e1f5] opacity-50" size={32} />
+    <div className="relative min-h-screen bg-[#faf9f8] dark:bg-stone-950 px-6 py-10 md:px-12 overflow-hidden">
 
       {/* Toast */}
       {toast && (
@@ -113,7 +110,7 @@ export default function SearchBooks() {
         <h1 className="font-['Quicksand'] font-bold text-4xl md:text-5xl text-[#795465] mb-2">
           Search Books
         </h1>
-        <p className="font-['Be_Vietnam_Pro'] text-lg text-[#4f4448]/80">
+        <p className="font-['Be_Vietnam_Pro'] text-lg text-[#4f4448] dark:text-stone-300">
           Find your next great read and add it to your library
         </p>
 
@@ -133,7 +130,7 @@ export default function SearchBooks() {
             variant="primary"
             disabled={loading || !query.trim()}
             loading={loading}
-            className="rounded-full px-7 font-['Quicksand'] font-bold bg-[#795465] hover:bg-[#795465]/90 shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)]"
+            className="rounded-lg px-7 font-['Quicksand'] font-bold bg-[#795465] hover:bg-[#795465]/90 shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)]"
           >
             Search
           </Button>
@@ -157,7 +154,7 @@ export default function SearchBooks() {
       {/* Results */}
       {!loading && results.length > 0 && (
         <div className="relative z-10 max-w-6xl mx-auto">
-          <p className="flex items-center gap-2 font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/70 mb-4">
+          <p className="flex items-center gap-2 font-['Be_Vietnam_Pro'] text-sm text-[#4f4448] dark:text-stone-300 mb-4">
             <Search size={14} /> {results.length} results found
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -185,7 +182,7 @@ export default function SearchBooks() {
           <div className="w-16 h-16 rounded-full bg-[#f8c8dc] flex items-center justify-center text-[#795465] mx-auto mb-6">
             <BookOpen size={30} />
           </div>
-          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/80 mb-8">
+          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448] dark:text-stone-300 mb-8">
             Where would you like to add<br />
             <strong className="text-[#795465]">"{selectedBook?.volumeInfo?.title}"</strong>?
           </p>
@@ -197,7 +194,7 @@ export default function SearchBooks() {
               onClick={() => addBookToLibrary('want_to_read')}
               disabled={addingBook}
               loading={addingBook}
-              className="rounded-full border-2 border-[#f8c8dc] text-[#795465] font-['Quicksand'] font-bold hover:bg-[#f8c8dc]/10"
+              className="rounded-lg border-2 border-[#f8c8dc] text-[#795465] font-['Quicksand'] font-bold hover:bg-[#f8c8dc]/10"
             >
               Want to Read
             </Button>
@@ -206,7 +203,7 @@ export default function SearchBooks() {
               fullWidth
               onClick={() => addBookToLibrary('currently_reading')}
               disabled={addingBook}
-              className="rounded-full bg-[#e1e1f5] text-[#626374] font-['Quicksand'] font-bold hover:opacity-90"
+              className="rounded-lg bg-[#e1e1f5] text-[#626374] font-['Quicksand'] font-bold hover:opacity-90"
             >
               Currently Reading
             </Button>
@@ -215,7 +212,7 @@ export default function SearchBooks() {
               fullWidth
               onClick={() => addBookToLibrary('finished')}
               disabled={addingBook}
-              className="rounded-full bg-[#795465] text-white font-['Quicksand'] font-bold hover:bg-[#795465]/90 shadow-lg"
+              className="rounded-lg bg-[#795465] text-white font-['Quicksand'] font-bold hover:bg-[#795465]/90 shadow-lg"
             >
               Already Read
             </Button>
@@ -229,7 +226,7 @@ export default function SearchBooks() {
 function SearchBookCard({ book, onAdd, added }) {
   const info = book.volumeInfo
   return (
-    <article className="group flex flex-col h-full bg-white p-6 rounded-[2.5rem] shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)] hover:scale-[1.02] transition-transform duration-300">
+    <article className="group flex flex-col h-full bg-white dark:bg-stone-900 p-6 rounded-[2.5rem] shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)] hover:scale-[1.02] transition-transform duration-300">
       <div className="relative w-full aspect-[2/3] mb-6 rounded-[2rem] overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
         {info.imageLinks?.thumbnail ? (
           <img
@@ -251,7 +248,7 @@ function SearchBookCard({ book, onAdd, added }) {
           ) : (
             <button
               onClick={() => onAdd(book)}
-              className="w-11 h-11 rounded-full bg-white/90 backdrop-blur text-[#795465] flex items-center justify-center hover:bg-[#795465] hover:text-white transition-all duration-300 shadow-sm"
+              className="w-11 h-11 rounded-lg bg-white/90 dark:bg-stone-800/90 backdrop-blur text-[#795465] flex items-center justify-center hover:bg-[#795465] hover:text-white transition-all duration-300 shadow-sm"
             >
               <Plus size={18} />
             </button>
@@ -274,12 +271,12 @@ function SearchBookCard({ book, onAdd, added }) {
         </div>
 
         <h3 className="font-['Quicksand'] font-semibold text-xl text-[#795465] mb-1">{info.title}</h3>
-        <p className="font-['Be_Vietnam_Pro'] italic text-[#4f4448]/80 mb-4">
+        <p className="font-['Be_Vietnam_Pro'] italic text-[#4f4448] dark:text-stone-300 mb-4">
           {info.authors?.join(', ') || 'Unknown Author'}
         </p>
 
         {info.description && (
-          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/70 line-clamp-3 mb-4">
+          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448] dark:text-stone-300 line-clamp-3 mb-4">
             {info.description.substring(0, 130)}
             {info.description.length > 130 ? '…' : ''}
           </p>

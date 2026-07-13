@@ -66,19 +66,19 @@ export default function LegalPage({ type = 'terms' }) {
   const [highlightA, highlightB, ...rest] = page.sections
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 font-body" style={bubblyBg}>
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 font-body" style={bubblyBg}>
       {/* header */}
-      <header className="sticky top-0 z-50 bg-stone-50/80 backdrop-blur-md shadow-[0_8px_30px_rgba(248,200,220,0.35)]">
+      <header className="sticky top-0 z-50 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-md shadow-[0_8px_30px_rgba(248,200,220,0.35)] dark:shadow-none">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold text-rose-500">
             <img src={logoImage} alt="" className="w-8 h-8 rounded-lg object-cover" />
             ReadList
           </Link>
           <div className="flex items-center gap-6">
-            <Link to="/login" className="text-sm font-medium text-stone-500 hover:text-rose-500 transition">Log In</Link>
+            <Link to="/login" className="text-sm font-medium text-stone-800 dark:text-stone-300 hover:text-rose-500 transition">Log In</Link>
             <Link
               to="/signup"
-              className="bg-rose-200 text-rose-700 px-6 py-2 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-rose-200/60 active:scale-95 transition-all"
+              className="bg-rose-200 text-rose-700 px-6 py-2 rounded-lg text-sm font-bold hover:shadow-lg hover:shadow-rose-200/60 active:scale-95 transition-all"
             >
               Get Started
             </Link>
@@ -87,25 +87,13 @@ export default function LegalPage({ type = 'terms' }) {
       </header>
 
       <main className="max-w-4xl mx-auto px-6 py-16 relative">
-        {/* decorative floating icons, hidden on small screens */}
-        <Sparkles
-          className="absolute -left-16 top-24 text-rose-200 opacity-60 hidden lg:block"
-          size={90}
-          style={{ animation: 'float 6s ease-in-out infinite' }}
-        />
-        <Sparkles
-          className="absolute -right-12 top-80 text-mint-200 opacity-60 hidden lg:block"
-          size={60}
-          style={{ animation: 'float 6s ease-in-out infinite 2s' }}
-        />
-
         {/* page header */}
         <div className="text-center mb-12 relative z-10">
           <span className="inline-block px-4 py-1 mb-4 rounded-full bg-mint-100 text-mint-600 text-xs font-semibold">
             Legal
           </span>
           <h1 className="font-display text-4xl md:text-5xl font-bold text-rose-500 mb-4">{page.title}</h1>
-          <p className="text-lg text-stone-500 max-w-2xl mx-auto leading-relaxed">{page.intro}</p>
+          <p className="text-lg text-stone-800 dark:text-stone-300 max-w-2xl mx-auto leading-relaxed">{page.intro}</p>
         </div>
 
         {/* two highlight cards from the first two sections */}
@@ -115,7 +103,7 @@ export default function LegalPage({ type = 'terms' }) {
             return (
               <section
                 key={title}
-                className={`bg-white p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all flex flex-col gap-4 border-t-4 ${tintClasses[tint].border200}`}
+                className={`bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all flex flex-col gap-4 border-t-4 ${tintClasses[tint].border200}`}
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-full ${tintClasses[tint].bg100} flex items-center justify-center ${tintClasses[tint].text600}`}>
@@ -123,14 +111,14 @@ export default function LegalPage({ type = 'terms' }) {
                   </div>
                   <h2 className={`font-display text-lg font-semibold ${tintClasses[tint].text600}`}>{title}</h2>
                 </div>
-                <p className="text-stone-500 text-sm leading-relaxed">{text}</p>
+                <p className="text-stone-800 dark:text-stone-300 text-sm leading-relaxed">{text}</p>
               </section>
             )
           })}
         </div>
 
         {/* remaining sections in one detailed card */}
-        <section className="bg-white p-8 md:p-12 rounded-3xl shadow-[0_30px_60px_rgba(248,200,220,0.15)] mb-12 relative z-10">
+        <section className="bg-white dark:bg-stone-900 p-8 md:p-12 rounded-3xl shadow-[0_30px_60px_rgba(248,200,220,0.15)] mb-12 relative z-10">
           <div className="space-y-8">
             {rest.map(([title, text], i) => {
               const { icon: Icon, tint } = sectionStyle[i + 2]
@@ -140,7 +128,7 @@ export default function LegalPage({ type = 'terms' }) {
                     <Icon size={18} />
                     {title}
                   </h3>
-                  <p className="text-stone-500 leading-relaxed">{text}</p>
+                  <p className="text-stone-800 dark:text-stone-300 leading-relaxed">{text}</p>
                 </div>
               )
             })}
@@ -153,7 +141,7 @@ export default function LegalPage({ type = 'terms' }) {
           <p className="opacity-80 mb-6">We are happy to help clarify anything on this page.</p>
           <a
             href="mailto:support@readlist.app"
-            className="inline-flex items-center gap-2 px-8 py-3 bg-white text-lavender-600 font-bold rounded-full hover:shadow-lg transition-all active:scale-95"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-white dark:bg-stone-900 text-lavender-600 font-bold rounded-lg hover:shadow-lg transition-all active:scale-95"
           >
             <Mail size={18} /> Contact support
           </a>
@@ -161,25 +149,25 @@ export default function LegalPage({ type = 'terms' }) {
       </main>
 
       {/* footer */}
-      <footer className="bg-white rounded-t-3xl">
+      <footer className="bg-white dark:bg-stone-900 rounded-t-3xl">
         <div className="max-w-7xl mx-auto px-6 py-14 flex flex-col items-center gap-6">
           <div className="flex items-center gap-2 font-display text-lg font-semibold text-rose-500">
             <BookOpen size={20} /> ReadList
           </div>
-          <p className="text-stone-500 text-sm text-center max-w-sm">
+          <p className="text-stone-800 dark:text-stone-300 text-sm text-center max-w-sm">
             Book tracking, reading progress, and habits in one organized place.
           </p>
           <div className="flex gap-8 flex-wrap justify-center text-sm">
-            <Link to="/" className="text-stone-500 hover:text-rose-500 transition">Home</Link>
+            <Link to="/" className="text-stone-800 dark:text-stone-300 hover:text-rose-500 transition">Home</Link>
             <Link
               to="/terms"
-              className={type === 'terms' ? 'text-rose-500 font-bold' : 'text-stone-500 hover:text-rose-500 transition'}
+              className={type === 'terms' ? 'text-rose-500 font-bold' : 'text-stone-800 dark:text-stone-300 hover:text-rose-500 transition'}
             >
               Terms of Use
             </Link>
             <Link
               to="/privacy"
-              className={type === 'privacy' ? 'text-rose-500 font-bold' : 'text-stone-500 hover:text-rose-500 transition'}
+              className={type === 'privacy' ? 'text-rose-500 font-bold' : 'text-stone-800 dark:text-stone-300 hover:text-rose-500 transition'}
             >
               Privacy Policy
             </Link>
