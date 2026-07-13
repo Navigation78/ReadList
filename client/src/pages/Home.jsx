@@ -50,48 +50,48 @@ export default function Home() {
   const wantPct     = 100 - readingPct - finishedPct
 
   const barColors = [
-    'bg-mint/40 hover:bg-mint/60',
-    'bg-lavender/60 hover:bg-lavender/80',
-    'bg-peach/50 hover:bg-peach/70',
-    'bg-lavender/60 hover:bg-lavender/80',
-    'bg-primary-container hover:opacity-90',
-    'bg-mint/40 hover:bg-mint/60'
+    'bg-mint-400/40 hover:bg-mint-400/60',
+    'bg-lavender-400/60 hover:bg-lavender-400/80',
+    'bg-rose-200/50 hover:bg-rose-200/70',
+    'bg-lavender-400/60 hover:bg-lavender-400/80',
+    'bg-rose-500 hover:opacity-90',
+    'bg-mint-400/40 hover:bg-mint-400/60'
   ]
 
   return (
-    <div className="px-container-margin pb-section-gap max-w-container-max mx-auto space-y-gutter">
+    <div className="px-6 pb-10 max-w-6xl mx-auto space-y-8">
       {/* Welcome Header with Decorative Background */}
-      <section className="relative py-stack-lg mt-stack-md rounded-xl overflow-hidden">
+      <section className="relative py-10 mt-4 rounded-xl overflow-hidden">
         <div className="absolute inset-0 floral-pattern"></div>
-        <div className="relative z-10 px-stack-md">
-          <h3 className="text-display-lg font-display-lg text-on-background animate-fade-in">
-            Welcome, {displayName} <span className="text-primary">✨</span>
+        <div className="relative z-10 px-6">
+          <h3 className="text-display-lg text-stone-900 animate-fade-in">
+            Welcome, {displayName} <span className="text-rose-500">✨</span>
           </h3>
-          <p className="text-body-lg font-body-lg text-on-surface-variant mt-2">
+          <p className="text-body-lg text-stone-500 mt-2">
             Magic awaits on every page. You've reached {booksThisYear} milestone{booksThisYear === 1 ? '' : 's'} this year.
           </p>
         </div>
       </section>
 
       {/* Row 1: Statistics Cards */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Stars Collected Card */}
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md flex flex-col justify-between floating-card border border-primary-container/10">
-          <div className="flex justify-between items-start mb-stack-sm">
+        <div className="bg-white rounded-xl shadow-sm p-6 flex flex-col justify-between floating-card border border-rose-500/10">
+          <div className="flex justify-between items-start mb-2">
             <div>
-              <p className="text-label-md font-label-md text-on-surface-variant flex items-center gap-1">
-                <span className="material-symbols-outlined text-primary scale-75">stars</span> Stars Collected
+              <p className="text-label-md text-stone-500 flex items-center gap-1">
+                <span className="material-symbols-outlined text-rose-500 scale-75">stars</span> Stars Collected
               </p>
               <div className="flex items-baseline gap-3 mt-1">
-                <span className="text-display-lg font-display-lg text-primary">{finished.length}</span>
-                <span className="text-label-sm font-label-sm text-tertiary flex items-center bg-tertiary-container px-3 py-1 rounded-full">
+                <span className="text-display-lg text-rose-500">{finished.length}</span>
+                <span className="text-label-sm text-mint-700 flex items-center bg-mint-100 px-3 py-1 rounded-full">
                   <span className="material-symbols-outlined text-[14px] mr-1">trending_up</span> {booksThisYear} this year
                 </span>
               </div>
             </div>
             <button
               onClick={() => navigate('/stats')}
-              className="text-label-md font-label-md text-primary underline underline-offset-4 hover:opacity-70 transition-opacity"
+              className="text-label-md text-rose-500 underline underline-offset-4 hover:opacity-70 transition-opacity"
             >
               View Stats
             </button>
@@ -110,7 +110,7 @@ export default function Home() {
                     title={`${m.count} books finished`}
                   >
                     {/* Tooltip */}
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-on-surface text-surface text-[10px] px-2 py-0.5 rounded shadow z-10 whitespace-nowrap">
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-stone-800 text-white text-[10px] px-2 py-0.5 rounded shadow z-10 whitespace-nowrap">
                       {m.count} {m.count === 1 ? 'book' : 'books'}
                     </div>
                   </div>
@@ -118,7 +118,7 @@ export default function Home() {
               )
             })}
           </div>
-          <div className="flex justify-between mt-4 text-label-sm text-on-surface-variant px-1 font-bold">
+          <div className="flex justify-between mt-4 text-label-sm text-stone-500 px-1 font-bold">
             {monthlyData.map((m, i) => (
               <span key={i}>{m.month}</span>
             ))}
@@ -126,7 +126,7 @@ export default function Home() {
         </div>
 
         {/* Garden Status Card */}
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md flex flex-col md:flex-row gap-stack-md items-center floating-card border border-primary-container/10">
+        <div className="bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row gap-6 items-center floating-card border border-rose-500/10">
           <div className="relative w-48 h-48 flex-shrink-0">
             {/* SVG Donut Chart with Pastel Colors */}
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
@@ -169,40 +169,40 @@ export default function Home() {
               )}
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-headline-md font-headline-md text-on-surface">{allBooks.length}</span>
-              <span className="text-label-sm font-label-sm text-on-surface-variant">Seeds</span>
+              <span className="text-headline-md text-stone-800">{allBooks.length}</span>
+              <span className="text-label-sm text-stone-500">Seeds</span>
             </div>
           </div>
           <div className="flex-1 space-y-4 w-full">
             <div className="flex justify-between items-center">
-              <h4 className="text-headline-md font-headline-md text-on-surface">Garden Status</h4>
+              <h4 className="text-headline-md text-stone-800">Garden Status</h4>
               <button
                 onClick={() => navigate('/library')}
-                className="text-label-md font-label-md text-primary underline underline-offset-4"
+                className="text-label-md text-rose-500 underline underline-offset-4"
               >
                 Explore
               </button>
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-primary-container"></div>
-                <span className="text-label-md font-label-md flex-1">Bloomed</span>
-                <span className="text-label-md font-label-md text-on-surface-variant">{finishedPct}%</span>
+                <div className="w-3 h-3 rounded-full bg-rose-500"></div>
+                <span className="text-label-md flex-1">Bloomed</span>
+                <span className="text-label-md text-stone-500">{finishedPct}%</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-mint"></div>
-                <span className="text-label-md font-label-md flex-1">Growing</span>
-                <span className="text-label-md font-label-md text-on-surface-variant">{readingPct}%</span>
+                <div className="w-3 h-3 rounded-full bg-mint-400"></div>
+                <span className="text-label-md flex-1">Growing</span>
+                <span className="text-label-md text-stone-500">{readingPct}%</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-lavender"></div>
-                <span className="text-label-md font-label-md flex-1">Planter Box</span>
-                <span className="text-label-md font-label-md text-on-surface-variant">{wantPct}%</span>
+                <div className="w-3 h-3 rounded-full bg-lavender-400"></div>
+                <span className="text-label-md flex-1">Planter Box</span>
+                <span className="text-label-md text-stone-500">{wantPct}%</span>
               </div>
             </div>
-            <div className="bg-surface-container-low px-4 py-2 rounded-full mt-4 border border-primary-container/20">
-              <p className="text-label-sm font-label-sm text-on-surface-variant italic flex items-center gap-2">
-                <span className="material-symbols-outlined scale-75 text-primary">local_florist</span> Tending to {inProgress.length} stories
+            <div className="bg-stone-50 px-4 py-2 rounded-full mt-4 border border-rose-500/20">
+              <p className="text-label-sm text-stone-500 italic flex items-center gap-2">
+                <span className="material-symbols-outlined scale-75 text-rose-500">local_florist</span> Tending to {inProgress.length} stories
               </p>
             </div>
           </div>
@@ -210,17 +210,17 @@ export default function Home() {
       </section>
 
       {/* Row 2: Reading Progress & Lists */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Active Progress (Active Spells) */}
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md col-span-1 floating-card border border-primary-container/10 flex flex-col justify-between">
+        <div className="bg-white rounded-xl shadow-sm p-6 col-span-1 floating-card border border-rose-500/10 flex flex-col justify-between">
           <div>
-            <h4 className="text-headline-md font-headline-md mb-stack-md flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">auto_fix_high</span> Active Spells
+            <h4 className="text-headline-md mb-4 flex items-center gap-2">
+              <span className="material-symbols-outlined text-rose-500">auto_fix_high</span> Active Spells
             </h4>
-            <div className="space-y-stack-lg py-4">
+            <div className="space-y-6 py-4">
               {inProgress.length === 0 ? (
-                <div className="text-center py-8 text-on-surface-variant">
-                  <span className="material-symbols-outlined text-4xl text-primary-container mb-2">auto_stories</span>
+                <div className="text-center py-8 text-stone-500">
+                  <span className="material-symbols-outlined text-4xl text-rose-300 mb-2">auto_stories</span>
                   <p className="text-label-md">No books in progress</p>
                 </div>
               ) : (
@@ -230,9 +230,9 @@ export default function Home() {
                     : 0
                   
                   const themes = [
-                    { stroke: '#f8c8dc', text: 'text-primary' },
-                    { stroke: '#c1dcc6', text: 'text-tertiary' },
-                    { stroke: '#e1e1f5', text: 'text-secondary' }
+                    { stroke: '#f8c8dc', text: 'text-rose-500' },
+                    { stroke: '#c1dcc6', text: 'text-mint-700' },
+                    { stroke: '#e1e1f5', text: 'text-lavender-700' }
                   ]
                   const theme = themes[i % themes.length]
 
@@ -261,10 +261,10 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-body-md font-bold text-on-surface leading-tight group-hover:text-primary transition-colors truncate">
+                        <p className="text-body-md font-bold text-stone-800 leading-tight group-hover:text-rose-500 transition-colors truncate">
                           {book.title}
                         </p>
-                        <p className="text-label-sm text-on-surface-variant truncate">
+                        <p className="text-label-sm text-stone-500 truncate">
                           {book.author || 'Unknown Author'}
                         </p>
                       </div>
@@ -277,21 +277,21 @@ export default function Home() {
         </div>
 
         {/* Reading Now List (Current Journeys) */}
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md col-span-1 flex flex-col justify-between floating-card border border-primary-container/10">
+        <div className="bg-white rounded-xl shadow-sm p-6 col-span-1 flex flex-col justify-between floating-card border border-rose-500/10">
           <div>
-            <div className="flex justify-between items-center mb-stack-md">
-              <h4 className="text-headline-md font-headline-md">Current Journeys</h4>
+            <div className="flex justify-between items-center mb-4">
+              <h4 className="text-headline-md">Current Journeys</h4>
               <button
                 onClick={() => navigate('/search')}
-                className="p-3 bg-primary-container text-on-primary-container rounded-full hover:shadow-md active:scale-90 transition-all flex items-center justify-center"
+                className="p-3 bg-rose-500 text-white rounded-full hover:shadow-md active:scale-90 transition-all flex items-center justify-center"
               >
                 <span className="material-symbols-outlined text-[18px]">add</span>
               </button>
             </div>
             <div className="space-y-4 max-h-[300px] overflow-y-auto custom-scrollbar pr-2">
               {inProgress.length === 0 ? (
-                <div className="text-center py-12 text-on-surface-variant">
-                  <span className="material-symbols-outlined text-4xl text-mint mb-2">explore</span>
+                <div className="text-center py-12 text-stone-500">
+                  <span className="material-symbols-outlined text-4xl text-mint-700 mb-2">explore</span>
                   <p className="text-label-md">Nothing in progress yet</p>
                 </div>
               ) : (
@@ -301,9 +301,9 @@ export default function Home() {
                     : 0
 
                   const rowThemes = [
-                    { hover: 'hover:bg-primary-container/20', bar: 'bg-primary-container', text: 'text-primary' },
-                    { hover: 'hover:bg-mint/20', bar: 'bg-mint', text: 'text-tertiary' },
-                    { hover: 'hover:bg-lavender/40', bar: 'bg-lavender', text: 'text-secondary' }
+                    { hover: 'hover:bg-rose-500/20', bar: 'bg-rose-500', text: 'text-rose-500' },
+                    { hover: 'hover:bg-mint-400/20', bar: 'bg-mint-400', text: 'text-mint-700' },
+                    { hover: 'hover:bg-lavender-400/40', bar: 'bg-lavender-400', text: 'text-lavender-700' }
                   ]
                   const theme = rowThemes[i % rowThemes.length]
 
@@ -313,17 +313,17 @@ export default function Home() {
                       onClick={() => navigate(`/book/${book.id}`)}
                       className={`flex gap-4 p-3 rounded-3xl transition-colors cursor-pointer group ${theme.hover}`}
                     >
-                      <div className="w-14 h-20 bg-surface-variant rounded-xl overflow-hidden flex-shrink-0 shadow-sm flex items-center justify-center">
+                      <div className="w-14 h-20 bg-stone-100 rounded-xl overflow-hidden flex-shrink-0 shadow-sm flex items-center justify-center">
                         {book.cover_url ? (
                           <img className="w-full h-full object-cover" src={book.cover_url} alt={book.title} />
                         ) : (
-                          <span className="material-symbols-outlined text-3xl text-on-surface-variant">book</span>
+                          <span className="material-symbols-outlined text-3xl text-stone-500">book</span>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-label-md font-bold truncate">{book.title}</p>
-                        <p className="text-label-sm text-on-surface-variant truncate">{book.author || 'Unknown'}</p>
-                        <div className="w-full bg-surface-container h-2 rounded-full mt-3 overflow-hidden">
+                        <p className="text-label-sm text-stone-500 truncate">{book.author || 'Unknown'}</p>
+                        <div className="w-full bg-stone-100 h-2 rounded-full mt-3 overflow-hidden">
                           <div className={`h-full rounded-full ${theme.bar}`} style={{ width: `${pct}%` }}></div>
                         </div>
                       </div>
@@ -337,15 +337,15 @@ export default function Home() {
         </div>
 
         {/* Wishlist Card */}
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md col-span-1 flex flex-col justify-between floating-card border border-primary-container/10">
+        <div className="bg-white rounded-xl shadow-sm p-6 col-span-1 flex flex-col justify-between floating-card border border-rose-500/10">
           <div>
-            <h4 className="text-headline-md font-headline-md mb-stack-sm flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">favorite</span> Wishlist
+            <h4 className="text-headline-md mb-2 flex items-center gap-2">
+              <span className="material-symbols-outlined text-rose-500">favorite</span> Wishlist
             </h4>
             <div className="space-y-1 max-h-[220px] overflow-y-auto custom-scrollbar pr-2">
               {wantToRead.length === 0 ? (
-                <div className="text-center py-12 text-on-surface-variant">
-                  <span className="material-symbols-outlined text-4xl text-lavender mb-2">favorite_border</span>
+                <div className="text-center py-12 text-stone-500">
+                  <span className="material-symbols-outlined text-4xl text-lavender-700 mb-2">favorite_border</span>
                   <p className="text-label-md">Nothing on your list yet</p>
                 </div>
               ) : (
@@ -353,10 +353,10 @@ export default function Home() {
                   <div
                     key={book.id}
                     onClick={() => navigate(`/book/${book.id}`)}
-                    className="flex items-center justify-between p-4 rounded-full hover:bg-primary-container/10 transition-all group cursor-pointer"
+                    className="flex items-center justify-between p-4 rounded-full hover:bg-rose-500/10 transition-all group cursor-pointer"
                   >
                     <span className="text-label-md font-bold truncate pr-4">{book.title}</span>
-                    <span className="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">
+                    <span className="material-symbols-outlined text-rose-500 group-hover:translate-x-1 transition-transform">
                       arrow_forward_ios
                     </span>
                   </div>
@@ -365,14 +365,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-stack-lg pt-stack-md border-t border-primary-container/20">
+          <div className="mt-8 pt-4 border-t border-rose-500/20">
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-label-sm font-label-sm text-on-surface-variant">Collection Total</p>
-                <p className="text-display-lg font-display-lg text-primary">{allBooks.length}</p>
+                <p className="text-label-sm text-stone-500">Collection Total</p>
+                <p className="text-display-lg text-rose-500">{allBooks.length}</p>
               </div>
               <div className="pb-1">
-                <span className="inline-flex items-center bg-primary-container/20 text-primary px-4 py-2 rounded-full text-label-sm font-bold animate-pulse">
+                <span className="inline-flex items-center bg-rose-500/20 text-rose-500 px-4 py-2 rounded-full text-label-sm font-bold animate-pulse">
                   {finished.length} finished · {totalPages.toLocaleString()} pages
                 </span>
               </div>
