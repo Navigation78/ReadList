@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: toggling .dark on <html> (see ThemeContext) drives dark: variants */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Tailwind theme tokens: fonts + brand color scales, picked up as utilities (font-display, bg-mint-500, ...) */
 @theme {
   --font-display: "Quicksand", sans-serif;
@@ -41,11 +44,6 @@
   --spacing-stack-sm: 8px;
   --spacing-stack-md: 16px;
   --spacing-stack-lg: 32px;
-
-  /* Radius */
-  --radius: 1rem;
-  --radius-lg: 2rem;
-  --radius-xl: 3rem;
 }
 
 /* Custom utilities */
@@ -148,6 +146,13 @@ body {
   color: var(--color-on-surface);
   font-family: var(--font-body);
   background-image: linear-gradient(135deg, #fffafa 0%, #f5fff9 100%);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dark body {
+  background-color: #16181a;
+  color: #f2f1ef;
+  background-image: linear-gradient(135deg, #1a1c1e 0%, #17191b 100%);
 }
 
 /* Animation */

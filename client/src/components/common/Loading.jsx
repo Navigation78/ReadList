@@ -20,10 +20,10 @@ export default function Loading({
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-50/90 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-50/90 dark:bg-stone-950/90 backdrop-blur-sm">
         <div className="flex flex-col items-center gap-3">
           {spinner}
-          {text && <p className="text-sm text-stone-500">{text}</p>}
+          {text && <p className="text-sm text-stone-800 dark:text-stone-300">{text}</p>}
         </div>
       </div>
     )
@@ -32,7 +32,7 @@ export default function Loading({
   return (
     <div className="flex flex-col items-center justify-center gap-3 py-8">
       {spinner}
-      {text && <p className="text-sm text-stone-500">{text}</p>}
+      {text && <p className="text-sm text-stone-800 dark:text-stone-300">{text}</p>}
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { bookService } from '../services/bookService'
 import Loading from '../components/common/Loading'
 import {
   BookMarked, CheckCircle, BookOpen, FileText,
-  TrendingUp, Clock, Star, BarChart3, Sparkles
+  TrendingUp, Clock, Star, BarChart3
 } from 'lucide-react'
 
 const BAR_COLORS = [
@@ -87,7 +87,7 @@ export default function Stats() {
   ]
 
   return (
-    <div className="relative min-h-screen bg-[#faf9f8] px-6 py-10 md:px-12 overflow-hidden">
+    <div className="relative min-h-screen bg-[#faf9f8] dark:bg-stone-950 px-6 py-10 md:px-12 overflow-hidden">
       {/* Whimsical background glow */}
       <div
         className="fixed inset-0 -z-10 opacity-40 pointer-events-none"
@@ -99,13 +99,10 @@ export default function Stats() {
 
       {/* Header */}
       <header className="relative max-w-6xl mx-auto mb-12">
-        <div className="relative inline-block">
-          <h1 className="font-['Quicksand'] font-bold text-4xl md:text-5xl text-[#795465] mb-2">
-            Reading Stats
-          </h1>
-          <Sparkles size={28} className="absolute -top-3 -right-8 text-[#f8c8dc] animate-bounce" />
-        </div>
-        <p className="font-['Be_Vietnam_Pro'] text-lg text-[#4f4448]/80 max-w-2xl">
+        <h1 className="font-['Quicksand'] font-bold text-4xl md:text-5xl text-[#795465] mb-2">
+          Reading Stats
+        </h1>
+        <p className="font-['Be_Vietnam_Pro'] text-lg text-[#4f4448] dark:text-stone-300 max-w-2xl">
           Tracking your reading journey through stories and knowledge.
         </p>
       </header>
@@ -131,7 +128,7 @@ export default function Stats() {
       {/* Charts */}
       <section className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16">
         {/* Books Per Month */}
-        <div className="lg:col-span-8 bg-white rounded-2xl p-8 shadow-[0_10px_40px_-10px_rgba(225,225,245,0.6)] relative overflow-hidden">
+        <div className="lg:col-span-8 bg-white dark:bg-stone-900 rounded-2xl p-8 shadow-[0_10px_40px_-10px_rgba(225,225,245,0.6)] relative overflow-hidden">
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-['Quicksand'] font-semibold text-xl text-[#5c5d6e]">Books Per Month</h2>
             <TrendingUp size={18} className="text-[#5c5d6e]/60" />
@@ -156,13 +153,13 @@ export default function Stats() {
                         )}
                       </div>
                     </div>
-                    <span className="font-['Be_Vietnam_Pro'] text-xs text-[#4f4448]/70">{item.month}</span>
+                    <span className="font-['Be_Vietnam_Pro'] text-xs text-[#4f4448] dark:text-stone-300">{item.month}</span>
                   </div>
                 )
               })}
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-3 py-12 text-[#4f4448]/50">
+            <div className="flex flex-col items-center gap-3 py-12 text-[#4f4448] dark:text-stone-300">
               <TrendingUp size={32} />
               <p className="font-['Be_Vietnam_Pro'] text-sm">No monthly data yet</p>
             </div>
@@ -172,7 +169,7 @@ export default function Stats() {
         </div>
 
         {/* Genre Breakdown */}
-        <div className="lg:col-span-4 bg-white rounded-2xl p-8 shadow-[0_10px_40px_-10px_rgba(193,220,198,0.6)]">
+        <div className="lg:col-span-4 bg-white dark:bg-stone-900 rounded-2xl p-8 shadow-[0_10px_40px_-10px_rgba(193,220,198,0.6)]">
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-['Quicksand'] font-semibold text-xl text-[#4c6452]">Genre Breakdown</h2>
             <BarChart3 size={18} className="text-[#4c6452]/60" />
@@ -184,7 +181,7 @@ export default function Stats() {
                 <div key={index}>
                   <div className="flex justify-between mb-2 font-['Be_Vietnam_Pro'] text-sm">
                     <span className="text-[#1a1c1c]">{item.genre}</span>
-                    <span className="text-[#4f4448]/60">{item.count} {item.count === 1 ? 'book' : 'books'}</span>
+                    <span className="text-[#4f4448] dark:text-stone-300">{item.count} {item.count === 1 ? 'book' : 'books'}</span>
                   </div>
                   <div className="w-full bg-[#eeeeed] h-3 rounded-full overflow-hidden">
                     <div
@@ -196,7 +193,7 @@ export default function Stats() {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-3 py-12 text-[#4f4448]/50">
+            <div className="flex flex-col items-center gap-3 py-12 text-[#4f4448] dark:text-stone-300">
               <BarChart3 size={32} />
               <p className="font-['Be_Vietnam_Pro'] text-sm text-center">Finish some books to see genre stats</p>
             </div>
@@ -221,7 +218,7 @@ export default function Stats() {
               </div>
               <div>
                 <p className="font-['Quicksand'] font-bold text-xl text-[#1a1c1c]">{value}</p>
-                <p className="font-['Be_Vietnam_Pro'] text-xs text-[#4f4448]/70">{label}</p>
+                <p className="font-['Be_Vietnam_Pro'] text-xs text-[#4f4448] dark:text-stone-300">{label}</p>
               </div>
             </div>
           ))}

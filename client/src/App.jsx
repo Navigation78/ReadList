@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
 import ProtectedLayout from './components/auth/ProtectedLayout'
 
 // Auth pages
@@ -20,6 +21,7 @@ import BookDetail from './pages/BookDetail'
 
 function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <BrowserRouter>
         <div style={{ minHeight: '100vh', background: 'var(--background)' }}>
@@ -89,6 +91,7 @@ function App() {
         </div>
       </BrowserRouter>
     </AuthProvider>
+    </ThemeProvider>
   )
 }
 
