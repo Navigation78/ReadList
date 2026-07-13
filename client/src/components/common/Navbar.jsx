@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Sun, Moon } from 'lucide-react'
 import { useTheme } from '../../context/ThemeContext'
-import logoImage from '../../assets/Black Logo.png'
+import logoImage from '../../assets/ReadList Icon.png'
 
 // pass a custom links array for pages that don't have on-page sections to jump to (like Legal)
 const defaultLinks = [
@@ -17,7 +17,7 @@ export default function Navbar({ links = defaultLinks }) {
     <header className="sticky top-0 z-50 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-md shadow-[0_8px_30px_rgba(248,200,220,0.35)] dark:shadow-none">
       <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold text-rose-500">
-          <img src={logoImage} alt="" className="w-8 h-8 rounded-lg object-cover" />
+          <img src={logoImage} alt="" className="h-10 w-auto dark:invert" />
           ReadList
         </Link>
 
