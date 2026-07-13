@@ -108,7 +108,7 @@ export default function ForgotPassword() {
             <div className="w-14 h-14 rounded-full bg-[#c1dcc6]/40 text-[#4a6150] flex items-center justify-center">
               <CheckCircle size={28} />
             </div>
-            <h2 className="font-['Quicksand'] font-semibold text-lg text-[#1a1c1c]">Check your email</h2>
+            <h2 className="font-['Quicksand'] font-semibold text-lg text-[#1a1c1c] dark:text-stone-100">Check your email</h2>
             <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448] dark:text-stone-300">
               We sent a password reset link to <strong className="text-[#795465]">{email}</strong>
             </p>

@@ -155,6 +155,17 @@ body {
   background-image: linear-gradient(135deg, #1a1c1e 0%, #17191b 100%);
 }
 
+/* Kill the light pastel glow shadows (shadow-sm/md/lg/xl/2xl and arbitrary shadow-[...] utilities)
+   everywhere in dark mode -- they were designed against a light background and just look like a
+   bright halo floating on dark cards/pages. */
+.dark [class*="shadow-"] {
+  box-shadow: none !important;
+}
+
+.dark .floating-card:hover {
+  box-shadow: none;
+}
+
 /* Animation */
 @keyframes float {
   0%,
