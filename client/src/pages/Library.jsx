@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 
 // status pill styling and label, kept in one place so the badge and modal buttons agree
-const statusMeta = {
+const statusMeta = {//three categories of book status with their respective labels and badge styles
   want_to_read: { label: 'Want to Read', badge: 'bg-lavender-100 text-lavender-700' },
   currently_reading: { label: 'Currently Reading', badge: 'bg-rose-100 text-rose-700' },
   finished: { label: 'Finished', badge: 'bg-mint-100 text-mint-700' }
