@@ -265,7 +265,7 @@ export default function BookDetail() {
                     max={book.page_count}
                     value={currentPage}
                     onChange={(e) => setCurrentPage(parseInt(e.target.value) || 0)}
-                    className="w-full h-11 rounded-full bg-white border-none pl-5 pr-12 text-sm text-stone-900 dark:text-stone-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="w-full h-11 rounded-full bg-white dark:bg-stone-800 border-none pl-5 pr-12 text-sm text-stone-900 dark:text-stone-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
                   />
                   <button
                     type="submit"

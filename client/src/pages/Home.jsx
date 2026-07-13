@@ -66,7 +66,7 @@ export default function Home() {
         <div className="absolute inset-0 floral-pattern"></div>
         <div className="relative z-10 px-6 flex flex-wrap items-center justify-between gap-6">
           <div>
-            <h3 className="text-display-lg text-stone-900 dark:text-stone-100 animate-fade-in">
+            <h3 className="text-headline-lg text-stone-900 dark:text-stone-100 animate-fade-in">
               Welcome, {displayName} <span className="text-rose-250"></span>
             </h3>
             <p className="text-body-lg text-stone-800 dark:text-stone-300 mt-2">

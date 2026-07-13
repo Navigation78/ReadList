@@ -180,7 +180,7 @@ export default function Stats() {
               {genreBreakdown.map((item, index) => (
                 <div key={index}>
                   <div className="flex justify-between mb-2 font-['Be_Vietnam_Pro'] text-sm">
-                    <span className="text-[#1a1c1c]">{item.genre}</span>
+                    <span className="text-[#1a1c1c] dark:text-stone-100">{item.genre}</span>
                     <span className="text-[#4f4448] dark:text-stone-300">{item.count} {item.count === 1 ? 'book' : 'books'}</span>
                   </div>
                   <div className="w-full bg-[#eeeeed] h-3 rounded-full overflow-hidden">
@@ -211,13 +211,13 @@ export default function Stats() {
           {details.map(({ icon: Icon, label, value, accent, iconBg, iconText }) => (
             <div
               key={label}
-              className={`bg-white p-6 rounded-2xl shadow-sm flex gap-4 items-center border-l-4 ${accent}`}
+              className={`bg-white dark:bg-stone-900 p-6 rounded-2xl shadow-sm flex gap-4 items-center border-l-4 ${accent}`}
             >
               <div className={`${iconBg} p-3 rounded-full ${iconText}`}>
                 <Icon size={16} />
               </div>
               <div>
-                <p className="font-['Quicksand'] font-bold text-xl text-[#1a1c1c]">{value}</p>
+                <p className="font-['Quicksand'] font-bold text-xl text-[#1a1c1c] dark:text-stone-100">{value}</p>
                 <p className="font-['Be_Vietnam_Pro'] text-xs text-[#4f4448] dark:text-stone-300">{label}</p>
               </div>
             </div>
