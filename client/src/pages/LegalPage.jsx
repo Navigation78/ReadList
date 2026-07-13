@@ -44,6 +44,15 @@ const sectionStyle = [
   { icon: HelpCircle, tint: 'lavender' }
 ]
 
+// Full literal class names per tint so Tailwind's JIT scanner can find them.
+// (Building class names via template strings like `bg-${tint}-100` silently
+// drops the utility from the build since Tailwind never sees the full string.)
+const tintClasses = {
+  rose: { border200: 'border-rose-200', bg100: 'bg-rose-100', text600: 'text-rose-600' },
+  lavender: { border200: 'border-lavender-200', bg100: 'bg-lavender-100', text600: 'text-lavender-600' },
+  mint: { border200: 'border-mint-200', bg100: 'bg-mint-100', text600: 'text-mint-600' }
+}
+
 const bubblyBg = {
   backgroundImage:
     'radial-gradient(circle at 10% 10%, rgba(248,200,220,0.15) 0%, transparent 20%), ' +
@@ -106,13 +115,13 @@ export default function LegalPage({ type = 'terms' }) {
             return (
               <section
                 key={title}
-                className={`bg-white p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all flex flex-col gap-4 border-t-4 border-${tint}-200`}
+                className={`bg-white p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all flex flex-col gap-4 border-t-4 ${tintClasses[tint].border200}`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full bg-${tint}-100 flex items-center justify-center text-${tint}-600`}>
+                  <div className={`w-10 h-10 rounded-full ${tintClasses[tint].bg100} flex items-center justify-center ${tintClasses[tint].text600}`}>
                     <Icon size={18} />
                   </div>
-                  <h2 className={`font-display text-lg font-semibold text-${tint}-600`}>{title}</h2>
+                  <h2 className={`font-display text-lg font-semibold ${tintClasses[tint].text600}`}>{title}</h2>
                 </div>
                 <p className="text-stone-500 text-sm leading-relaxed">{text}</p>
               </section>
@@ -127,7 +136,7 @@ export default function LegalPage({ type = 'terms' }) {
               const { icon: Icon, tint } = sectionStyle[i + 2]
               return (
                 <div key={title}>
-                  <h3 className={`font-display text-lg font-semibold text-${tint}-600 mb-2 flex items-center gap-2`}>
+                  <h3 className={`font-display text-lg font-semibold ${tintClasses[tint].text600} mb-2 flex items-center gap-2`}>
                     <Icon size={18} />
                     {title}
                   </h3>

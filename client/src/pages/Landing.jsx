@@ -43,6 +43,15 @@ const doodleBg = {
   backgroundSize: '36px 36px'
 }
 
+// Full literal class names per tint so Tailwind's JIT scanner can find them.
+// (Building class names via template strings like `bg-${tint}-100` silently
+// drops the utility from the build since Tailwind never sees the full string.)
+const tintClasses = {
+  rose: { bg100: 'bg-rose-100', text500: 'text-rose-500', text600: 'text-rose-600', border100: 'border-rose-100' },
+  lavender: { bg100: 'bg-lavender-100', text500: 'text-lavender-500', text600: 'text-lavender-600', border100: 'border-lavender-100' },
+  mint: { bg100: 'bg-mint-100', text500: 'text-mint-500', text600: 'text-mint-600', border100: 'border-mint-100' }
+}
+
 export default function Landing() {
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 font-body" style={doodleBg}>
@@ -128,12 +137,12 @@ export default function Landing() {
             {highlights.map(({ icon: Icon, title, text, tint }) => (
               <div className="flex items-center gap-4 group" key={title}>
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform bg-${tint}-100 text-${tint}-500`}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform ${tintClasses[tint].bg100} ${tintClasses[tint].text500}`}
                 >
                   {createElement(Icon, { size: 20 })}
                 </div>
                 <div>
-                  <p className={`font-display text-sm font-semibold text-${tint}-500`}>{title}</p>
+                  <p className={`font-display text-sm font-semibold ${tintClasses[tint].text500}`}>{title}</p>
                   <p className="text-xs text-stone-500">{text}</p>
                 </div>
               </div>
@@ -287,17 +296,17 @@ export default function Landing() {
             {testimonials.map(({ quote, name, tint }) => (
               <div
                 key={name}
-                className={`bg-white p-8 rounded-3xl shadow-xl border border-${tint}-100 flex flex-col gap-4`}
+                className={`bg-white p-8 rounded-3xl shadow-xl border ${tintClasses[tint].border100} flex flex-col gap-4`}
               >
-                <div className={`flex text-${tint}-500`}>
+                <div className={`flex ${tintClasses[tint].text500}`}>
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} size={16} fill="currentColor" stroke="none" />
                   ))}
                 </div>
                 <p className="italic text-stone-500">{quote}</p>
                 <div className="mt-auto pt-4 flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full bg-${tint}-100`} />
-                  <p className={`font-bold text-${tint}-600`}>{name}</p>
+                  <div className={`w-10 h-10 rounded-full ${tintClasses[tint].bg100}`} />
+                  <p className={`font-bold ${tintClasses[tint].text600}`}>{name}</p>
                 </div>
               </div>
             ))}
