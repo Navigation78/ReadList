@@ -3,7 +3,7 @@ import { useNavigate, Navigate, Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { LayoutDashboard, BarChart3, Library as LibraryIcon, ChevronLeft, ChevronRight, Sun, Moon } from 'lucide-react'
-import logoImage from '../../assets/Black Logo.png'
+import logoImage from '../../assets/ReadList Icon.png'
 
 const NAV_ITEMS = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -82,7 +82,7 @@ export default function ProtectedLayout({ children }) {
         </button>
 
         <div className={`flex items-center gap-2 mb-2 px-1 ${collapsed ? 'justify-center' : ''}`}>
-          <img src={logoImage} alt="ReadList" className="w-9 h-9 rounded-lg object-cover flex-shrink-0" />
+          <img src={logoImage} alt="ReadList" className="h-11 w-auto flex-shrink-0 dark:invert" />
           {!collapsed && <h1 className="text-headline-md text-rose-500 font-display font-bold">ReadList</h1>}
         </div>
 

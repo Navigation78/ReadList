@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
-import logoImage from '../../assets/Black Logo.png'
+import logoImage from '../../assets/ReadList Icon.png'
 
 export default function Signup() {
   const { signup, loading } = useAuth()
@@ -94,7 +94,7 @@ export default function Signup() {
       <div className="w-full max-w-sm bg-white dark:bg-stone-900 rounded-[2.5rem] p-8 shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)]">
         {/* logo and heading */}
         <div className="flex flex-col items-center text-center mb-8">
-          <img src={logoImage} alt="ReadList" className="w-12 h-12 rounded-2xl object-cover mb-4" />
+          <img src={logoImage} alt="ReadList" className="h-16 w-auto mb-4 dark:invert" />
           <h1 className="font-['Quicksand'] font-bold text-2xl text-[#795465] mb-2">Create account</h1>
           <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448] dark:text-stone-300">Start tracking your reading journey</p>
         </div>
