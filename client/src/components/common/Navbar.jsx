@@ -1,108 +1,44 @@
-import { Link, useLocation } from 'react-router-dom'
-import { createElement } from 'react'
-import { Home, BookMarked, Search, BarChart2, Settings, HelpCircle, ChevronLeft, ChevronRight } from 'lucide-react'
-import logo from '../../assets/Black Logo.png'
+import { Link } from 'react-router-dom'
+import logoImage from '../../assets/Black Logo.png'
 
-const MENU_ITEMS = [
-  { to: '/dashboard', icon: Home, label: 'Dashboard' },
-  { to: '/library', icon: BookMarked, label: 'Library' },
-  { to: '/search', icon: Search, label: 'Search' },
-  { to: '/stats', icon: BarChart2, label: 'Stats' }
+// pass a custom links array for pages that don't have on-page sections to jump to (like Legal)
+const defaultLinks = [
+  { href: '/#features', label: 'Features' },
+  { href: '/#preview', label: 'Preview' },
+  { href: '/#testimonials', label: 'Community' }
 ]
 
-const OTHER_ITEMS = [
-  { to: '/profile', icon: Settings, label: 'Settings' },
-  { to: '/profile', icon: HelpCircle, label: 'Help' }
-]
-
-export default function Navbar({ collapsed, onToggle }) {
-  const location = useLocation()
-  const isActive = (path) =>
-    location.pathname === path || location.pathname.startsWith(`${path}/`)
-
+export default function Navbar({ links = defaultLinks }) {
   return (
-    <nav
-      className={`relative h-screen sticky top-0 flex flex-col bg-white border-r border-stone-200 transition-all duration-200 ${
-        collapsed ? 'w-20' : 'w-64'
-      }`}
-    >
-      {/* toggle button, sits on the edge of the sidebar */}
-      <button
-        onClick={onToggle}
-        title={collapsed ? 'Expand' : 'Collapse'}
-        className="absolute -right-3 top-8 w-6 h-6 rounded-full bg-white border border-stone-200 flex items-center justify-center text-stone-500 hover:text-plum-600 hover:border-plum-300 transition"
-      >
-        {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-      </button>
+    <header className="sticky top-0 z-50 bg-stone-50/80 backdrop-blur-md shadow-[0_8px_30px_rgba(248,200,220,0.35)]">
+      <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold text-rose-500">
+          <img src={logoImage} alt="" className="w-8 h-8 rounded-lg object-cover" />
+          ReadList
+        </Link>
 
-      {/* brand */}
-      <div className="flex items-center gap-3 px-5 h-20 border-b border-stone-100">
-        <div className="w-9 h-9 rounded-lg overflow-hidden flex-shrink-0">
-          <img src={logo} alt="ReadList" className="w-full h-full object-cover" />
-        </div>
-        {!collapsed && <span className="text-base font-semibold text-stone-900">ReadList</span>}
-      </div>
-
-      {/* menu section */}
-      <div className="flex-1 px-3 pt-6">
-        {!collapsed && (
-          <span className="block px-3 mb-2 text-xs font-medium tracking-wide text-stone-400">
-            MENU
-          </span>
+        {links.length > 0 && (
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+            {links.map(({ href, label }) => (
+              <a key={href} href={href} className="text-stone-500 hover:text-rose-500 transition">
+                {label}
+              </a>
+            ))}
+          </div>
         )}
-        <div className="flex flex-col gap-1">
-          {MENU_ITEMS.map(({ to, icon: Icon, label }) => {
-            const active = isActive(to)
-            return (
-              <Link
-                key={to + label}
-                to={to}
-                title={collapsed ? label : undefined}
-                className={`relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                  active
-                    ? 'bg-plum-50 text-plum-700'
-                    : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
-                }`}
-              >
-                {createElement(Icon, { size: 18, className: active ? 'text-plum-600' : 'text-stone-500' })}
-                {!collapsed && <span>{label}</span>}
-                {active && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-plum-500 rounded-r" />
-                )}
-              </Link>
-            )
-          })}
-        </div>
-      </div>
 
-      {/* others section */}
-      <div className="px-3 pb-6">
-        {!collapsed && (
-          <span className="block px-3 mb-2 text-xs font-medium tracking-wide text-stone-400">
-            OTHERS
-          </span>
-        )}
-        <div className="flex flex-col gap-1">
-          {OTHER_ITEMS.map(({ to, icon: Icon, label }) => {
-            const active = location.pathname === to && label === 'Settings'
-            return (
-              <Link
-                key={to + label}
-                to={to}
-                title={collapsed ? label : undefined}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                  active
-                    ? 'bg-plum-50 text-plum-700'
-                    : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
-                }`}
-              >
-                {createElement(Icon, { size: 18, className: active ? 'text-plum-600' : 'text-stone-500' })}
-                {!collapsed && <span>{label}</span>}
-              </Link>
-            )
-          })}
+        <div className="flex items-center gap-4">
+          <Link to="/login" className="hidden sm:inline text-sm font-medium text-stone-500 hover:text-rose-500 transition">
+            Log In
+          </Link>
+          <Link
+            to="/signup"
+            className="bg-rose-200 text-rose-700 px-6 py-2 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-rose-200/60 active:scale-95 transition-all"
+          >
+            Get Started
+          </Link>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   )
 }

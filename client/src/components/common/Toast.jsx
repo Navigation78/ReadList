@@ -3,10 +3,10 @@ import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react'
 
 // each type maps to a background, border, text, and icon color
 const typeStyles = {
-  success: { wrap: 'bg-sage-50 border-sage-200 text-sage-700', icon: 'text-sage-600' },
+  success: { wrap: 'bg-mint-50 border-mint-200 text-mint-700', icon: 'text-mint-600' },
   error: { wrap: 'bg-red-50 border-red-200 text-red-700', icon: 'text-red-600' },
   warning: { wrap: 'bg-amber-50 border-amber-200 text-amber-700', icon: 'text-amber-600' },
-  info: { wrap: 'bg-stone-100 border-stone-200 text-stone-700', icon: 'text-stone-600' }
+  info: { wrap: 'bg-lavender-50 border-lavender-200 text-lavender-700', icon: 'text-lavender-600' }
 }
 
 export default function Toast({
@@ -40,7 +40,7 @@ export default function Toast({
   return (
     <div
       role="alert"
-      className={`flex items-center gap-3 rounded-lg border px-4 py-3 shadow-sm min-w-[280px] max-w-sm ${style.wrap}`}
+      className={`flex items-center gap-3 rounded-full border px-5 py-3 shadow-sm min-w-[280px] max-w-sm ${style.wrap}`}
     >
       <span className={style.icon}>{icons[type]}</span>
       <span className="flex-1 text-sm font-medium">{message}</span>

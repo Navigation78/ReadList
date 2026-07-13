@@ -16,6 +16,7 @@ import SearchBooks from './pages/SearchBooks'
 import Stats from './pages/Stats'
 import Profile from './pages/Profile'
 import LegalPage from './pages/LegalPage'
+import BookDetail from './pages/BookDetail'
 
 function App() {
   return (
@@ -46,6 +47,14 @@ function App() {
               element={
                 <ProtectedLayout>
                   <Library />
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path="/book/:id"
+              element={
+                <ProtectedLayout>
+                  <BookDetail />
                 </ProtectedLayout>
               }
             />

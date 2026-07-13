@@ -3,15 +3,21 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { bookService } from '../services/bookService'
 import Button from '../components/common/Button'
-import Input from '../components/common/Input'
 import Loading from '../components/common/Loading'
 import Modal from '../components/common/Modal'
-import styles from './BookDetail.module.css'
 import {
   ArrowLeft, BookOpen, Calendar, Hash, FileText,
   CheckCircle2, Trophy, Library, RefreshCw, Trash2,
-  BookMarked, AlertCircle, CheckCircle
+  BookMarked, AlertCircle, CheckCircle, Check,
+  Star, Sparkles, Flower2, Bookmark, PauseCircle
 } from 'lucide-react'
+
+// status pill styling, label, and icon, kept in one place so badge, timeline, and modal all agree
+const statusMeta = {
+  want_to_read: { label: 'Want to Read', badge: 'bg-lavender-100 text-lavender-700', icon: Bookmark, tint: 'lavender' },
+  currently_reading: { label: 'Currently Reading', badge: 'bg-rose-100 text-rose-700', icon: BookOpen, tint: 'rose' },
+  finished: { label: 'Finished', badge: 'bg-mint-100 text-mint-700', icon: CheckCircle2, tint: 'mint' }
+}
 
 export default function BookDetail() {
   const { id } = useParams()
@@ -76,7 +82,7 @@ export default function BookDetail() {
       const updatedBook = await bookService.updateStatus(book.id, newStatus)
       setBook(updatedBook)
       setShowStatusModal(false)
-      showToast(`Moved to ${getStatusLabel(newStatus)}`)
+      showToast(`Moved to ${statusMeta[newStatus].label}`)
     } catch (error) {
       console.error('Error changing status:', error)
       showToast('Failed to change status', 'error')
@@ -112,24 +118,6 @@ export default function BookDetail() {
     }
   }
 
-  const getStatusLabel = (status) => {
-    switch (status) {
-      case 'want_to_read':      return 'Want to Read'
-      case 'currently_reading': return 'Currently Reading'
-      case 'finished':          return 'Finished'
-      default:                  return status
-    }
-  }
-
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case 'want_to_read':      return styles.statusWant
-      case 'currently_reading': return styles.statusReading
-      case 'finished':          return styles.statusFinished
-      default:                  return ''
-    }
-  }
-
   const progressPercentage = book?.page_count
     ? Math.min(100, Math.round((currentPage / book.page_count) * 100))
     : 0
@@ -138,277 +126,320 @@ export default function BookDetail() {
 
   if (!book) {
     return (
-      <div className={styles.errorContainer}>
-        <BookOpen size={48} className={styles.errorIcon} />
-        <h2>Book not found</h2>
+      <div className="flex flex-col items-center justify-center gap-4 py-24 text-center">
+        <BookOpen size={48} className="text-stone-300" />
+        <h2 className="font-display text-xl font-semibold text-stone-800">Book not found</h2>
         <Button onClick={() => navigate('/library')}>Back to Library</Button>
       </div>
     )
   }
 
   return (
-    <div className={styles.container}>
-      {/* Toast notification */}
+    <div className="relative max-w-6xl mx-auto px-6 py-10 overflow-hidden">
+      {/* floating decorative icons, purely visual, hidden on small screens */}
+      <Star
+        className="hidden lg:block absolute top-6 right-24 text-rose-200 pointer-events-none"
+        size={48}
+        style={{ animation: 'float 6s ease-in-out infinite' }}
+      />
+      <Sparkles
+        className="hidden lg:block absolute top-56 left-4 text-mint-200 pointer-events-none"
+        size={32}
+        style={{ animation: 'float 6s ease-in-out infinite 2s' }}
+      />
+      <Flower2
+        className="hidden lg:block absolute bottom-24 right-6 text-lavender-200 pointer-events-none"
+        size={40}
+        style={{ animation: 'float 6s ease-in-out infinite 4s' }}
+      />
+
+      {/* toast notification, floats top right */}
       {toast && (
-        <div className={`${styles.toast} ${toast.type === 'error' ? styles.toastError : styles.toastSuccess}`}>
-          {toast.type === 'error'
-            ? <AlertCircle size={16} />
-            : <CheckCircle size={16} />
-          }
+        <div
+          role="alert"
+          className={`fixed top-6 right-6 z-50 flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium shadow-lg ${
+            toast.type === 'error' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-mint-50 text-mint-700 border border-mint-200'
+          }`}
+        >
+          {toast.type === 'error' ? <AlertCircle size={16} /> : <CheckCircle size={16} />}
           {toast.message}
         </div>
       )}
 
-      {/* Back */}
-      <button className={styles.backButton} onClick={() => navigate('/library')}>
+      {/* back link */}
+      <button
+        onClick={() => navigate('/library')}
+        className="relative z-10 inline-flex items-center gap-2 text-sm font-semibold text-rose-500 hover:-translate-x-1 transition-transform mb-8"
+      >
         <ArrowLeft size={16} /> Back to Library
       </button>
 
-      {/* Header */}
-      <div className={styles.header}>
-        <div className={styles.coverSection}>
-          <div className={styles.coverWrapper}>
+      {/* hero: cover plus core info */}
+      <section className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-14">
+        <div className="md:col-span-4 flex justify-center md:justify-start">
+          <div className="relative">
+            <div className="absolute -inset-4 bg-rose-200 blur-2xl opacity-30 rounded-[2.5rem]" />
             {book.cover_url ? (
-              <img src={book.cover_url} alt={book.title} className={styles.cover} />
+              <img
+                src={book.cover_url}
+                alt={book.title}
+                className="relative w-56 h-80 object-cover rounded-[2.5rem] shadow-[0_20px_50px_rgba(248,200,220,0.5)] border-4 border-white z-10"
+              />
             ) : (
-              <div className={styles.placeholderCover}>
-                <BookOpen size={64} color="#fff" />
+              <div className="relative w-56 h-80 rounded-[2.5rem] shadow-[0_20px_50px_rgba(248,200,220,0.5)] border-4 border-white z-10 bg-rose-100 flex items-center justify-center">
+                <BookOpen size={56} className="text-rose-300" />
               </div>
             )}
           </div>
         </div>
 
-        <div className={styles.infoSection}>
-          <div>
-            <span className={`${styles.statusBadge} ${getStatusStyle(book.status)}`}>
-              {getStatusLabel(book.status)}
-            </span>
-            <h1 className={styles.title}>{book.title}</h1>
-            <p className={styles.author}>by {book.author}</p>
-          </div>
+        <div className="md:col-span-8 text-center md:text-left">
+          <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wide mb-3 ${statusMeta[book.status]?.badge}`}>
+            {statusMeta[book.status]?.label || book.status}
+          </span>
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-rose-500 mb-2">{book.title}</h1>
+          <p className="text-xl text-stone-500 mb-6">by {book.author}</p>
 
-          <div className={styles.metadata}>
+          <div className="flex flex-wrap justify-center md:justify-start gap-6 mb-8">
             {book.published_year && (
-              <div className={styles.metaItem}>
-                <Calendar size={14} className={styles.metaIcon} />
-                <div>
-                  <span className={styles.metaLabel}>Published</span>
-                  <span className={styles.metaValue}>{book.published_year}</span>
-                </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-medium text-stone-400">Published</span>
+                <span className="font-display font-semibold text-stone-800">{book.published_year}</span>
               </div>
             )}
             {book.page_count && (
-              <div className={styles.metaItem}>
-                <FileText size={14} className={styles.metaIcon} />
-                <div>
-                  <span className={styles.metaLabel}>Pages</span>
-                  <span className={styles.metaValue}>{book.page_count}</span>
+              <>
+                <div className="w-px h-10 bg-stone-200 hidden md:block" />
+                <div className="flex flex-col">
+                  <span className="text-xs font-medium text-stone-400">Pages</span>
+                  <span className="font-display font-semibold text-stone-800">{book.page_count}</span>
                 </div>
-              </div>
+              </>
             )}
             {book.isbn && (
-              <div className={styles.metaItem}>
-                <Hash size={14} className={styles.metaIcon} />
-                <div>
-                  <span className={styles.metaLabel}>ISBN</span>
-                  <span className={styles.metaValue}>{book.isbn}</span>
+              <>
+                <div className="w-px h-10 bg-stone-200 hidden md:block" />
+                <div className="flex flex-col">
+                  <span className="text-xs font-medium text-stone-400">ISBN</span>
+                  <span className="font-display font-semibold text-stone-800">{book.isbn}</span>
                 </div>
-              </div>
+              </>
             )}
           </div>
 
-          <div className={styles.actions}>
-            <Button variant="primary" onClick={() => setShowStatusModal(true)}>
+          <div className="flex flex-wrap justify-center md:justify-start gap-3">
+            <Button variant="secondary" onClick={() => setShowStatusModal(true)}>
               <RefreshCw size={15} /> Change Status
             </Button>
-            <Button variant="outline" onClick={() => setShowDeleteModal(true)}>
+            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
               <Trash2 size={15} /> Remove
             </Button>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Description */}
-      {book.description && (
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>
-            <BookOpen size={16} /> About this book
-          </h2>
-          <p className={styles.description}>{book.description}</p>
-        </div>
-      )}
-
-      {/* Reading Progress */}
-      {book.status === 'currently_reading' && book.page_count && (
-        <div className={styles.card}>
-          <h2 className={styles.cardTitle}>
-            <BookMarked size={16} /> Reading Progress
-          </h2>
-
-          <div className={styles.progressSection}>
-            <div className={styles.progressHeader}>
-              <span className={styles.progressLabel}>
-                {currentPage} of {book.page_count} pages
-              </span>
-              <span className={styles.progressPercentage}>{progressPercentage}%</span>
-            </div>
-            <div className={styles.progressBar}>
-              <div className={styles.progressFill} style={{ width: `${progressPercentage}%` }} />
-            </div>
+      {/* content grid: about spans two columns, progress and timeline stack in the third */}
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {book.description && (
+          <div className="md:col-span-2 bg-white rounded-[2.5rem] p-8 shadow-[0_20px_50px_rgba(225,225,245,0.4)] h-fit">
+            <h2 className="font-display text-lg font-semibold text-stone-900 mb-4 flex items-center gap-2">
+              <BookOpen size={18} className="text-rose-500" /> About this book
+            </h2>
+            <p className="text-stone-600 leading-relaxed">{book.description}</p>
           </div>
+        )}
 
-          <form onSubmit={handleUpdateProgress} className={styles.progressForm}>
-            <Input
-              label="Current Page"
-              type="number"
-              min="0"
-              max={book.page_count}
-              value={currentPage}
-              onChange={(e) => setCurrentPage(parseInt(e.target.value) || 0)}
-              helperText={`Enter a page between 0 and ${book.page_count}`}
-            />
-            <div className={styles.progressActions}>
-              <Button
-                type="submit"
-                variant="primary"
-                loading={updatingProgress}
-                disabled={updatingProgress || currentPage === book.current_page}
-              >
-                Update Progress
-              </Button>
-              {currentPage >= book.page_count && (
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={handleMarkAsFinished}
-                  disabled={updatingProgress}
-                >
-                  <Trophy size={15} /> Mark as Finished
-                </Button>
-              )}
-            </div>
-          </form>
-        </div>
-      )}
+        <div className={`flex flex-col gap-6 ${!book.description ? 'md:col-span-3' : ''}`}>
+          {/* reading progress */}
+          {book.status === 'currently_reading' && book.page_count && (
+            <div className="bg-rose-50/60 backdrop-blur-sm border border-white rounded-[2.5rem] p-7 shadow-[0_20px_50px_rgba(248,200,220,0.35)]">
+              <div className="flex justify-between items-center mb-5">
+                <h3 className="font-display font-semibold text-stone-900">Reading Progress</h3>
+                <div className="p-2 bg-white rounded-full text-rose-500">
+                  <Trophy size={16} />
+                </div>
+              </div>
 
-      {/* Completion card */}
-      {book.status === 'finished' && (
-        <div className={`${styles.card} ${styles.completionCard}`}>
-          <div className={styles.completionInfo}>
-            <div className={styles.completionIconWrap}>
-              <Trophy size={28} />
+              <div className="mb-6">
+                <div className="flex justify-between items-end mb-2">
+                  <span className="font-display text-2xl font-bold text-rose-500">{progressPercentage}%</span>
+                  <span className="text-xs text-stone-500">{currentPage} / {book.page_count} pages</span>
+                </div>
+                <div className="w-full h-3.5 bg-white/70 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-rose-400 rounded-full transition-all"
+                    style={{ width: `${progressPercentage}%` }}
+                  />
+                </div>
+              </div>
+
+              <form onSubmit={handleUpdateProgress} className="flex flex-col gap-3">
+                <label className="text-xs font-medium text-stone-500 ml-1">Update current page</label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    min="0"
+                    max={book.page_count}
+                    value={currentPage}
+                    onChange={(e) => setCurrentPage(parseInt(e.target.value) || 0)}
+                    className="w-full h-11 rounded-full bg-white border-none pl-5 pr-12 text-sm text-stone-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  />
+                  <button
+                    type="submit"
+                    disabled={updatingProgress || currentPage === book.current_page}
+                    className="absolute right-1.5 top-1.5 w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center hover:bg-rose-600 disabled:opacity-50 transition"
+                  >
+                    <Check size={14} />
+                  </button>
+                </div>
+
+                {currentPage >= book.page_count && (
+                  <Button
+                    type="button"
+                    variant="primary"
+                    fullWidth
+                    onClick={handleMarkAsFinished}
+                    disabled={updatingProgress}
+                  >
+                    <Trophy size={15} /> Mark as Finished
+                  </Button>
+                )}
+              </form>
             </div>
-            <div>
-              <p className={styles.completionText}>You finished this book!</p>
-              {book.finished_at && (
-                <p className={styles.completionDate}>
-                  Completed on {new Date(book.finished_at).toLocaleDateString('en-US', {
+          )}
+
+          {/* completion card */}
+          {book.status === 'finished' && (
+            <div className="bg-mint-50 border border-mint-100 rounded-[2.5rem] p-7">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-full bg-mint-100 text-mint-600 flex items-center justify-center flex-shrink-0">
+                  <Trophy size={24} />
+                </div>
+                <div>
+                  <p className="font-display font-semibold text-mint-700">You finished this book!</p>
+                  {book.finished_at && (
+                    <p className="text-sm text-mint-600/80">
+                      Completed on {new Date(book.finished_at).toLocaleDateString('en-US', {
+                        year: 'numeric', month: 'long', day: 'numeric'
+                      })}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* timeline with a connecting line */}
+          <div className="bg-white rounded-[2.5rem] p-7 shadow-[0_20px_50px_rgba(225,225,245,0.4)]">
+            <h3 className="font-display font-semibold text-stone-900 mb-5">Timeline</h3>
+            <div className="relative ml-2 space-y-6">
+              <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-stone-100" />
+
+              <div className="relative pl-8">
+                <div className="absolute left-0 top-1 w-4 h-4 rounded-full bg-mint-300 ring-4 ring-white" />
+                <p className="text-sm font-semibold text-stone-800">Added to Library</p>
+                <p className="text-xs text-stone-400">
+                  {new Date(book.created_at).toLocaleDateString('en-US', {
                     year: 'numeric', month: 'long', day: 'numeric'
                   })}
                 </p>
+              </div>
+
+              {book.started_at ? (
+                <div className="relative pl-8">
+                  <div className="absolute left-0 top-1 w-4 h-4 rounded-full bg-rose-300 ring-4 ring-white" />
+                  <p className="text-sm font-semibold text-stone-800">Started Reading</p>
+                  <p className="text-xs text-stone-400">
+                    {new Date(book.started_at).toLocaleDateString('en-US', {
+                      year: 'numeric', month: 'long', day: 'numeric'
+                    })}
+                  </p>
+                </div>
+              ) : (
+                <div className="relative pl-8 opacity-40">
+                  <div className="absolute left-0 top-1 w-4 h-4 rounded-full bg-stone-200 ring-4 ring-white" />
+                  <p className="text-sm font-semibold text-stone-500">Started Reading</p>
+                  <p className="text-xs text-stone-400">Not started yet</p>
+                </div>
+              )}
+
+              {book.finished_at ? (
+                <div className="relative pl-8">
+                  <div className="absolute left-0 top-1 w-4 h-4 rounded-full bg-mint-400 ring-4 ring-white" />
+                  <p className="text-sm font-semibold text-stone-800">Finished</p>
+                  <p className="text-xs text-stone-400">
+                    {new Date(book.finished_at).toLocaleDateString('en-US', {
+                      year: 'numeric', month: 'long', day: 'numeric'
+                    })}
+                  </p>
+                </div>
+              ) : (
+                <div className="relative pl-8 opacity-40">
+                  <div className="absolute left-0 top-1 w-4 h-4 rounded-full bg-stone-200 ring-4 ring-white" />
+                  <p className="text-sm font-semibold text-stone-500">Finished Reading</p>
+                  <p className="text-xs text-stone-400">TBD</p>
+                </div>
               )}
             </div>
           </div>
         </div>
-      )}
-
-      {/* Timeline */}
-      <div className={styles.card}>
-        <h2 className={styles.cardTitle}>
-          <Calendar size={16} /> Reading Timeline
-        </h2>
-        <div className={styles.timeline}>
-          <div className={styles.timelineItem}>
-            <div className={`${styles.timelineDot} ${styles.dotBlue}`}>
-              <Library size={14} />
-            </div>
-            <div className={styles.timelineContent}>
-              <span className={styles.timelineLabel}>Added to Library</span>
-              <span className={styles.timelineDate}>
-                {new Date(book.created_at).toLocaleDateString('en-US', {
-                  year: 'numeric', month: 'long', day: 'numeric'
-                })}
-              </span>
-            </div>
-          </div>
-
-          {book.started_at && (
-            <div className={styles.timelineItem}>
-              <div className={`${styles.timelineDot} ${styles.dotIndigo}`}>
-                <BookOpen size={14} />
-              </div>
-              <div className={styles.timelineContent}>
-                <span className={styles.timelineLabel}>Started Reading</span>
-                <span className={styles.timelineDate}>
-                  {new Date(book.started_at).toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                  })}
-                </span>
-              </div>
-            </div>
-          )}
-
-          {book.finished_at && (
-            <div className={styles.timelineItem}>
-              <div className={`${styles.timelineDot} ${styles.dotGreen}`}>
-                <CheckCircle2 size={14} />
-              </div>
-              <div className={styles.timelineContent}>
-                <span className={styles.timelineLabel}>Finished</span>
-                <span className={styles.timelineDate}>
-                  {new Date(book.finished_at).toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                  })}
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
       </div>
 
-      {/* Change Status Modal */}
+      {/* change status modal, rows instead of stacked buttons */}
       <Modal
         isOpen={showStatusModal}
         onClose={() => !changingStatus && setShowStatusModal(false)}
-        title="Change Book Status"
+        title="Change Status"
         size="small"
       >
-        <div className={styles.modalContent}>
-          <p className={styles.modalText}>Where would you like to move this book?</p>
-          <div className={styles.statusOptions}>
-            {['want_to_read', 'currently_reading', 'finished'].map(s => (
-              <Button
+        <div className="flex flex-col gap-2">
+          {['currently_reading', 'finished', 'want_to_read'].map((s) => {
+            const meta = statusMeta[s]
+            const Icon = meta.icon
+            const active = book.status === s
+            return (
+              <button
                 key={s}
-                variant={book.status === s ? 'primary' : 'outline'}
-                fullWidth
-                onClick={() => handleStatusChange(s)}
-                disabled={changingStatus || book.status === s}
+                type="button"
+                onClick={() => !active && handleStatusChange(s)}
+                disabled={changingStatus || active}
+                className={`w-full text-left p-4 rounded-2xl border-2 flex items-center gap-3 transition disabled:cursor-default ${
+                  active
+                    ? `border-${meta.tint}-300 bg-${meta.tint}-50`
+                    : 'border-transparent hover:bg-stone-50'
+                }`}
               >
-                {getStatusLabel(s)}
-              </Button>
-            ))}
-          </div>
+                <Icon size={18} className={active ? `text-${meta.tint}-600` : 'text-stone-400'} />
+                <span className={`text-sm font-medium ${active ? `text-${meta.tint}-700` : 'text-stone-700'}`}>
+                  {meta.label}
+                </span>
+              </button>
+            )
+          })}
         </div>
       </Modal>
 
-      {/* Delete Modal */}
+      {/* delete modal */}
       <Modal
         isOpen={showDeleteModal}
         onClose={() => !deleting && setShowDeleteModal(false)}
         title="Remove Book?"
         size="small"
       >
-        <div className={styles.deleteModal}>
-          <p className={styles.deleteWarning}>
-            Are you sure you want to remove "{book.title}" from your library?
+        <div className="flex flex-col items-center text-center gap-4">
+          <div className="w-16 h-16 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
+            <Trash2 size={26} />
+          </div>
+          <p className="text-sm text-stone-600 leading-relaxed">
+            Are you sure you want to remove &ldquo;{book.title}&rdquo; from your library?
             This action cannot be undone.
           </p>
-          <div className={styles.deleteActions}>
-            <Button variant="danger" fullWidth onClick={handleDelete} loading={deleting} disabled={deleting}>
-              {deleting ? 'Removing…' : 'Yes, Remove Book'}
-            </Button>
+          <div className="flex gap-3 w-full">
             <Button variant="outline" fullWidth onClick={() => setShowDeleteModal(false)} disabled={deleting}>
               Cancel
+            </Button>
+            <Button variant="danger" fullWidth onClick={handleDelete} loading={deleting} disabled={deleting}>
+              {deleting ? 'Removing...' : 'Remove'}
             </Button>
           </div>
         </div>

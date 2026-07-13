@@ -64,13 +64,22 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-sm bg-white border border-stone-200 rounded-2xl p-8 shadow-sm">
+    <div className="relative min-h-screen bg-[#faf9f8] flex items-center justify-center px-4 py-12 overflow-hidden">
+      {/* Whimsical background glow */}
+      <div
+        className="fixed inset-0 -z-10 opacity-40 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(circle at 10% 20%, rgba(248,200,220,0.3) 0%, transparent 20%), radial-gradient(circle at 90% 80%, rgba(225,225,245,0.3) 0%, transparent 20%), radial-gradient(circle at 50% 50%, rgba(193,220,198,0.2) 0%, transparent 40%)',
+        }}
+      />
+
+      <div className="w-full max-w-sm bg-white rounded-[2.5rem] p-8 shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)]">
         {/* logo and heading */}
         <div className="flex flex-col items-center text-center mb-8">
-          <img src={logoImage} alt="ReadList" className="w-12 h-12 rounded-lg object-cover mb-4" />
-          <h1 className="text-xl font-semibold text-stone-900 mb-2">Welcome back</h1>
-          <p className="text-sm text-stone-500">Login to continue your reading journey</p>
+          <img src={logoImage} alt="ReadList" className="w-12 h-12 rounded-2xl object-cover mb-4" />
+          <h1 className="font-['Quicksand'] font-bold text-2xl text-[#795465] mb-2">Welcome back</h1>
+          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/70">Login to continue your reading journey</p>
         </div>
 
         {/* form */}
@@ -78,7 +87,7 @@ export default function Login() {
           {serverError && (
             <div
               role="alert"
-              className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3"
+              className="bg-[#ffdad6] text-[#93000a] font-['Be_Vietnam_Pro'] text-sm rounded-2xl px-4 py-3"
             >
               {serverError}
             </div>
@@ -94,6 +103,7 @@ export default function Login() {
             error={errors.email}
             fullWidth
             required
+            className="rounded-2xl font-['Be_Vietnam_Pro'] focus:ring-4 focus:ring-[#f8c8dc]"
           />
 
           <Input
@@ -106,11 +116,12 @@ export default function Login() {
             error={errors.password}
             fullWidth
             required
+            className="rounded-2xl font-['Be_Vietnam_Pro'] focus:ring-4 focus:ring-[#f8c8dc]"
           />
 
           <Link
             to="/forgot-password"
-            className="text-sm font-medium text-plum-600 hover:text-plum-700 -mt-2 self-end transition"
+            className="font-['Be_Vietnam_Pro'] text-sm font-medium text-[#795465] hover:text-[#5f3c4d] -mt-2 self-end transition"
           >
             Forgot password?
           </Link>
@@ -121,16 +132,17 @@ export default function Login() {
             fullWidth
             loading={loading}
             disabled={loading}
+            className="rounded-full bg-[#795465] hover:bg-[#795465]/90 font-['Quicksand'] font-bold shadow-lg"
           >
             {loading ? 'Logging in...' : 'Login'}
           </Button>
         </form>
 
         {/* sign up link */}
-        <div className="mt-8 pt-6 border-t border-stone-100 text-center">
-          <p className="text-sm text-stone-500">
+        <div className="mt-8 pt-6 border-t border-[#e3e2e1] text-center">
+          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/70">
             Don't have an account?{' '}
-            <Link to="/signup" className="font-medium text-plum-600 hover:text-plum-700 transition">
+            <Link to="/signup" className="font-medium text-[#795465] hover:text-[#5f3c4d] transition">
               Sign up
             </Link>
           </p>

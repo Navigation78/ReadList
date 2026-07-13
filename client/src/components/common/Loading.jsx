@@ -14,7 +14,7 @@ export default function Loading({
     <div
       role="status"
       aria-label={text || 'Loading'}
-      className={`rounded-full border-stone-200 border-t-plum-500 animate-spin ${sizes[size]}`}
+      className={`rounded-full border-rose-100 border-t-rose-400 animate-spin ${sizes[size]}`}
     />
   )
 

@@ -27,7 +27,7 @@ export default function Tooltip({
       {isVisible && content && (
         <div
           role="tooltip"
-          className={`absolute z-50 whitespace-nowrap rounded-lg bg-stone-900 px-2.5 py-1.5 text-xs font-medium text-white pointer-events-none ${positions[position]}`}
+          className={`absolute z-50 whitespace-nowrap rounded-full bg-stone-800 px-3 py-1.5 text-xs font-medium text-white pointer-events-none ${positions[position]}`}
         >
           {content}
         </div>

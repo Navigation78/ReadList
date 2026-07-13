@@ -46,19 +46,19 @@ export default function Modal({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/40 backdrop-blur-sm px-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/30 backdrop-blur-sm px-4"
     >
       <div
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className={`w-full bg-white rounded-2xl border border-stone-200 shadow-lg ${sizes[size]}`}
+        className={`w-full bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(248,200,220,0.4)] ${sizes[size]}`}
       >
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100">
+          <div className="flex items-center justify-between px-7 py-5 border-b border-stone-100">
             {title && (
-              <h2 id="modal-title" className="text-base font-semibold text-stone-900">
+              <h2 id="modal-title" className="font-display text-lg font-semibold text-rose-500">
                 {title}
               </h2>
             )}
@@ -66,7 +66,7 @@ export default function Modal({
               <button
                 onClick={onClose}
                 aria-label="Close modal"
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-500 hover:bg-stone-100 hover:text-stone-700 transition"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-stone-400 hover:bg-rose-50 hover:text-rose-500 transition"
               >
                 <X size={16} />
               </button>
@@ -74,7 +74,7 @@ export default function Modal({
           </div>
         )}
 
-        <div className="px-6 py-5">
+        <div className="px-7 py-6">
           {children}
         </div>
       </div>

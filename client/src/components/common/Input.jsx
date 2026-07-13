@@ -13,7 +13,7 @@ export default function Input({
   return (
     <div className={`flex flex-col gap-1.5 ${fullWidth ? 'w-full' : ''}`}>
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-stone-700">
+        <label htmlFor={id} className="text-sm font-medium text-stone-700 ml-1">
           {label}
         </label>
       )}
@@ -22,11 +22,11 @@ export default function Input({
         id={id}
         name={name}
         className={`
-          h-11 rounded-lg border px-3.5 text-sm text-stone-900
-          placeholder:text-stone-400 bg-white
-          focus:outline-none focus:ring-2 focus:ring-plum-500 focus:border-plum-500
+          h-11 rounded-full border-none px-5 text-sm text-stone-900
+          placeholder:text-stone-400 bg-white shadow-sm
+          focus:outline-none focus:ring-2 focus:ring-rose-300
           transition
-          ${error ? 'border-red-300' : 'border-stone-300'}
+          ${error ? 'ring-2 ring-red-300' : ''}
           ${fullWidth ? 'w-full' : ''}
           ${className}
         `}
@@ -34,9 +34,9 @@ export default function Input({
       />
 
       {error ? (
-        <p className="text-xs text-red-600">{error}</p>
+        <p className="text-xs text-red-600 ml-1">{error}</p>
       ) : helperText ? (
-        <p className="text-xs text-stone-500">{helperText}</p>
+        <p className="text-xs text-stone-500 ml-1">{helperText}</p>
       ) : null}
     </div>
   )
