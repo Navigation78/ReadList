@@ -1,25 +1,41 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Theme variables */
-:root {
-  /* Fonts */
+/* Tailwind theme tokens: fonts + brand color scales, picked up as utilities (font-display, bg-mint-500, ...) */
+@theme {
   --font-display: "Quicksand", sans-serif;
   --font-body: "Be Vietnam Pro", sans-serif;
 
+  /* Brand overrides of Tailwind's default rose scale */
+  --color-rose-200: #f8c8dc;
+  --color-rose-500: #795465;
+
+  --color-mint-50: #f3faf4;
+  --color-mint-100: #e3f3e6;
+  --color-mint-200: #c1dcc6;
+  --color-mint-300: #9fcaa8;
+  --color-mint-400: #7eb98a;
+  --color-mint-500: #5c9d67;
+  --color-mint-600: #487d51;
+  --color-mint-700: #386340;
+
+  --color-lavender-50: #f8f8fd;
+  --color-lavender-100: #e1e1f5;
+  --color-lavender-200: #c9c9ea;
+  --color-lavender-300: #adade0;
+  --color-lavender-400: #9191d3;
+  --color-lavender-500: #7a7ac0;
+  --color-lavender-600: #6363a6;
+  --color-lavender-700: #4f4f86;
+}
+
+/* Non-Tailwind theme variables */
+:root {
   /* Colors */
   --color-background: #faf9f8;
   --color-on-surface: #1a1c1c;
   --color-primary: #795465;
   --color-secondary: #5c5d6e;
-  --color-mint: #c1dcc6;
-  --color-lavender: #e1e1f5;
   --color-peach: #ffdbc1;
-
-  /* Extended palette */
-  --color-rose-200: #f8c8dc;
-  --color-rose-500: #795465;
 
   /* Spacing */
   --spacing-stack-sm: 8px;
@@ -60,6 +76,13 @@
 
   .text-label-md {
     font-size: 14px;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .text-label-sm {
+    font-size: 12px;
     line-height: 1.2;
     letter-spacing: 0.05em;
     font-weight: 600;
