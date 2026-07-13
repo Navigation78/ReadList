@@ -1,47 +1,46 @@
-import styles from './Button.module.css'
+import { Loader2 } from 'lucide-react'
 
-export default function Button({ 
-  children, 
-  variant = 'primary', 
-  size = 'medium',
-  type = 'button',
-  onClick,
-  disabled = false,
-  loading = false,
+// shared variants so every button in the app pulls from one place
+
+const variants = {
+  primary: 'bg-rose-500 text-white hover:bg-rose-600 focus-visible:ring-rose-500',
+  secondary: 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 focus-visible:ring-rose-500',
+  outline: 'bg-transparent text-stone-600 border border-stone-300 hover:bg-stone-50 focus-visible:ring-rose-500',
+  ghost: 'bg-transparent text-stone-600 hover:bg-stone-100 focus-visible:ring-rose-500',
+  danger: 'bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-500'
+}
+const sizes = {
+  small: 'h-9 px-4 text-xs',
+  medium: 'h-11 px-5 text-sm',
+  large: 'h-12 px-6 text-base'
+}
+export default function Button({
+  children,
+  variant = 'primary',
   fullWidth = false,
-  icon,
-  ariaLabel,
-  className = ''
+  loading = false,
+  disabled = false,
+  type = 'button',
+  className = '',
+  ...rest
 }) {
-  const classNames = [
-    styles.btn,
-    styles[variant],
-    styles[size],
-    fullWidth && styles.fullWidth,
-    loading && styles.loading,
-    className
-  ].filter(Boolean).join(' ')
-
   return (
     <button
       type={type}
-      onClick={onClick}
       disabled={disabled || loading}
-      className={classNames}
-      aria-label={ariaLabel || (typeof children === 'string' ? children : undefined)}
-      aria-busy={loading}
+      className={`
+        h-11 px-5 rounded-lg text-sm font-medium
+        inline-flex items-center justify-center gap-2
+        transition disabled:opacity-60 disabled:cursor-not-allowed
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+        ${variants[variant]}
+        ${fullWidth ? 'w-full' : ''}
+        ${className}
+      `}
+      {...rest}
     >
-      {loading ? (
-        <>
-          <span className={styles.spinner} aria-hidden="true" />
-          <span className={styles.srOnly}>Loading...</span>
-        </>
-      ) : (
-        <>
-          {icon && <span className={styles.icon} aria-hidden="true">{icon}</span>}
-          <span>{children}</span>
-        </>
-      )}
+      {loading && <Loader2 size={16} className="animate-spin" />}
+      {children}
     </button>
   )
 }

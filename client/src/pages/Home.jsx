@@ -3,11 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { bookService } from '../services/bookService'
 import Loading from '../components/common/Loading'
-import styles from './Home.module.css'
-import {
-  BookOpen, CheckCircle, BookMarked, TrendingUp,
-  Plus, ChevronRight, BarChart2
-} from 'lucide-react'
 
 export default function Home() {
   const { user } = useAuth()
@@ -42,8 +37,6 @@ export default function Home() {
     b.finished_at && new Date(b.finished_at).getFullYear() === thisYear
   ).length
 
-  const today     = new Date()
-  const dateLabel = today.toLocaleDateString('default', { month: 'short', day: 'numeric', year: 'numeric' })
   const displayName = user?.user_metadata?.display_name || user?.email?.split('@')[0] || 'Reader'
 
   // Bar chart data: last 6 months finished books
@@ -56,236 +49,337 @@ export default function Home() {
   const finishedPct = Math.round((finished.length  / total) * 100)
   const wantPct     = 100 - readingPct - finishedPct
 
-  return (
-    <div className={styles.page}>
-      {/* Page title */}
-      <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>Dashboard</h1>
-      </div>
+  const barColors = [
+    'bg-mint/40 hover:bg-mint/60',
+    'bg-lavender/60 hover:bg-lavender/80',
+    'bg-peach/50 hover:bg-peach/70',
+    'bg-lavender/60 hover:bg-lavender/80',
+    'bg-primary-container hover:opacity-90',
+    'bg-mint/40 hover:bg-mint/60'
+  ]
 
-      {/* ── Row 1 ── */}
-      <div className={styles.row1}>
-        {/* Books Read card (like Revenue) */}
-        <div className={styles.card}>
-          <div className={styles.cardTopRow}>
+  return (
+    <div className="px-container-margin pb-section-gap max-w-container-max mx-auto space-y-gutter">
+      {/* Welcome Header with Decorative Background */}
+      <section className="relative py-stack-lg mt-stack-md rounded-xl overflow-hidden">
+        <div className="absolute inset-0 floral-pattern"></div>
+        <div className="relative z-10 px-stack-md">
+          <h3 className="text-display-lg font-display-lg text-on-background animate-fade-in">
+            Welcome, {displayName} <span className="text-primary">✨</span>
+          </h3>
+          <p className="text-body-lg font-body-lg text-on-surface-variant mt-2">
+            Magic awaits on every page. You've reached {booksThisYear} milestone{booksThisYear === 1 ? '' : 's'} this year.
+          </p>
+        </div>
+      </section>
+
+      {/* Row 1: Statistics Cards */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+        {/* Stars Collected Card */}
+        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md flex flex-col justify-between floating-card border border-primary-container/10">
+          <div className="flex justify-between items-start mb-stack-sm">
             <div>
-              <p className={styles.cardLabel}>Books Finished</p>
-              <h2 className={styles.bigStat}>{finished.length}</h2>
-              <p className={styles.cardSub}>
-                <span className={styles.trendUp}>
-                  <TrendingUp size={13} /> {booksThisYear} this year
-                </span>
+              <p className="text-label-md font-label-md text-on-surface-variant flex items-center gap-1">
+                <span className="material-symbols-outlined text-primary scale-75">stars</span> Stars Collected
               </p>
+              <div className="flex items-baseline gap-3 mt-1">
+                <span className="text-display-lg font-display-lg text-primary">{finished.length}</span>
+                <span className="text-label-sm font-label-sm text-tertiary flex items-center bg-tertiary-container px-3 py-1 rounded-full">
+                  <span className="material-symbols-outlined text-[14px] mr-1">trending_up</span> {booksThisYear} this year
+                </span>
+              </div>
             </div>
             <button
-              className={styles.viewReportBtn}
               onClick={() => navigate('/stats')}
+              className="text-label-md font-label-md text-primary underline underline-offset-4 hover:opacity-70 transition-opacity"
             >
               View Stats
             </button>
           </div>
-          <p className={styles.cardDateRange}>{dateLabel}</p>
-
-          {/* Bar chart */}
-          <div className={styles.barChart}>
-            {monthlyData.map((m, i) => (
-              <div key={i} className={styles.barCol}>
-                <div className={styles.barTrack}>
+          
+          {/* Bar Chart */}
+          <div className="h-40 flex items-end justify-between gap-3 mt-4 px-2">
+            {monthlyData.map((m, i) => {
+              const heightPercent = Math.max(10, (m.count / maxVal) * 100)
+              const colorClass = barColors[i % barColors.length]
+              return (
+                <div key={i} className="flex-1 flex flex-col items-center h-full justify-end group">
                   <div
-                    className={`${styles.bar} ${i === monthlyData.length - 1 ? styles.barActive : ''}`}
-                    style={{ height: `${Math.max(4, (m.count / maxVal) * 100)}%` }}
-                  />
+                    className={`${colorClass} rounded-t-full w-full transition-all duration-300 relative`}
+                    style={{ height: `${heightPercent}%` }}
+                    title={`${m.count} books finished`}
+                  >
+                    {/* Tooltip */}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-on-surface text-surface text-[10px] px-2 py-0.5 rounded shadow z-10 whitespace-nowrap">
+                      {m.count} {m.count === 1 ? 'book' : 'books'}
+                    </div>
+                  </div>
                 </div>
-                <span className={styles.barLabel}>{m.month}</span>
-              </div>
+              )
+            })}
+          </div>
+          <div className="flex justify-between mt-4 text-label-sm text-on-surface-variant px-1 font-bold">
+            {monthlyData.map((m, i) => (
+              <span key={i}>{m.month}</span>
             ))}
           </div>
-
-          <div className={styles.legendRow}>
-            <span className={styles.legendDot} style={{ background: 'var(--accent-color)' }} />
-            <span className={styles.legendText}>Last 6 months</span>
-            <span className={styles.legendDot} style={{ background: 'var(--border-dark)' }} />
-            <span className={styles.legendText}>Previous</span>
-          </div>
         </div>
 
-        {/* Reading Status donut (like Order Time) */}
-        <div className={styles.card}>
-          <div className={styles.cardTopRow}>
-            <div>
-              <p className={styles.cardLabel}>Library Status</p>
-              <p className={styles.cardSub}>{allBooks.length} books total</p>
+        {/* Garden Status Card */}
+        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md flex flex-col md:flex-row gap-stack-md items-center floating-card border border-primary-container/10">
+          <div className="relative w-48 h-48 flex-shrink-0">
+            {/* SVG Donut Chart with Pastel Colors */}
+            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" fill="transparent" r="16" stroke="#f4f3f2" strokeWidth="4"></circle>
+              {finishedPct > 0 && (
+                <circle
+                  cx="18"
+                  cy="18"
+                  fill="transparent"
+                  r="16"
+                  stroke="#f8c8dc"
+                  strokeWidth="4"
+                  strokeDasharray={`${finishedPct}, ${100 - finishedPct}`}
+                  strokeDashoffset="0"
+                ></circle>
+              )}
+              {readingPct > 0 && (
+                <circle
+                  cx="18"
+                  cy="18"
+                  fill="transparent"
+                  r="16"
+                  stroke="#c1dcc6"
+                  strokeWidth="4"
+                  strokeDasharray={`${readingPct}, ${100 - readingPct}`}
+                  strokeDashoffset={-finishedPct}
+                ></circle>
+              )}
+              {wantPct > 0 && (
+                <circle
+                  cx="18"
+                  cy="18"
+                  fill="transparent"
+                  r="16"
+                  stroke="#e1e1f5"
+                  strokeWidth="4"
+                  strokeDasharray={`${wantPct}, ${100 - wantPct}`}
+                  strokeDashoffset={-(finishedPct + readingPct)}
+                ></circle>
+              )}
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-headline-md font-headline-md text-on-surface">{allBooks.length}</span>
+              <span className="text-label-sm font-label-sm text-on-surface-variant">Seeds</span>
             </div>
-            <button
-              className={styles.viewReportBtn}
-              onClick={() => navigate('/library')}
-            >
-              View Library
-            </button>
           </div>
-
-          {/* Donut chart (CSS-only) */}
-          <div className={styles.donutWrap}>
-            <div
-              className={styles.donut}
-              style={{
-                background: `conic-gradient(
-                  var(--accent-color) 0% ${finishedPct}%,
-                  #D4956A ${finishedPct}% ${finishedPct + readingPct}%,
-                  var(--border-dark) ${finishedPct + readingPct}% 100%
-                )`
-              }}
-            >
-              <div className={styles.donutHole}>
-                <span className={styles.donutNum}>{allBooks.length}</span>
-                <span className={styles.donutSub}>books</span>
+          <div className="flex-1 space-y-4 w-full">
+            <div className="flex justify-between items-center">
+              <h4 className="text-headline-md font-headline-md text-on-surface">Garden Status</h4>
+              <button
+                onClick={() => navigate('/library')}
+                className="text-label-md font-label-md text-primary underline underline-offset-4"
+              >
+                Explore
+              </button>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-primary-container"></div>
+                <span className="text-label-md font-label-md flex-1">Bloomed</span>
+                <span className="text-label-md font-label-md text-on-surface-variant">{finishedPct}%</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-mint"></div>
+                <span className="text-label-md font-label-md flex-1">Growing</span>
+                <span className="text-label-md font-label-md text-on-surface-variant">{readingPct}%</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-lavender"></div>
+                <span className="text-label-md font-label-md flex-1">Planter Box</span>
+                <span className="text-label-md font-label-md text-on-surface-variant">{wantPct}%</span>
               </div>
             </div>
-            {/* Tooltip-style callout */}
-            {inProgress.length > 0 && (
-              <div className={styles.donutCallout}>
-                <p className={styles.calloutTitle}>Reading Now</p>
-                <p className={styles.calloutSub}>{inProgress.length} {inProgress.length === 1 ? 'book' : 'books'}</p>
-              </div>
-            )}
-          </div>
-
-          <div className={styles.donutLegend}>
-            <span className={styles.legendItem}>
-              <span className={styles.legendDot} style={{ background: 'var(--accent-color)' }} /> Finished {finishedPct}%
-            </span>
-            <span className={styles.legendItem}>
-              <span className={styles.legendDot} style={{ background: '#D4956A' }} /> Reading {readingPct}%
-            </span>
-            <span className={styles.legendItem}>
-              <span className={styles.legendDot} style={{ background: 'var(--border-dark)' }} /> Want {wantPct}%
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Row 2 ── */}
-      <div className={styles.row2}>
-        {/* Progress bubbles (like Your Rating) */}
-        <div className={styles.card}>
-          <p className={styles.cardLabel}>Reading Progress</p>
-          <p className={styles.cardSub}>Pages across active books</p>
-          <div className={styles.bubblesWrap}>
-            {inProgress.length === 0 ? (
-              <div className={styles.emptyBubble}>
-                <BookOpen size={28} />
-                <p>No books in progress</p>
-              </div>
-            ) : (
-              inProgress.slice(0, 3).map((book, i) => {
-                const pct = book.page_count > 0 && book.current_page != null
-                  ? Math.round((book.current_page / book.page_count) * 100)
-                  : 0
-                const sizes = ['large', 'medium', 'small']
-                return (
-                  <div
-                    key={book.id}
-                    className={`${styles.bubble} ${styles[`bubble_${sizes[i]}`]}`}
-                    onClick={() => navigate(`/book/${book.id}`)}
-                    title={book.title}
-                  >
-                    <span className={styles.bubblePct}>{pct}%</span>
-                    <span className={styles.bubbleLabel}>{book.title.split(' ').slice(0, 2).join(' ')}</span>
-                  </div>
-                )
-              })
-            )}
-          </div>
-        </div>
-
-        {/* Currently reading list (like Food with most requests) */}
-        <div className={styles.card}>
-          <div className={styles.cardTopRow}>
-            <div>
-              <p className={styles.cardLabel}>Currently Reading</p>
-              <p className={styles.cardSub}>your active books</p>
-            </div>
-            <button className={styles.addBookBtn} onClick={() => navigate('/search')}>
-              <Plus size={13} /> Add
-            </button>
-          </div>
-          <div className={styles.bookList}>
-            {inProgress.length === 0 ? (
-              <div className={styles.emptyList}>
-                <BookOpen size={22} />
-                <p>Nothing in progress yet</p>
-              </div>
-            ) : (
-              inProgress.slice(0, 5).map(book => {
-                const pct = book.page_count > 0 && book.current_page != null
-                  ? Math.round((book.current_page / book.page_count) * 100)
-                  : null
-                return (
-                  <div key={book.id} className={styles.bookRow} onClick={() => navigate(`/book/${book.id}`)}>
-                    <div className={styles.bookThumb}>
-                      {book.cover_url
-                        ? <img src={book.cover_url} alt={book.title} />
-                        : <BookOpen size={14} />
-                      }
-                    </div>
-                    <div className={styles.bookMeta}>
-                      <span className={styles.bookTitle}>{book.title}</span>
-                      {book.author && <span className={styles.bookAuthor}>{book.author}</span>}
-                    </div>
-                    {pct !== null && (
-                      <span className={styles.bookPct}>{pct}%</span>
-                    )}
-                  </div>
-                )
-              })
-            )}
-          </div>
-        </div>
-
-        {/* Total books + want to read (like Order card) */}
-        <div className={styles.card}>
-          <div className={styles.cardTopRow}>
-            <div>
-              <p className={styles.cardLabel}>Total Books</p>
-              <h2 className={styles.bigStatSm}>{allBooks.length}</h2>
-              <p className={styles.cardSub}>
-                {wantToRead.length > 0 && (
-                  <span className={styles.trendDown}>
-                    <BarChart2 size={13} /> {wantToRead.length} want to read
-                  </span>
-                )}
+            <div className="bg-surface-container-low px-4 py-2 rounded-full mt-4 border border-primary-container/20">
+              <p className="text-label-sm font-label-sm text-on-surface-variant italic flex items-center gap-2">
+                <span className="material-symbols-outlined scale-75 text-primary">local_florist</span> Tending to {inProgress.length} stories
               </p>
             </div>
-            <button className={styles.viewReportBtn} onClick={() => navigate('/library')}>
-              View All
-            </button>
-          </div>
-
-          {/* Mini line-style list */}
-          <div className={styles.wantList}>
-            {wantToRead.length === 0 ? (
-              <div className={styles.emptyList}>
-                <BookMarked size={20} />
-                <p>Nothing on your list yet</p>
-              </div>
-            ) : (
-              wantToRead.slice(0, 4).map(book => (
-                <div key={book.id} className={styles.wantRow} onClick={() => navigate(`/book/${book.id}`)}>
-                  <BookMarked size={13} className={styles.wantIcon} />
-                  <span className={styles.wantTitle}>{book.title}</span>
-                  <ChevronRight size={12} className={styles.wantArrow} />
-                </div>
-              ))
-            )}
-          </div>
-
-          {/* Finished stat */}
-          <div className={styles.finishBadge}>
-            <CheckCircle size={15} />
-            <span>{finished.length} finished · {totalPages.toLocaleString()} pages read</span>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Row 2: Reading Progress & Lists */}
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+        {/* Active Progress (Active Spells) */}
+        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md col-span-1 floating-card border border-primary-container/10 flex flex-col justify-between">
+          <div>
+            <h4 className="text-headline-md font-headline-md mb-stack-md flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary">auto_fix_high</span> Active Spells
+            </h4>
+            <div className="space-y-stack-lg py-4">
+              {inProgress.length === 0 ? (
+                <div className="text-center py-8 text-on-surface-variant">
+                  <span className="material-symbols-outlined text-4xl text-primary-container mb-2">auto_stories</span>
+                  <p className="text-label-md">No books in progress</p>
+                </div>
+              ) : (
+                inProgress.slice(0, 3).map((book, i) => {
+                  const pct = book.page_count > 0 && book.current_page != null
+                    ? Math.round((book.current_page / book.page_count) * 100)
+                    : 0
+                  
+                  const themes = [
+                    { stroke: '#f8c8dc', text: 'text-primary' },
+                    { stroke: '#c1dcc6', text: 'text-tertiary' },
+                    { stroke: '#e1e1f5', text: 'text-secondary' }
+                  ]
+                  const theme = themes[i % themes.length]
+
+                  return (
+                    <div
+                      key={book.id}
+                      onClick={() => navigate(`/book/${book.id}`)}
+                      className="flex items-center gap-4 group cursor-pointer"
+                    >
+                      <div className="relative w-20 h-20 flex-shrink-0">
+                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                          <circle cx="18" cy="18" fill="transparent" r="16" stroke="#f4f3f2" strokeWidth="3"></circle>
+                          <circle
+                            cx="18"
+                            cy="18"
+                            fill="transparent"
+                            r="16"
+                            stroke={theme.stroke}
+                            strokeWidth="3"
+                            strokeDasharray={`${pct}, ${100 - pct}`}
+                            strokeLinecap="round"
+                          ></circle>
+                        </svg>
+                        <div className={`absolute inset-0 flex items-center justify-center text-label-sm font-bold ${theme.text}`}>
+                          {pct}%
+                        </div>
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-body-md font-bold text-on-surface leading-tight group-hover:text-primary transition-colors truncate">
+                          {book.title}
+                        </p>
+                        <p className="text-label-sm text-on-surface-variant truncate">
+                          {book.author || 'Unknown Author'}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Reading Now List (Current Journeys) */}
+        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md col-span-1 flex flex-col justify-between floating-card border border-primary-container/10">
+          <div>
+            <div className="flex justify-between items-center mb-stack-md">
+              <h4 className="text-headline-md font-headline-md">Current Journeys</h4>
+              <button
+                onClick={() => navigate('/search')}
+                className="p-3 bg-primary-container text-on-primary-container rounded-full hover:shadow-md active:scale-90 transition-all flex items-center justify-center"
+              >
+                <span className="material-symbols-outlined text-[18px]">add</span>
+              </button>
+            </div>
+            <div className="space-y-4 max-h-[300px] overflow-y-auto custom-scrollbar pr-2">
+              {inProgress.length === 0 ? (
+                <div className="text-center py-12 text-on-surface-variant">
+                  <span className="material-symbols-outlined text-4xl text-mint mb-2">explore</span>
+                  <p className="text-label-md">Nothing in progress yet</p>
+                </div>
+              ) : (
+                inProgress.map((book, i) => {
+                  const pct = book.page_count > 0 && book.current_page != null
+                    ? Math.round((book.current_page / book.page_count) * 100)
+                    : 0
+
+                  const rowThemes = [
+                    { hover: 'hover:bg-primary-container/20', bar: 'bg-primary-container', text: 'text-primary' },
+                    { hover: 'hover:bg-mint/20', bar: 'bg-mint', text: 'text-tertiary' },
+                    { hover: 'hover:bg-lavender/40', bar: 'bg-lavender', text: 'text-secondary' }
+                  ]
+                  const theme = rowThemes[i % rowThemes.length]
+
+                  return (
+                    <div
+                      key={book.id}
+                      onClick={() => navigate(`/book/${book.id}`)}
+                      className={`flex gap-4 p-3 rounded-3xl transition-colors cursor-pointer group ${theme.hover}`}
+                    >
+                      <div className="w-14 h-20 bg-surface-variant rounded-xl overflow-hidden flex-shrink-0 shadow-sm flex items-center justify-center">
+                        {book.cover_url ? (
+                          <img className="w-full h-full object-cover" src={book.cover_url} alt={book.title} />
+                        ) : (
+                          <span className="material-symbols-outlined text-3xl text-on-surface-variant">book</span>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-label-md font-bold truncate">{book.title}</p>
+                        <p className="text-label-sm text-on-surface-variant truncate">{book.author || 'Unknown'}</p>
+                        <div className="w-full bg-surface-container h-2 rounded-full mt-3 overflow-hidden">
+                          <div className={`h-full rounded-full ${theme.bar}`} style={{ width: `${pct}%` }}></div>
+                        </div>
+                      </div>
+                      <div className={`text-label-md font-bold self-center ${theme.text}`}>{pct}%</div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Wishlist Card */}
+        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-stack-md col-span-1 flex flex-col justify-between floating-card border border-primary-container/10">
+          <div>
+            <h4 className="text-headline-md font-headline-md mb-stack-sm flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary">favorite</span> Wishlist
+            </h4>
+            <div className="space-y-1 max-h-[220px] overflow-y-auto custom-scrollbar pr-2">
+              {wantToRead.length === 0 ? (
+                <div className="text-center py-12 text-on-surface-variant">
+                  <span className="material-symbols-outlined text-4xl text-lavender mb-2">favorite_border</span>
+                  <p className="text-label-md">Nothing on your list yet</p>
+                </div>
+              ) : (
+                wantToRead.slice(0, 5).map(book => (
+                  <div
+                    key={book.id}
+                    onClick={() => navigate(`/book/${book.id}`)}
+                    className="flex items-center justify-between p-4 rounded-full hover:bg-primary-container/10 transition-all group cursor-pointer"
+                  >
+                    <span className="text-label-md font-bold truncate pr-4">{book.title}</span>
+                    <span className="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">
+                      arrow_forward_ios
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+          <div className="mt-stack-lg pt-stack-md border-t border-primary-container/20">
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-label-sm font-label-sm text-on-surface-variant">Collection Total</p>
+                <p className="text-display-lg font-display-lg text-primary">{allBooks.length}</p>
+              </div>
+              <div className="pb-1">
+                <span className="inline-flex items-center bg-primary-container/20 text-primary px-4 py-2 rounded-full text-label-sm font-bold animate-pulse">
+                  {finished.length} finished · {totalPages.toLocaleString()} pages
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

@@ -4,12 +4,11 @@ import { useAuth } from '../../context/AuthContext'
 import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
 import logoImage from '../../assets/Black Logo.png'
-import styles from './Signup.module.css'
 
 export default function Signup() {
   const { signup, loading } = useAuth()
   const navigate = useNavigate()
-  
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -25,7 +24,7 @@ export default function Signup() {
       ...prev,
       [name]: value
     }))
-    // Clear error for this field
+    // clear error for this field
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -70,10 +69,10 @@ export default function Signup() {
 
     if (result.success) {
       if (result.message) {
-        // Email confirmation required
+        // email confirmation required
         setSuccessMessage(result.message)
       } else {
-        // Auto-login successful
+        // auto-login successful
         navigate('/dashboard')
       }
     } else {
@@ -82,25 +81,40 @@ export default function Signup() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.card}>
-        {/* Logo */}
-        <div className={styles.logoSection}>
-          <img src={logoImage} alt="ReadList" className={styles.logo} />
-          <h1 className={styles.title}>Create Account</h1>
-          <p className={styles.subtitle}>Start tracking your reading journey</p>
+    <div className="relative min-h-screen bg-[#faf9f8] flex items-center justify-center px-4 py-12 overflow-hidden">
+      {/* Whimsical background glow */}
+      <div
+        className="fixed inset-0 -z-10 opacity-40 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(circle at 10% 20%, rgba(248,200,220,0.3) 0%, transparent 20%), radial-gradient(circle at 90% 80%, rgba(225,225,245,0.3) 0%, transparent 20%), radial-gradient(circle at 50% 50%, rgba(193,220,198,0.2) 0%, transparent 40%)',
+        }}
+      />
+
+      <div className="w-full max-w-sm bg-white rounded-[2.5rem] p-8 shadow-[0_10px_40px_-10px_rgba(248,200,220,0.6)]">
+        {/* logo and heading */}
+        <div className="flex flex-col items-center text-center mb-8">
+          <img src={logoImage} alt="ReadList" className="w-12 h-12 rounded-2xl object-cover mb-4" />
+          <h1 className="font-['Quicksand'] font-bold text-2xl text-[#795465] mb-2">Create account</h1>
+          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/70">Start tracking your reading journey</p>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className={styles.form}>
+        {/* form */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {serverError && (
-            <div className={styles.errorAlert} role="alert">
+            <div
+              role="alert"
+              className="bg-[#ffdad6] text-[#93000a] font-['Be_Vietnam_Pro'] text-sm rounded-2xl px-4 py-3"
+            >
               {serverError}
             </div>
           )}
 
           {successMessage && (
-            <div className={styles.successAlert} role="alert">
+            <div
+              role="alert"
+              className="bg-[#c1dcc6]/40 text-[#4a6150] font-['Be_Vietnam_Pro'] text-sm rounded-2xl px-4 py-3"
+            >
               {successMessage}
             </div>
           )}
@@ -115,6 +129,7 @@ export default function Signup() {
             error={errors.email}
             fullWidth
             required
+            className="rounded-2xl font-['Be_Vietnam_Pro'] focus:ring-4 focus:ring-[#f8c8dc]"
           />
 
           <Input
@@ -128,10 +143,11 @@ export default function Signup() {
             helperText="Must be at least 6 characters"
             fullWidth
             required
+            className="rounded-2xl font-['Be_Vietnam_Pro'] focus:ring-4 focus:ring-[#f8c8dc]"
           />
 
           <Input
-            label="Confirm Password"
+            label="Confirm password"
             type="password"
             name="confirmPassword"
             placeholder="Confirm your password"
@@ -140,24 +156,26 @@ export default function Signup() {
             error={errors.confirmPassword}
             fullWidth
             required
+            className="rounded-2xl font-['Be_Vietnam_Pro'] focus:ring-4 focus:ring-[#f8c8dc]"
           />
 
-          <Button 
-            type="submit" 
-            variant="primary" 
-            fullWidth 
+          <Button
+            type="submit"
+            variant="primary"
+            fullWidth
             loading={loading}
             disabled={loading}
+            className="rounded-full bg-[#795465] hover:bg-[#795465]/90 font-['Quicksand'] font-bold shadow-lg"
           >
-            {loading ? 'Creating account...' : 'Sign Up'}
+            {loading ? 'Creating account...' : 'Sign up'}
           </Button>
         </form>
 
-        {/* Login Link */}
-        <div className={styles.footer}>
-          <p className={styles.footerText}>
+        {/* login link */}
+        <div className="mt-8 pt-6 border-t border-[#e3e2e1] text-center">
+          <p className="font-['Be_Vietnam_Pro'] text-sm text-[#4f4448]/70">
             Already have an account?{' '}
-            <Link to="/login" className={styles.link}>
+            <Link to="/login" className="font-medium text-[#795465] hover:text-[#5f3c4d] transition">
               Login
             </Link>
           </p>
