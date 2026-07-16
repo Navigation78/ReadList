@@ -18,6 +18,12 @@ import { useTheme } from '../context/ThemeContext'
 import logoImage from '../assets/ReadList Icon.png'
 import heroImage from '../assets/ReadList Hero Image.jpg'
 import bookCoverImage from '../assets/Bookcover.jpg'
+import searchLight from '../assets/Search Light Mode.png'
+import searchDark from '../assets/Search Dark Mode.png'
+import libraryLight from '../assets/Library Light Mode.png'
+import libraryDark from '../assets/Library Dark Mode.png'
+import analyticsLight from '../assets/Analytics Light Mode.png'
+import analyticsDark from '../assets/Analytics Dark Mode.png'
 
 // short capability labels under the hero, kept honest since ReadList has no live users yet
 const highlights = [
@@ -25,6 +31,37 @@ const highlights = [
   { icon: NotebookPen, title: 'Session Logging', text: 'Track pages as you read', tint: 'lavender' },
   { icon: BarChart3, title: 'Reading Stats', text: 'Streaks and monthly pace', tint: 'mint' },
   { icon: Zap, title: 'Quick Add', text: 'Search and add in seconds', tint: 'rose' }
+]
+
+// real product screenshots, one light/dark pair per feature, shown in the features section below
+const featureShowcase = [
+  {
+    badge: 'Book Search',
+    heading: 'Find Your Next Read',
+    text: 'Search a huge open catalog by title, author, or ISBN and add any book to your shelves in a single tap.',
+    points: ['Instant results as you type', 'One-tap add straight to your library', 'No manual data entry required'],
+    tint: 'rose',
+    lightImg: searchLight,
+    darkImg: searchDark
+  },
+  {
+    badge: 'My Library',
+    heading: 'One Shelf for Every Book',
+    text: 'Every title you own or want to read lives in one place, sorted into Reading, Want to Read, and Finished.',
+    points: ['Three shelves that mirror how you actually read', 'Covers pulled in automatically', 'Collection size always visible at a glance'],
+    tint: 'lavender',
+    lightImg: libraryLight,
+    darkImg: libraryDark
+  },
+  {
+    badge: 'Reading Analytics',
+    heading: 'Know Your Reading Habits',
+    text: 'A dedicated stats page turns your reading history into a clear picture of pace, progress, and habits.',
+    points: ['Books finished this year at a glance', 'Running total of every book you have finished', 'Books-per-month trend so you can spot your pace'],
+    tint: 'mint',
+    lightImg: analyticsLight,
+    darkImg: analyticsDark
+  }
 ]
 
 const previewPoints = [
@@ -162,76 +199,60 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* features bento grid */}
+        {/* features showcase, real product screenshots swapped to match the active theme */}
         <section className="max-w-7xl mx-auto px-6 py-20" id="features">
-          <div className="text-center mb-14">
+          <div className="text-center mb-16">
             <h2 className="font-display text-3xl font-bold text-rose-500 mb-3">Every detail, considered.</h2>
             <p className="text-stone-800 dark:text-stone-300 max-w-2xl mx-auto">
               Thoughtfully designed features that celebrate your reading life without adding clutter.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* visual progress, wide card with a mini bar chart */}
-            <div className="md:col-span-2 bg-white dark:bg-stone-900 rounded-3xl p-8 shadow-[0_15px_40px_rgba(193,220,198,0.3)] border-t-8 border-mint-100 flex flex-col justify-between">
-              <div>
-                <h3 className="font-display text-xl font-semibold text-mint-600 mb-2">Visual Progress</h3>
-                <p className="text-stone-800 dark:text-stone-300 max-w-md">
-                  Watch your pace take shape through simple, tactile charts of your streaks and monthly totals.
-                </p>
-              </div>
-              <div className="flex items-end gap-2 h-32 mt-6 px-2">
-                {[30, 50, 40, 85, 60, 25, 45].map((h, i) => (
+          <div className="flex flex-col gap-24">
+            {featureShowcase.map(({ badge, heading, text, points, tint, lightImg, darkImg }, i) => (
+              <div
+                key={badge}
+                className={`flex flex-col lg:flex-row items-center gap-12 ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
+              >
+                <div className="lg:w-1/2 relative">
                   <div
-                    key={i}
-                    className={`w-full rounded-t-full ${i === 3 ? 'bg-mint-500' : 'bg-mint-100'}`}
-                    style={{ height: `${h}%` }}
+                    className={`absolute -z-10 w-full h-full rounded-3xl blur-3xl opacity-40 ${tintClasses[tint].bg100} ${i % 2 === 1 ? '-rotate-3' : 'rotate-3'}`}
                   />
-                ))}
-              </div>
-            </div>
+                  <div className="rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-stone-100 dark:border-stone-800">
+                    <div className="flex items-center gap-1.5 px-4 py-3 bg-stone-100 dark:bg-stone-800">
+                      <span className="w-2.5 h-2.5 rounded-full bg-rose-300" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-lavender-300" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-mint-300" />
+                    </div>
+                    <div className="h-[380px] overflow-hidden">
+                      <img
+                        src={theme === 'dark' ? darkImg : lightImg}
+                        alt={`${heading} in the ReadList app`}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+                  </div>
+                </div>
 
-            {/* reading notes, small card with two sample note snippets */}
-            <div className="bg-rose-50 dark:bg-stone-900 rounded-3xl p-8 shadow-[0_15px_40px_rgba(248,200,220,0.25)] border-b-8 border-rose-200 flex flex-col">
-              <div className="w-12 h-12 bg-rose-200 rounded-full flex items-center justify-center mb-4 text-rose-700">
-                <NotebookPen size={20} />
-              </div>
-              <h3 className="font-display text-xl font-semibold text-rose-500 mb-2">Reading Notes</h3>
-              <p className="text-stone-800 dark:text-stone-300 text-sm mb-6">
-                Jot a quick note after every session so the moments that stood out do not fade.
-              </p>
-              <div className="mt-auto space-y-3">
-                <div className="bg-white dark:bg-stone-900 p-3 rounded-xl shadow-sm border border-rose-100 text-xs text-stone-600 dark:text-stone-400">
-                  The way she describes the fog is breathtaking.
-                </div>
-                <div className="bg-white dark:bg-stone-900 p-3 rounded-xl shadow-sm border border-rose-100 text-xs text-stone-600 dark:text-stone-400 translate-x-3 opacity-70">
-                  Important character beat in chapter four.
-                </div>
-              </div>
-            </div>
-
-            {/* curated shelves, full width card with tag chips and a spine illustration */}
-            <div className="md:col-span-3 bg-lavender-50 dark:bg-stone-900 rounded-3xl p-8 shadow-[0_15px_40px_rgba(197,197,216,0.3)] flex flex-col md:flex-row items-center gap-10">
-              <div className="md:w-1/2">
-                <h3 className="font-display text-xl font-semibold text-lavender-600 mb-2">Curated Shelves</h3>
-                <p className="text-stone-800 dark:text-stone-300">
-                  Organize want to read, currently reading, and finished titles into shelves that make sense to
-                  you. Build custom collections for favorites, classics, or study material.
-                </p>
-                <div className="flex gap-2 mt-6 flex-wrap">
-                  <span className="px-3 py-1 rounded-full bg-lavender-100 text-lavender-600 text-xs font-bold">2026 Goals</span>
-                  <span className="px-3 py-1 rounded-full bg-rose-100 text-rose-600 text-xs font-bold">Summer Reads</span>
-                  <span className="px-3 py-1 rounded-full bg-mint-100 text-mint-600 text-xs font-bold">Lent Out</span>
+                <div className="lg:w-1/2 flex flex-col gap-4">
+                  <span
+                    className={`w-fit px-4 py-1 rounded-full text-xs font-bold ${tintClasses[tint].bg100} ${tintClasses[tint].text600}`}
+                  >
+                    {badge}
+                  </span>
+                  <h3 className={`font-display text-2xl font-semibold ${tintClasses[tint].text500}`}>{heading}</h3>
+                  <p className="text-stone-800 dark:text-stone-300 leading-relaxed">{text}</p>
+                  <ul className="space-y-3 mt-2">
+                    {points.map((point) => (
+                      <li key={point} className="flex items-center gap-3 text-stone-700 dark:text-stone-300 text-sm">
+                        <CheckCircle2 className={tintClasses[tint].text500} size={18} />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-              <div className="md:w-1/2 flex items-end justify-center gap-1 py-6">
-                <div className="w-8 h-28 bg-lavender-200 rounded-lg border-2 border-lavender-300/40" />
-                <div className="w-10 h-36 bg-rose-200 rounded-lg border-2 border-rose-300/40" />
-                <div className="w-12 h-44 bg-mint-200 rounded-lg border-2 border-mint-300/40" />
-                <div className="w-9 h-32 bg-lavender-100 rounded-lg border-2 border-lavender-300/40" />
-                <div className="w-11 h-40 bg-rose-100 rounded-lg border-2 border-rose-300/40" />
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
