@@ -1,5 +1,4 @@
-import styles from './ReadingStreak.module.css'
-import { Flame } from 'lucide-react'
+  import { Flame } from 'lucide-react'
 
 export default function ReadingStreak({ days }) {
   return (

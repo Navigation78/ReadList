@@ -1,5 +1,4 @@
-import styles from './StatsChart.module.css'
-
+import React from 'react'
 // Simple placeholder - you can enhance this with a charting library later
 export default function StatsChart({ data, title }) {
   const maxValue = Math.max(...data.map(d => d.value))

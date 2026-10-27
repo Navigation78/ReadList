@@ -71,7 +71,7 @@ export const bookService = {
         .from('books')
         .select('*')
         .eq('id', bookId)
-        .single()
+        .single()//get a single book by ID
       
       if (error) throw error
       return data
@@ -90,7 +90,7 @@ export const bookService = {
   async addBook(userId, bookData) {
     try {
       // Prepare book data with defaults
-      const newBook = {
+      const newBook = {//newBook object with userId and bookData
         user_id: userId,
         google_books_id: bookData.google_books_id || null,
         title: bookData.title,
