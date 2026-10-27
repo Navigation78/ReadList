@@ -1,83 +1,102 @@
-import { useEffect } from 'react'
-import { X } from 'lucide-react'
 
-// maps size prop to a max width so callers can request small/medium/large dialogs
-const sizes = {
-  small: 'max-w-sm',
-  medium: 'max-w-lg',
-  large: 'max-w-2xl'
-}
+import React, { useEffect, useId, useRef } from "react";
+import { createPortal } from "react-dom";
 
 export default function Modal({
-  isOpen,
+  open,
   onClose,
   title,
   children,
-  size = 'medium',
-  showCloseButton = true
+  footer,
 }) {
-  // handle esc key
+  const titleId = useId();
+  const dialogRef = useRef(null);
+  const closeRef = useRef(null);
+
   useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose()
+    if (!open) return;
+
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        onClose?.();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = dialogRef.current?.querySelectorAll(
+        'button:not([disabled]), input:not([disabled]), ' +
+        'select:not([disabled]), textarea:not([disabled]), ' +
+        'a[href], [tabindex]:not([tabindex="-1"])'
+      );
+
+      if (!focusable?.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     }
 
-    document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [isOpen, onClose])
-
-  // prevent body scroll when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen])
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus?.();
+    };
+  }, [open, onClose]);
 
-  if (!isOpen) return null
+  if (!open) return null;
 
-  return (
+  return createPortal(
     <div
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/30 backdrop-blur-sm px-4"
+      className="rl-modal-backdrop"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          onClose?.();
+        }
+      }}
     >
       <div
-        onClick={(e) => e.stopPropagation()}
+        ref={dialogRef}
+        className="rl-modal"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
-        className={`w-full bg-white dark:bg-stone-900 rounded-[2rem] shadow-[0_20px_50px_rgba(248,200,220,0.4)] dark:shadow-none ${sizes[size]}`}
+        aria-labelledby={titleId}
       >
-        {(title || showCloseButton) && (
-          <div className="flex items-center justify-between px-7 py-5 border-b border-stone-100 dark:border-stone-700">
-            {title && (
-              <h2 id="modal-title" className="font-display text-lg font-semibold text-rose-500">
-                {title}
-              </h2>
-            )}
-            {showCloseButton && (
-              <button
-                onClick={onClose}
-                aria-label="Close modal"
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 dark:text-stone-400 hover:bg-rose-50 dark:hover:bg-stone-800 hover:text-rose-500 transition"
-              >
-                <X size={16} />
-              </button>
-            )}
-          </div>
-        )}
-
-        <div className="px-7 py-6">
-          {children}
+        <div className="rl-modal__header">
+          <h2 id={titleId}>{title}</h2>
+          <button
+            ref={closeRef}
+            type="button"
+            className="rl-icon-button"
+            onClick={onClose}
+            aria-label="Close dialog"
+          >
+            ×
+          </button>
         </div>
+
+        <div className="rl-modal__body">{children}</div>
+
+        {footer && (
+          <div className="rl-modal__footer">{footer}</div>
+        )}
       </div>
-    </div>
-  )
+    </div>,
+    document.body
+  );
 }

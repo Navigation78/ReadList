@@ -23,7 +23,13 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'no-unused-vars': ['error', {
+        // Ignore unused variables that start with a capital letter or underscore
+        varsIgnorePattern: '^[A-Z_]',
+        // Same idea for function parameters, so ({ icon: Icon }) => <Icon />
+        // is not flagged (ESLint does not count JSX usage on its own)
+        argsIgnorePattern: '^[A-Z_]',
+      }],
     },
   },
 ])

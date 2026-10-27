@@ -22,6 +22,8 @@ import { supabase } from '../lib/supabaseClient'
 const AuthContext = createContext({})
 
 // Custom hook to use auth context
+// This file exports a hook next to a component, which is fine for this app
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext)
   if (!context) {
@@ -29,7 +31,6 @@ export const useAuth = () => {
   }
   return context
 }
-
 // AuthProvider component
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)

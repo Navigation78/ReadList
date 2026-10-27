@@ -1,0 +1,38 @@
+# Name shown in the GitHub Actions tab
+name: CI
+
+# When the robot wakes up
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    # A fresh Linux computer, same kind Vercel uses
+    runs-on: ubuntu-latest
+
+    # Run every command from inside the client folder
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      # Download your repository code
+      - uses: actions/checkout@v4
+
+      # Install Node 24 and cache packages to speed up later runs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      # Install packages exactly as listed in package-lock.json
+      - run: npm ci
+
+      # Catch code mistakes
+      - run: npm run lint
+
+      # Catch build failures
+      - run: npm run build
