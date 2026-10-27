@@ -133,4 +133,26 @@
   --z-tooltip: 500;
 
   --navbar-height: 64px;
+
+  /*Revamp styles*/
+  
+:root {
+  --color-background: #faf8f4;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f2f1ec;
+  --color-primary: #76505f;
+  --color-primary-hover: #603e4c;
+  --color-text: #292524;
+  --color-text-muted: #78716c;
+  --color-border: #e7e5e4;
+  --color-success: #6f8b74;
+  --color-danger: #b45353;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-card: 0 3px 16px rgb(41 37 36 / 4%);
+}
+
 }

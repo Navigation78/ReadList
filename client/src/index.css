@@ -44,6 +44,7 @@
   --spacing-stack-sm: 8px;
   --spacing-stack-md: 16px;
   --spacing-stack-lg: 32px;
+
 }
 
 /* Custom utilities */
@@ -175,4 +176,21 @@ body {
   50% {
     transform: translateY(-10px);
   }
+}
+/* Expose the CSS variables as Tailwind utilities (Tailwind v4) */
+@theme inline {
+  --color-rl-bg: var(--rl-bg);
+  --color-rl-surface: var(--rl-surface);
+  --color-rl-alt: var(--rl-surface-alt);
+  --color-rl-panel: var(--rl-panel);
+  --color-rl-text: var(--rl-text);
+  --color-rl-muted: var(--rl-muted);
+  --color-rl-border: var(--rl-border);
+  --color-rl-primary: var(--rl-primary);
+  --color-rl-primary-hover: var(--rl-primary-hover);
+  --color-rl-contrast: var(--rl-primary-contrast);
+  --color-rl-sage: var(--rl-sage);
+  --color-rl-sage-soft: var(--rl-sage-soft);
+  --color-rl-rose-soft: var(--rl-rose-soft);
+  --font-display: "Newsreader", Georgia, serif;
 }
