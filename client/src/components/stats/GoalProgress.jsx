@@ -1,27 +1,61 @@
-import { Trophy } from 'lucide-react'
 
-export default function GoalProgress({ current, goal }) {
-  const percentage = goal > 0 ? Math.round((current / goal) * 100) : 0
+import React from "react";
+
+export default function GoalProgress({
+  completed = 0,
+  goal = 20,
+  year = new Date().getFullYear(),
+}) {
+  const safeCompleted = Math.max(0, Number(completed) || 0);
+  const safeGoal = Math.max(0, Number(goal) || 0);
+
+  const percentage =
+    safeGoal > 0
+      ? Math.min((safeCompleted / safeGoal) * 100, 100)
+      : 0;
+
+  const remaining = Math.max(safeGoal - safeCompleted, 0);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h3 className={styles.title}>Annual Reading Goal</h3>
-        <span className={styles.numbers}>{current} / {goal}</span>
+    <section className="stats-card">
+      <div className="stats-card__header">
+        <h2>Annual Reading Goal</h2>
+        <span>{year}</span>
       </div>
-      
-      <div className={styles.progressBar}>
-        <div 
-          className={styles.progressFill}
-          style={{ width: `${Math.min(percentage, 100)}%` }}
+
+      <div className="goal-progress__numbers">
+        <div>
+          <strong>{safeCompleted}</strong>
+          <span> of {safeGoal} books</span>
+        </div>
+
+        <span className="goal-progress__percentage">
+          {Math.round(percentage)}%
+        </span>
+      </div>
+
+      <div
+        className="goal-progress__track"
+        role="progressbar"
+        aria-label="Annual reading goal progress"
+        aria-valuemin={0}
+        aria-valuemax={safeGoal || 1}
+        aria-valuenow={Math.min(safeCompleted, safeGoal || 1)}
+      >
+        <div
+          className="goal-progress__fill"
+          style={{ width: `${percentage}%` }}
         />
       </div>
-      
-      <p className={styles.text}>
-        {percentage >= 100
-          ? <span className={styles.achieved}><Trophy size={14} /> Goal achieved!</span>
-          : `${goal - current} books to go`}
+
+      <p className="stats-card__description">
+        {safeGoal === 0
+          ? "Set a reading goal to get started."
+          : remaining === 0
+            ? "You've reached your reading goal."
+            : `${remaining} more ${remaining === 1 ? "book" : "books"
+            } to reach your goal.`}
       </p>
-    </div>
-  )
+    </section>
+  );
 }
