@@ -1,11 +1,11 @@
-import LandingNavbar from "../components/landing/LandingNavbar";
-import Hero from "../components/landing/Hero";
-import FeatureStrip from "../components/landing/FeatureStrip";
-import BookDiscovery from "../components/landing/BookDiscovery";
-import ReadingStats from "../components/landing/ReadingStats";
-import Testimonials from "../components/landing/Testimonials";
-import CtaBanner from "../components/landing/CtaBanner";
-import LandingFooter from "../components/landing/LandingFooter";
+import LandingNavbar from "./LandingPage/LandingNavbar";
+import Hero from "./LandingPage/Hero";
+import FeatureStrip from "./LandingPage/FeatureStrip";
+import BookDiscovery from "./LandingPage/BookDiscovery";
+import ReadingStats from "./LandingPage/ReadingStats";
+import Testimonials from "./LandingPage/Testimonials";
+import CtaBanner from "./LandingPage/CtaBanner";
+import LandingFooter from "./LandingPage/LandingFooter";
 
 // Landing page: just composes the sections in the order shown in the mockup
 export default function Landing() {
