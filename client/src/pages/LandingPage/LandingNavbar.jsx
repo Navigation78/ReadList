@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { LogoMark, SunIcon, MoonIcon } from "./Icons";
-import logoIcon from "../../assets/ logo.png";
+import logoIcon from "../../assets/ReadList Icon.png";
 
 // Anchor links point at section ids further down the page
 const links = [
